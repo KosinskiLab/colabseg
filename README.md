@@ -1,6 +1,6 @@
 # Colabseg Tool: Jupyter-based Membrane Segmentation Manipulation
 ---
-![example workflow](https://github.com/KosinskiLab/colabseg/actions/workflows/main.yml/badge.svg)
+![Build and Testing](https://github.com/KosinskiLab/colabseg/actions/workflows/python-app.yml/badge.svg)
 
 ## General Remarks
 

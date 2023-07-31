@@ -57,7 +57,7 @@ def generate_membrainseg_gui():
     value=False,
     description='Should connected components be computed to separate membranes?',
     style = {'description_width': 'initial'},
-    layout = widgets.Layout(width='300px'))
+    layout = widgets.Layout(width='800px'))
 
     all_values["connected_component_thres"] = widgets.Text(
     placeholder='0',
@@ -70,7 +70,7 @@ def generate_membrainseg_gui():
     value=False,
     description='Should 8-fold test-time augmentation be performed (takes longer)?',
     style = {'description_width': 'initial'},
-    layout = widgets.Layout(width='300px'))
+    layout = widgets.Layout(width='800px'))
 
     hbox_ckpt_path = all_values["membrain_model"]
     hbox_tomo_file =  all_values["tomo_file"]

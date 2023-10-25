@@ -4,8 +4,6 @@
 # Marc Siggel, December 2021
 
 import numpy as np
-import math
-import scipy
 import subprocess
 from scipy import interpolate
 from scipy.spatial.distance import cdist
@@ -22,7 +20,7 @@ from .image_io import ImageIO
 class ColabSegData(object):
     """Docstring for ColabSegData data structure framework."""
 
-    def __init__(self,):
+    def __init__(self):
         super(ColabSegData, self).__init__()
         # filename
         self.mrc_filename = None
@@ -50,6 +48,12 @@ class ColabSegData(object):
         self.cluster_list_fits_previous = []
 
         self.raw_tomogram_slice = []
+        self.protein_positions_list = []
+        self.analysis_properties = {}
+        self.analysis_properties["minimal_distances"] = []
+        self.analysis_properties["radii"] = []
+        self.analysis_properties["normal_selection"] = []
+        self.analysis_properties["surface_normals"] = []
 
     def load_tomogram(self, filename):
         """load_tomogram with pyto library"""
@@ -88,6 +92,46 @@ class ColabSegData(object):
             subset = np.take(self.position_list, np.where(self.intensity_list == index)[0], axis=0)
             self.cluster_list_tv.append(subset)
 
+        return
+
+    def load_point_cloud(self, filename):
+        """Load a plain point cloud from a txt file.
+           In case a user has some preprocessed input on hand
+        """
+        input_data = np.loadtxt(filename)
+        if len(input_data[0]) < 3:
+            raise ValueError("Too few columns. Need 3 colums in data at least")
+        elif len(input_data[0]) == 3:
+            self.cluster_list_tv.append(input_data)
+            self.position_list = input_data.tolist()
+        elif len(input_data[0]) == 4:
+            cluster_indices = input_data[:,3]
+            for cluster_index in cluster_indices:
+                subset = input_data[input_data[:,3] == cluster_index]
+                self.cluster_list_tv.append(subset)
+            self.position_list = input_data.tolist()
+        else:
+            raise ValueError("Too many columns. Need max 4 columns")
+        self.shape = None
+        #TODO currently we don't allow for a box if the data in not from a tomogram
+        self.boxlength = [0, 0, 0]
+        self.pixel_size = 13.4
+        print("Loaded data from point cloud")
+        return
+    
+    def load_stl_file(self, filename):
+        """Load an stl file. This is a common output from IMOD as a mesh.
+        For sake of consistency only the positions are loaded.
+        """
+        file_extension = filename.split(".")[-1]
+        if file_extension != "stl":
+            raise ValueError("Only STL files are supported at this point")
+        mesh = o3d.io.read_triangle_mesh(filename)
+        points = np.asarray(mesh.vertices)
+        self.cluster_list_tv.append(points)
+        self.position_list = points 
+        self.boxlength = [0, 0, 0]
+        self.pixel_size = 13.4
         return
 
     def get_lamina_rotation_matrix(self, alignment_axis="z"):
@@ -136,7 +180,7 @@ class ColabSegData(object):
         elif trim_axis == "z":
             trim_column = 2
         else:
-            raise Exeception("Value for trim axis must be x, y, or z")
+            raise ValueError("Value for trim axis must be x, y, or z")
         for cluster_index in cluster_indices:
             trim_min_val = np.min(self.cluster_list_tv[cluster_index][:, trim_column]) + trim_min
             trim_max_val  = np.max(self.cluster_list_tv[cluster_index][:, trim_column]) - trim_max
@@ -156,7 +200,7 @@ class ColabSegData(object):
         elif trim_axis == "z":
             trim_column = 2
         else:
-            raise Exeception("Value for trim axis must be x, y, or z")
+            raise ValueError("Value for trim axis must be x, y, or z")
         for cluster_index in fit_indices:
             trim_min = np.min(self.cluster_list_fits[cluster_index][:, trim_column]) + trim_min
             trim_max = np.max(self.cluster_list_fits[cluster_index][:, trim_column]) - trim_max
@@ -278,7 +322,7 @@ class ColabSegData(object):
         xyz_file += "pointcloud as xyz positions\n"
         for position in np.asarray(point_cloud):
             xyz_file += "C {} {} {}\n".format(position[0], position[1], position[2])
-        return xyz_string
+        return xyz_file
 
     def merge_clusters(self, cluster_indices=[]):
         """Merge two or more clusters by vstacking them"""
@@ -399,14 +443,34 @@ class ColabSegData(object):
         self.cluster_list_tv[cluster_index] = np.asarray(face_np)[:,:3]
         return
 
-    def calculate_normals(self, cluster_index=0):
+    def calculate_normals(self, cluster_indices=[], fit_indices=[]):
         """Calculate the normals of each voxel based on nearest neighbors
             uses a plane fit (very basic method)
         """
+        self.analysis_properties["normal_selection"] = []
+        self.analysis_properties["surface_normals"] = []
+        all_positions = []
+        for i in cluster_indices:
+            all_positions.append(self.cluster_list_tv[i])
+        for j in fit_indices:
+            all_positions.append(self.cluster_list_fits[j])
+        all_positions = np.vstack(all_positions)
         pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(self.cluster_list_tv[cluster_index])
+        pcd.points = o3d.utility.Vector3dVector(all_positions)
         pcd.estimate_normals()
-        return np.asarray(pcd.normals)
+        pcd.normalize_normals()
+        pcd.orient_normals_consistent_tangent_plane(k=50)
+        self.analysis_properties["normal_selection"] = np.asarray(all_positions)
+        self.analysis_properties["surface_normals"] = np.asarray(pcd.normals)
+        return
+
+    def delete_normals(self):
+        self.analysis_properties["normal_selection"] = []
+        self.analysis_properties["surface_normals"] = []
+        return
+    
+    def flip_normals(self):
+        self.analysis_properties["surface_normals"] = self.analysis_properties["surface_normals"]*(-1)
 
     def interpolate_membrane_sphere(self, cluster_index=0):
         """ Least square fit for a perfect sphere and adding of points.
@@ -490,10 +554,63 @@ class ColabSegData(object):
         self.raw_tomogram_slice = slice
         return
 
-    def paint_volume(self, boundary):
-        # TODO estimate thicknenss of lamella for calculations (use some Z gaussian fit?)
-        # TODO
+    # new analysis features for protein tab 
+    def load_protein_position(self, filename):
+        """Load a protein position list (XYZ file)"""
+        extension = filename.split(".")[-1]
+        if extension == "csv":
+            protein_positions = np.genfromtxt(filename, delimiter=',')
+        elif extension == "txt":
+            protein_positions = np.loadtxt(filename)
+        elif extension == "mrc":
+            pass
+            # TODO load from MRC file
+            #protein_positions = 
+        else:
+            raise ValueError("Only csv and txt file without headers can be loaded. Please provide a different file.")
+        self.protein_positions_list = []
+        self.protein_positions_list.append(protein_positions)
+        return 
+    
+    def analyze_protein_membrane_min_distance(self, cluster_indices=[], fit_indices=[]):
+        """analyze distance between particle positions and a membrane segmentation"""
+        all_minimal_distances = []
+        all_considered_membranes = []
+        for i in cluster_indices:
+            all_considered_membranes.append(self.cluster_list_tv[i])
+        for j in fit_indices:
+            all_considered_membranes.append(self.cluster_list_fits[j])
+        all_considered_membranes = np.vstack(all_considered_membranes)
+
+        print("running distance analysis")
+        for point in self.protein_positions_list[0]:
+                minimal_distances = np.min(cdist([point],all_considered_membranes), axis=1)
+                all_minimal_distances.append(minimal_distances)
+        print("finalize and plot")
+        self.analysis_properties["minimal_distances"] = np.hstack(all_minimal_distances)
+        # self.analysis_properties["minimal_distances"] = np.min(np.vstack(all_minimal_distances),axis=0)
         return
+    
+    def get_selected_sphere_radii(self, fit_indices=[]):
+        """return a list of sphere radii based on a selection"""
+        self.analysis_properties["radii"] = []
+        radii = []
+        for j in fit_indices:
+            mean_point = np.mean(self.cluster_list_fits[j], axis=0)
+            radius = np.linalg.norm(mean_point - self.cluster_list_fits[j][0])
+            radii.append(radius)
+        self.analysis_properties["radii"] = radii
+        return
+    
+    @staticmethod
+    def save_values_txt(value_array, filename):
+        np.savetxt(filename, value_array)
+        return
+
+#TODO add another clustering method?
+#TODO give access to other open3d features
+#TODO add new protein stuff to state file hdf5 for saving etc.
+
 
 # LATER:
 # TODO: enable triangulation step + my modeling part

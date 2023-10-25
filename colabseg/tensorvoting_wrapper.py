@@ -43,6 +43,10 @@ def generate_tensor_voting_gui():
         subprocess.run(["gzip", "{}_global2.mrc".format(base_name)])
         print("DONE!")
         print("Your file is written to this working directory {} under name {}".format(os.getcwd(), "{}_global2.mrc.gz".format(base_name)))
+        print("### IMPORTANT: PLEASE CITE###")
+        print("Martinez-Sanchez, A.; Garcia, I.; Asano, S.; Lucic, V.; Fernandez, J.-J.")
+        print("Robust Membrane Detection Based on Tensor Voting for Electron Tomography")
+        print("J. Struct. Biol. 2014, 186 (1), 49–61. https://doi.org/10.1016/j.jsb.2014.02.015")
 
         if all_values["remove_intermediates"].value == True:
             print("cleaning intermediate files!")

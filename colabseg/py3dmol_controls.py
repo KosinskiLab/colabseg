@@ -99,6 +99,25 @@ class seg_visualization(object):
             self.view.setStyle({'model':i},{"sphere": {'color':'blue', "radius":"20","opacity":"0.4"}})
         self.view.zoomTo()
         return
+    
+    def load_protein_positions(self, protein_positions_list, start_index=0):
+        """load all 
+        """
+        xyz = self.make_xyz_string_protein(protein_positions_list[0])
+        self.view.addModel(xyz, 'xyz')
+        self.view.setStyle({'model': -1},{"sphere": {'color':'green', "radius":"40","opacity":"0.8"}})
+        self.view.zoomTo()
+        return
+    
+    def load_normal_positions(self, normal_positions, normal_vectors):
+        for position, normal in zip(normal_positions[::10], normal_vectors[::10]*150):
+            self.view.addArrow({
+                    "start": {"x":position[0], "y":position[1], "z":position[2]},
+                    "end": {"x":position[0]+normal[0], "y":position[1]+normal[1], "z":position[2]+normal[2]},
+                    "radius": 4.0,
+                    "opacity": 0.9,
+                    "color": 'red'})
+        return
 
     def cluster_checkbox(self, cluster_index, state=False):
         """emphasize the view of the active segment cluster"""
@@ -172,5 +191,15 @@ class seg_visualization(object):
         xyz_string = "{}\n".format(len(np.asarray(point_cloud)[::10]))
         xyz_string += "pointcloud as xyz positions\n"
         for position in np.asarray(point_cloud)[::10]:
+            xyz_string += "C {} {} {}\n".format(position[0], position[1], position[2])
+        return xyz_string
+    
+    @staticmethod
+    def make_xyz_string_protein(point_cloud):
+        """In memory XYZ string to load point cloud"""
+        # TODO add variable step size
+        xyz_string = "{}\n".format(len(np.asarray(point_cloud)[::1]))
+        xyz_string += "pointcloud as xyz positions\n"
+        for position in np.asarray(point_cloud)[::1]:
             xyz_string += "C {} {} {}\n".format(position[0], position[1], position[2])
         return xyz_string

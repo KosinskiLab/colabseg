@@ -162,6 +162,9 @@ class JupyterFramework(object):
         self.all_widgets["load_proteins_button"] = widgets.Button(description="Load Protein File", style= {'description_width': 'initial'})
         self.all_widgets["load_proteins_button"].on_click(self.execute_load_protein_position)
 
+        self.all_widgets["delete_proteins_button"] = widgets.Button(description="Delete Protein", style= {'description_width': 'initial'})
+        self.all_widgets["delete_proteins_button"].on_click(self.execute_delete_protein_positions)
+
         # analyze minimal distance from selected membranes or fits
         self.all_widgets["analyze_minimal_distance_button"] = widgets.Button(description="Analyze Prot-Mem Distances", style= {'description_width': 'initial'}, layout = widgets.Layout(width='200px'))
         self.all_widgets["analyze_minimal_distance_button"].on_click(self.calculate_and_plot_distances_proteins)
@@ -199,7 +202,6 @@ class JupyterFramework(object):
         self.all_widgets["radii_analysis_label"] = widgets.HTML(value="<b>Radii Analysis</b>")
         self.all_widgets["normal_analyis_label"] = widgets.HTML(value="<b>Membrane Normal Analysis</b>")
 
-
         self.all_widgets["save_distance_list_button"] = widgets.Button(description="Save Distance txt", style= {'description_width': 'initial'}, layout = widgets.Layout(width='150px'))
         self.all_widgets["save_distance_list_button"].on_click(self.save_distance_file)
 
@@ -233,7 +235,7 @@ class JupyterFramework(object):
 
         self.all_widgets["control_stat_outlier_removal"] = widgets.HBox([self.all_widgets["outlier_nb_neighbors"], self.all_widgets["outlier_std_ratio"], self.all_widgets["outlier_removal"]])
         self.all_widgets["control_dbscan_clustering"] = widgets.HBox([ self.all_widgets["dbscan_eps"], self.all_widgets["dbscan_min_points"], self.all_widgets["dbscan_recluster"]])
-        self.all_widgets["protein_loading"] = widgets.HBox([self.all_widgets["protein_filename"], self.all_widgets["load_proteins_button"]])
+        self.all_widgets["protein_loading"] = widgets.HBox([self.all_widgets["protein_filename"], self.all_widgets["load_proteins_button"], self.all_widgets["delete_proteins_button"] ])
         self.all_widgets["normals_processing"] = widgets.HBox([self.all_widgets["get_normals_button"], self.all_widgets["flip_normals_button"], self.all_widgets["delete_normals_button"]])
 
         self.all_widgets["saving"] = widgets.VBox([self.all_widgets["save_tomogram_line"],self.all_widgets["save_analysis_line"]])
@@ -579,6 +581,11 @@ class JupyterFramework(object):
         except: 
             print("File: {} not found!".format(self.all_widgets["protein_filename"].value))
             return
+        self.reload_gui()
+        return
+    
+    def execute_delete_protein_positions(self, obj):
+        self.data_structure.delete_protein_position()
         self.reload_gui()
         return
 

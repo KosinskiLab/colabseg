@@ -572,6 +572,11 @@ class ColabSegData(object):
         self.protein_positions_list.append(protein_positions)
         return 
     
+    def delete_protein_position(self):
+        """delete the positions from the gui"""
+        self.protein_positions_list = []
+        return
+    
     def analyze_protein_membrane_min_distance(self, cluster_indices=[], fit_indices=[]):
         """analyze distance between particle positions and a membrane segmentation"""
         all_minimal_distances = []

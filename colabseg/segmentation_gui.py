@@ -454,6 +454,7 @@ class JupyterFramework(object):
         self.all_widgets["analysis_plot_figure"] = self.all_widgets[
             "analysis_plot_output"
         ]
+  
 
         self.all_widgets["control_stat_outlier_removal"] = widgets.HBox(
             [
@@ -706,6 +707,7 @@ class JupyterFramework(object):
 
     def load_state_hdf(self, obj):
         """load state as hdf5"""
+        self.data_structure = ColabSegData()
         self.data_structure.load_hdf(self.all_widgets["input_mrc"].value)
         return
 

@@ -575,7 +575,7 @@ class ColabSegData(object):
             for key in self.analysis_properties.keys():
                 hf.create_dataset(
                     "{}".format(key),
-                    data=self.analysis_properties[key],
+                    data=self.analysis_properties[str(key)],
                     compression="gzip",
                 )
 
@@ -612,8 +612,11 @@ class ColabSegData(object):
             self.intensity_list = np.asarray(hf["intensity_list"])
             self.position_list = np.asarray(hf["position_list"])
 
-            for key in self.analysis_properties.keys():
-                self.analysis_properties[key] = hf[key]
+            try:
+                for key in self.analysis_properties.keys():
+                    self.analysis_properties[key] = np.asarray(hf[str(key)]).tolist()
+            except:
+                pass
 
             self.cluster_list_tv = []
             for i in hf["cluster_list_tv"]:

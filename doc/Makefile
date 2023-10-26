@@ -5,7 +5,7 @@
 # from the environment for the first two.
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
-SPHINXBUILD   = python3.8 -c "import sys,sphinx;sys.exit(sphinx.main(sys.argv))"
+SPHINXBUILD   = python3.8 -m sphinx
 SOURCEDIR     = .
 BUILDDIR      = _build
 

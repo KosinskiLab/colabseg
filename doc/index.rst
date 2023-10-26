@@ -15,16 +15,16 @@
 .. grid:: 2
 
     .. grid-item-card::
-       :img-top: _static/index_getting_started.svg
+       :img-top: _static/baseline_start_black_24dp.png
 
        Quickstart
        ^^^^^^^^^^
 
-       Here you can find tutorials on key data structures and the command line interface.
+       On overview of |project|'s functionalities.
 
        +++
 
-       .. button-ref:: reference/index
+       .. button-ref:: quickstart/index
              :expand:
              :color: secondary
              :click-parent:
@@ -32,7 +32,7 @@
              To the quickstart guide
 
     .. grid-item-card::
-       :img-top: _static/index_api.svg
+       :img-top: _static/baseline_menu_book_black_24dp.png
 
        API reference
        ^^^^^^^^^^^^^
@@ -53,5 +53,6 @@
    :hidden:
    :titlesonly:
 
+   Quickstart <quickstart/index>
    API reference <reference/index>
    Index <genindex>

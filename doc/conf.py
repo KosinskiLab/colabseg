@@ -11,11 +11,9 @@ release = "0.1"
 extensions = [
     "sphinx.ext.autodoc",
     "numpydoc",
-    "sphinx.ext.viewcode",
     "sphinx.ext.autosummary",
     "sphinx_design",
     "sphinx_copybutton",
-    "sphinx_tabs.tabs",
 ]
 copybutton_prompt_text = ">>> "
 copybutton_prompt_is_regexp = False
@@ -43,7 +41,7 @@ html_context = {
     "github_user": "MSiggel",
     "github_repo": "https://github.com/KosinskiLab/colabseg",
     "github_version": "master",
-    "doc_path": "docs",
+    "doc_path": "doc",
 }
 html_theme_options = {
     "use_edit_page_button": False,

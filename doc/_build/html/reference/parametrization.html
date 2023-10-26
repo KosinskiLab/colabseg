@@ -6,9 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>colabseg.parametrization module &#8212; colabseg 0.1 documentation</title>
+    <title>Parametrization &#8212; colabseg 0.1 documentation</title>
   
   
   
@@ -18,36 +18,37 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../_static/css/general.css?v=e68c333d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
-    <script src="../_static/documentation_options.js?v=1b390748"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=e031e9a9"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=4ea706d9"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/parametrization';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="colabseg.py3dmol_controls module" href="py3dmol_controls.html" />
-    <link rel="prev" title="colabseg.notebook_viz_launcher module" href="notebook_viz_launcher.html" />
+    <link rel="next" title="colabseg.parametrization.Parametrization" href="api/colabseg.parametrization.Parametrization.html" />
+    <link rel="prev" title="seg_visualization.update_highlight_fits" href="api/colabseg.py3dmol_controls.seg_visualization.update_highlight_fits.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -58,6 +59,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -98,7 +108,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -109,12 +120,12 @@
   
   
   
+  
     <p class="title logo__title">colabseg 0.1 documentation</p>
   
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -129,6 +140,13 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         API reference
@@ -152,23 +170,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -184,8 +204,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -195,18 +215,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -235,6 +257,13 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         API reference
@@ -260,10 +289,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -279,8 +308,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -293,17 +322,296 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="demo_widget.html">colabseg.demo_widget module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_io.html">colabseg.image_io module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="microscope_db.html">colabseg.microscope_db module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="new_gui_functions.html">colabseg.new_gui_functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebook_viz_launcher.html">colabseg.notebook_viz_launcher module</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">colabseg.parametrization module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="py3dmol_controls.html">colabseg.py3dmol_controls module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="segmentation_backend.html">colabseg.segmentation_backend module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="segmentation_gui.html">colabseg.segmentation_gui module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tensorvoting_wrapper.html">colabseg.tensorvoting_wrapper module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utilities.html">colabseg.utilities module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data_structures.html">Data structures</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.html">colabseg.new_gui_functions.ColabSegData</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.analyze_protein_membrane_min_distance.html">ColabSegData.analyze_protein_membrane_min_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.backup_step_to_previous.html">ColabSegData.backup_step_to_previous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.calculate_normals.html">ColabSegData.calculate_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.compile_xyz_string.html">ColabSegData.compile_xyz_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.convert_tomo.html">ColabSegData.convert_tomo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.crop_fit_around_membrane.html">ColabSegData.crop_fit_around_membrane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.dbscan_clustering.html">ColabSegData.dbscan_clustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_cluster.html">ColabSegData.delete_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_fit.html">ColabSegData.delete_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_multiple_clusters.html">ColabSegData.delete_multiple_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_protein_position.html">ColabSegData.delete_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.eigenvalue_outlier_removal.html">ColabSegData.eigenvalue_outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.extract_slice.html">ColabSegData.extract_slice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.get_selected_sphere_radii.html">ColabSegData.get_selected_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_rbf.html">ColabSegData.interpolate_membrane_rbf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_sphere.html">ColabSegData.interpolate_membrane_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_hdf.html">ColabSegData.load_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_point_cloud.html">ColabSegData.load_point_cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_protein_position.html">ColabSegData.load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_stl_file.html">ColabSegData.load_stl_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_tomogram.html">ColabSegData.load_tomogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.merge_clusters.html">ColabSegData.merge_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.plain_fit_and_rotate_lamina.html">ColabSegData.plain_fit_and_rotate_lamina</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.reload_original_values.html">ColabSegData.reload_original_values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.save_hdf.html">ColabSegData.save_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.statistical_outlier_removal.html">ColabSegData.statistical_outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_cluster.html">ColabSegData.trim_cluster_egdes_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_fit.html">ColabSegData.trim_cluster_egdes_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_output_mrc.html">ColabSegData.write_output_mrc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_txt.html">ColabSegData.write_txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_xyz.html">ColabSegData.write_xyz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.analyze_protein_membrane_min_distance.html">ColabSegData.analyze_protein_membrane_min_distance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.backup_step_to_previous.html">ColabSegData.backup_step_to_previous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.calculate_normals.html">ColabSegData.calculate_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.compile_xyz_string.html">ColabSegData.compile_xyz_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.convert_tomo.html">ColabSegData.convert_tomo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.crop_fit_around_membrane.html">ColabSegData.crop_fit_around_membrane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.dbscan_clustering.html">ColabSegData.dbscan_clustering</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_cluster.html">ColabSegData.delete_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_fit.html">ColabSegData.delete_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_multiple_clusters.html">ColabSegData.delete_multiple_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_normals.html">ColabSegData.delete_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.delete_protein_position.html">ColabSegData.delete_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.eigenvalue_outlier_removal.html">ColabSegData.eigenvalue_outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.extract_slice.html">ColabSegData.extract_slice</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.flip_normals.html">ColabSegData.flip_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.get_lamina_rotation_matrix.html">ColabSegData.get_lamina_rotation_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.get_selected_sphere_radii.html">ColabSegData.get_selected_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_rbf.html">ColabSegData.interpolate_membrane_rbf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_sphere.html">ColabSegData.interpolate_membrane_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_hdf.html">ColabSegData.load_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_point_cloud.html">ColabSegData.load_point_cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_protein_position.html">ColabSegData.load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_stl_file.html">ColabSegData.load_stl_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.load_tomogram.html">ColabSegData.load_tomogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.merge_clusters.html">ColabSegData.merge_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.plain_fit_and_rotate_lamina.html">ColabSegData.plain_fit_and_rotate_lamina</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.reload_original_values.html">ColabSegData.reload_original_values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.reload_previous_step.html">ColabSegData.reload_previous_step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.save_hdf.html">ColabSegData.save_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.save_values_txt.html">ColabSegData.save_values_txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.statistical_outlier_removal.html">ColabSegData.statistical_outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_cluster.html">ColabSegData.trim_cluster_egdes_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_fit.html">ColabSegData.trim_cluster_egdes_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_output_mrc.html">ColabSegData.write_output_mrc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_txt.html">ColabSegData.write_txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ColabSegData.write_xyz.html">ColabSegData.write_xyz</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.html">colabseg.new_gui_functions.ImageIO</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.adjustLength.html">ImageIO.adjustLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.checkFile.html">ImageIO.checkFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.fix.html">ImageIO.fix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.fixHeader.html">ImageIO.fixHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getFromEMHeader.html">ImageIO.getFromEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getPixelsize.html">ImageIO.getPixelsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getTiltAngle.html">ImageIO.getTiltAngle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.parseMRCHeader.html">ImageIO.parseMRCHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.putInEMHeader.html">ImageIO.putInEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.read.html">ImageIO.read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readData.html">ImageIO.readData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readEM.html">ImageIO.readEM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readEMHeader.html">ImageIO.readEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readHeader.html">ImageIO.readHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readMRC.html">ImageIO.readMRC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readMRCHeader.html">ImageIO.readMRCHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readRaw.html">ImageIO.readRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readRawHeader.html">ImageIO.readRawHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setData.html">ImageIO.setData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setFileFormat.html">ImageIO.setFileFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setTiltAngle.html">ImageIO.setTiltAngle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.write.html">ImageIO.write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeData.html">ImageIO.writeData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeEM.html">ImageIO.writeEM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeMRC.html">ImageIO.writeMRC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeRaw.html">ImageIO.writeRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.adjustLength.html">ImageIO.adjustLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.checkFile.html">ImageIO.checkFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.fix.html">ImageIO.fix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.fixHeader.html">ImageIO.fixHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getFromEMHeader.html">ImageIO.getFromEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getPixelsize.html">ImageIO.getPixelsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.getTiltAngle.html">ImageIO.getTiltAngle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.parseMRCHeader.html">ImageIO.parseMRCHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.putInEMHeader.html">ImageIO.putInEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.read.html">ImageIO.read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readData.html">ImageIO.readData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readEM.html">ImageIO.readEM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readEMHeader.html">ImageIO.readEMHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readHeader.html">ImageIO.readHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readMRC.html">ImageIO.readMRC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readMRCHeader.html">ImageIO.readMRCHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readRaw.html">ImageIO.readRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.readRawHeader.html">ImageIO.readRawHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setData.html">ImageIO.setData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setFileFormat.html">ImageIO.setFileFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.setTiltAngle.html">ImageIO.setTiltAngle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.write.html">ImageIO.write</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeData.html">ImageIO.writeData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeEM.html">ImageIO.writeEM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeMRC.html">ImageIO.writeMRC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.writeRaw.html">ImageIO.writeRaw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.byte_order.html">ImageIO.byte_order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.em.html">ImageIO.em</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emByteOrderTab.html">ImageIO.emByteOrderTab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emByteOrderTabInv.html">ImageIO.emByteOrderTabInv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emDataTypeTab.html">ImageIO.emDataTypeTab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emDataTypeTabInv.html">ImageIO.emDataTypeTabInv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emDefaultHeader.html">ImageIO.emDefaultHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emDefaultShape.html">ImageIO.emDefaultShape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.emHeaderFields.html">ImageIO.emHeaderFields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.fileFormats.html">ImageIO.fileFormats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.machineByteOrder.html">ImageIO.machineByteOrder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrc.html">ImageIO.mrc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrcDataTypeTab.html">ImageIO.mrcDataTypeTab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrcDataTypeTabInv.html">ImageIO.mrcDataTypeTabInv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrcDefaultHeader.html">ImageIO.mrcDefaultHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrcDefaultPixel.html">ImageIO.mrcDefaultPixel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.mrcDefaultShape.html">ImageIO.mrcDefaultShape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.pixelsize.html">ImageIO.pixelsize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.raw.html">ImageIO.raw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.new_gui_functions.ImageIO.tiltAngle.html">ImageIO.tiltAngle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="gui_interactions.html">GUI Interactions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.html">colabseg.segmentation_gui.JupyterFramework</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.boot_gui.html">JupyterFramework.boot_gui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins.html">JupyterFramework.calculate_and_plot_distances_proteins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii.html">JupyterFramework.calculate_and_plot_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.crop_fit.html">JupyterFramework.crop_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.dbscan_recluster.html">JupyterFramework.dbscan_recluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.delete_fit.html">JupyterFramework.delete_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.gui_elements_cluster_analysis.html">JupyterFramework.gui_elements_cluster_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.gui_elements_loading.html">JupyterFramework.gui_elements_loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_mrc_file.html">JupyterFramework.load_mrc_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_raw_image.html">JupyterFramework.load_raw_image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_state_hdf.html">JupyterFramework.load_state_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_viz.html">JupyterFramework.load_viz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.merge_clusters.html">JupyterFramework.merge_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.outlier_removal.html">JupyterFramework.outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.reload_gui.html">JupyterFramework.reload_gui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.remove_eigenvalue_outliers.html">JupyterFramework.remove_eigenvalue_outliers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.reset_input.html">JupyterFramework.reset_input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.rotate_back.html">JupyterFramework.rotate_back</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.rotate_flat.html">JupyterFramework.rotate_flat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_clusters_mrc.html">JupyterFramework.save_clusters_mrc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_clusters_txt.html">JupyterFramework.save_clusters_txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_state_hdf.html">JupyterFramework.save_state_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.trim_top_bottom.html">JupyterFramework.trim_top_bottom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.undo_step.html">JupyterFramework.undo_step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.update_downsampling.html">JupyterFramework.update_downsampling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.boot_gui.html">JupyterFramework.boot_gui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins.html">JupyterFramework.calculate_and_plot_distances_proteins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii.html">JupyterFramework.calculate_and_plot_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.crop_fit.html">JupyterFramework.crop_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.dbscan_recluster.html">JupyterFramework.dbscan_recluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.delete_cluster.html">JupyterFramework.delete_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.delete_fit.html">JupyterFramework.delete_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.delete_normals.html">JupyterFramework.delete_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions.html">JupyterFramework.execute_delete_protein_positions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.flip_normals.html">JupyterFramework.flip_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.get_and_plot_normals.html">JupyterFramework.get_and_plot_normals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.gui_elements_cluster_analysis.html">JupyterFramework.gui_elements_cluster_analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.gui_elements_loading.html">JupyterFramework.gui_elements_loading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_from_point_cloud.html">JupyterFramework.load_from_point_cloud</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_from_stl_file.html">JupyterFramework.load_from_stl_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_mrc_file.html">JupyterFramework.load_mrc_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_raw_image.html">JupyterFramework.load_raw_image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_state_hdf.html">JupyterFramework.load_state_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.load_viz.html">JupyterFramework.load_viz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.merge_clusters.html">JupyterFramework.merge_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.outlier_removal.html">JupyterFramework.outlier_removal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.reload_gui.html">JupyterFramework.reload_gui</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.remove_eigenvalue_outliers.html">JupyterFramework.remove_eigenvalue_outliers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.reset_input.html">JupyterFramework.reset_input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.rotate_back.html">JupyterFramework.rotate_back</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.rotate_flat.html">JupyterFramework.rotate_flat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_clusters_mrc.html">JupyterFramework.save_clusters_mrc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_clusters_txt.html">JupyterFramework.save_clusters_txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_distance_file.html">JupyterFramework.save_distance_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_distance_plot.html">JupyterFramework.save_distance_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_normals_file.html">JupyterFramework.save_normals_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_radii_file.html">JupyterFramework.save_radii_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_radii_plot.html">JupyterFramework.save_radii_plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.save_state_hdf.html">JupyterFramework.save_state_hdf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.trim_top_bottom.html">JupyterFramework.trim_top_bottom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.undo_step.html">JupyterFramework.undo_step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.segmentation_gui.JupyterFramework.update_downsampling.html">JupyterFramework.update_downsampling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.html">generate_tensor_voting_gui</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.html">colabseg.py3dmol_controls.seg_visualization</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.add_bounding_box.html">seg_visualization.add_bounding_box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.cluster_checkbox.html">seg_visualization.cluster_checkbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_cluster.html">seg_visualization.highlight_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_clusters.html">seg_visualization.highlight_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_fits.html">seg_visualization.highlight_fits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models.html">seg_visualization.load_all_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models_fit.html">seg_visualization.load_all_models_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file.html">seg_visualization.load_all_models_from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_protein_positions.html">seg_visualization.load_protein_positions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string.html">seg_visualization.make_xyz_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein.html">seg_visualization.make_xyz_string_protein</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.view_update.html">seg_visualization.view_update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.view_zoomto.html">seg_visualization.view_zoomto</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.add_bounding_box.html">seg_visualization.add_bounding_box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.cluster_checkbox.html">seg_visualization.cluster_checkbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_cluster.html">seg_visualization.highlight_cluster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_clusters.html">seg_visualization.highlight_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.highlight_fits.html">seg_visualization.highlight_fits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models.html">seg_visualization.load_all_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models_fit.html">seg_visualization.load_all_models_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file.html">seg_visualization.load_all_models_from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_model_from_file.html">seg_visualization.load_model_from_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_normal_positions.html">seg_visualization.load_normal_positions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.load_protein_positions.html">seg_visualization.load_protein_positions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string.html">seg_visualization.make_xyz_string</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein.html">seg_visualization.make_xyz_string_protein</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters.html">seg_visualization.update_highlight_clusters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.update_highlight_fits.html">seg_visualization.update_highlight_fits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.view_update.html">seg_visualization.view_update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.py3dmol_controls.seg_visualization.view_zoomto.html">seg_visualization.view_zoomto</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Parametrization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.parametrization.Parametrization.html">colabseg.parametrization.Parametrization</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Parametrization.fit.html">Parametrization.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Parametrization.sample.html">Parametrization.sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Parametrization.fit.html">Parametrization.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Parametrization.sample.html">Parametrization.sample</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.parametrization.Sphere.html">colabseg.parametrization.Sphere</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Sphere.fit.html">Sphere.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Sphere.sample.html">Sphere.sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Sphere.fit.html">Sphere.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Sphere.sample.html">Sphere.sample</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.html">colabseg.parametrization.Ellipsoid</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.fit.html">Ellipsoid.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.sample.html">Ellipsoid.sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.fit.html">Ellipsoid.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.sample.html">Ellipsoid.sample</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="api/colabseg.parametrization.Cylinder.html">colabseg.parametrization.Cylinder</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Cylinder.fit.html">Cylinder.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Cylinder.sample.html">Cylinder.sample</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Cylinder.fit.html">Cylinder.fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/colabseg.parametrization.Cylinder.sample.html">Cylinder.sample</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helpers</a></li>
 </ul>
 </div>
 </nav></div>
@@ -333,8 +641,8 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
@@ -344,7 +652,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">API reference</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">colabseg.parametrization module</li>
+    <li class="breadcrumb-item active" aria-current="page">Parametrization</li>
   </ul>
 </nav>
 </div>
@@ -361,8 +669,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="colabseg-parametrization-module">
-<h1>colabseg.parametrization module<a class="headerlink" href="#colabseg-parametrization-module" title="Link to this heading">#</a></h1>
+  <section id="parametrization">
+<h1>Parametrization<a class="headerlink" href="#parametrization" title="Permalink to this heading">#</a></h1>
+<section id="constructor">
+<h2>Constructor<a class="headerlink" href="#constructor" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/colabseg.parametrization.Parametrization.html#colabseg.parametrization.Parametrization" title="colabseg.parametrization.Parametrization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Parametrization</span></code></a>(*args, **kwargs)</p></td>
+<td><p>A strategy class to represent parametrizations of point clouds</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="available-parametrizations">
+<h2>Available Parametrizations<a class="headerlink" href="#available-parametrizations" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/colabseg.parametrization.Sphere.html#colabseg.parametrization.Sphere" title="colabseg.parametrization.Sphere"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sphere</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Parametrize a point cloud as sphere.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="api/colabseg.parametrization.Ellipsoid.html#colabseg.parametrization.Ellipsoid" title="colabseg.parametrization.Ellipsoid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Ellipsoid</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Parametrize a point cloud as ellipsoid.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="api/colabseg.parametrization.Cylinder.html#colabseg.parametrization.Cylinder" title="colabseg.parametrization.Cylinder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Cylinder</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Parametrize a point cloud as cylinder.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 
@@ -370,34 +704,30 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="notebook_viz_launcher.html"
+       href="api/colabseg.py3dmol_controls.seg_visualization.update_highlight_fits.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">colabseg.notebook_viz_launcher module</p>
+        <p class="prev-next-title">seg_visualization.update_highlight_fits</p>
       </div>
     </a>
     <a class="right-next"
-       href="py3dmol_controls.html"
+       href="api/colabseg.parametrization.Parametrization.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">colabseg.py3dmol_controls module</p>
+        <p class="prev-next-title">colabseg.parametrization.Parametrization</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -405,6 +735,17 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructor">Constructor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#available-parametrizations">Available Parametrizations</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
@@ -427,8 +768,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -446,7 +787,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>
@@ -454,10 +795,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
 </p></div>
       
     </div>

@@ -6,7 +6,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>colabseg.py3dmol_controls module &#8212; colabseg 0.1 documentation</title>
   
@@ -18,36 +18,35 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/tabs.css?v=a5c4661c" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="../_static/css/general.css?v=e68c333d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
-    <script src="../_static/documentation_options.js?v=1b390748"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=e031e9a9"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=4ea706d9"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/py3dmol_controls';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="colabseg.segmentation_backend module" href="segmentation_backend.html" />
-    <link rel="prev" title="colabseg.parametrization module" href="parametrization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -58,6 +57,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -98,7 +106,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -109,12 +118,12 @@
   
   
   
+  
     <p class="title logo__title">colabseg 0.1 documentation</p>
   
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -129,7 +138,14 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="index.html">
                         API reference
                       </a>
@@ -152,23 +168,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -184,8 +202,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -195,18 +213,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -217,7 +237,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -235,7 +255,14 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="index.html">
                         API reference
                       </a>
@@ -260,10 +287,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -279,35 +306,14 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         
       </div>
     
   </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="demo_widget.html">colabseg.demo_widget module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_io.html">colabseg.image_io module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="microscope_db.html">colabseg.microscope_db module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="new_gui_functions.html">colabseg.new_gui_functions module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebook_viz_launcher.html">colabseg.notebook_viz_launcher module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="parametrization.html">colabseg.parametrization module</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">colabseg.py3dmol_controls module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="segmentation_backend.html">colabseg.segmentation_backend module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="segmentation_gui.html">colabseg.segmentation_gui module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tensorvoting_wrapper.html">colabseg.tensorvoting_wrapper module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utilities.html">colabseg.utilities module</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
@@ -333,18 +339,15 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API reference</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">colabseg.py3dmol_controls module</li>
+    <li class="breadcrumb-item active" aria-current="page">colabseg.py3...</li>
   </ul>
 </nav>
 </div>
@@ -361,8 +364,175 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="colabseg-py3dmol-controls-module">
-<h1>colabseg.py3dmol_controls module<a class="headerlink" href="#colabseg-py3dmol-controls-module" title="Link to this heading">#</a></h1>
+  <section id="module-colabseg.py3dmol_controls">
+<span id="colabseg-py3dmol-controls-module"></span><h1>colabseg.py3dmol_controls module<a class="headerlink" href="#module-colabseg.py3dmol_controls" title="Permalink to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">seg_visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>docstring for JupyterFrontend.</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.add_bounding_box" title="colabseg.py3dmol_controls.seg_visualization.add_bounding_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_bounding_box</span></code></a>(boxlength)</p></td>
+<td><p>draws a bounding box according to the tomogram size</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.cluster_checkbox" title="colabseg.py3dmol_controls.seg_visualization.cluster_checkbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cluster_checkbox</span></code></a>(cluster_index[, state])</p></td>
+<td><p>emphasize the view of the active segment cluster</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.highlight_cluster" title="colabseg.py3dmol_controls.seg_visualization.highlight_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">highlight_cluster</span></code></a>(cluster_index)</p></td>
+<td><p>highlight cluster chosen with slider</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.highlight_clusters" title="colabseg.py3dmol_controls.seg_visualization.highlight_clusters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">highlight_clusters</span></code></a>(obj)</p></td>
+<td><p>highlight cluster chosen with multi_select</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.highlight_fits" title="colabseg.py3dmol_controls.seg_visualization.highlight_fits"><code class="xref py py-obj docutils literal notranslate"><span class="pre">highlight_fits</span></code></a>(obj)</p></td>
+<td><p>highlight RBF fit chosen with selector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models" title="colabseg.py3dmol_controls.seg_visualization.load_all_models"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_all_models</span></code></a>(cluster_list[, start_index])</p></td>
+<td><p>load all models from memory Use to initialize gui.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_fit" title="colabseg.py3dmol_controls.seg_visualization.load_all_models_fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_all_models_fit</span></code></a>(cluster_list, start_index)</p></td>
+<td><p>load all fir models from memory Use to initialize gui.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file" title="colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_all_models_from_file</span></code></a>(file_list)</p></td>
+<td><p>Load all xyz files from the xyz folder</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.load_protein_positions" title="colabseg.py3dmol_controls.seg_visualization.load_protein_positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_protein_positions</span></code></a>(protein_positions_list)</p></td>
+<td><p>load all</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string" title="colabseg.py3dmol_controls.seg_visualization.make_xyz_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_xyz_string</span></code></a>(point_cloud)</p></td>
+<td><p>In memory XYZ string to load point cloud</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein" title="colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_xyz_string_protein</span></code></a>(point_cloud)</p></td>
+<td><p>In memory XYZ string to load point cloud</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.view_update" title="colabseg.py3dmol_controls.seg_visualization.view_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_update</span></code></a>()</p></td>
+<td><p>Update view of molecules</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#colabseg.py3dmol_controls.seg_visualization.view_zoomto" title="colabseg.py3dmol_controls.seg_visualization.view_zoomto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">view_zoomto</span></code></a>()</p></td>
+<td><p>zoomTo shortcut</p></td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<tbody>
+<tr class="row-odd"><td><p><strong>load_model_from_file</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>load_normal_positions</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>update_highlight_clusters</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>update_highlight_fits</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.add_bounding_box">
+<span class="sig-name descname"><span class="pre">add_bounding_box</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">boxlength</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.add_bounding_box" title="Permalink to this definition">#</a></dt>
+<dd><p>draws a bounding box according to the tomogram size</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.cluster_checkbox">
+<span class="sig-name descname"><span class="pre">cluster_checkbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.cluster_checkbox" title="Permalink to this definition">#</a></dt>
+<dd><p>emphasize the view of the active segment cluster</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.highlight_cluster">
+<span class="sig-name descname"><span class="pre">highlight_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.highlight_cluster" title="Permalink to this definition">#</a></dt>
+<dd><p>highlight cluster chosen with slider</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.highlight_clusters">
+<span class="sig-name descname"><span class="pre">highlight_clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.highlight_clusters" title="Permalink to this definition">#</a></dt>
+<dd><p>highlight cluster chosen with multi_select</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.highlight_fits">
+<span class="sig-name descname"><span class="pre">highlight_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.highlight_fits" title="Permalink to this definition">#</a></dt>
+<dd><p>highlight RBF fit chosen with selector</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_all_models">
+<span class="sig-name descname"><span class="pre">load_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models" title="Permalink to this definition">#</a></dt>
+<dd><p>load all models from memory
+Use to initialize gui. Use to reload models after editing point cloud</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_all_models_fit">
+<span class="sig-name descname"><span class="pre">load_all_models_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cluster_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_fit" title="Permalink to this definition">#</a></dt>
+<dd><p>load all fir models from memory
+Use to initialize gui. Use to reload models after editing point cloud</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file">
+<span class="sig-name descname"><span class="pre">load_all_models_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file" title="Permalink to this definition">#</a></dt>
+<dd><p>Load all xyz files from the xyz folder</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_model_from_file">
+<span class="sig-name descname"><span class="pre">load_model_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_model_from_file" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_normal_positions">
+<span class="sig-name descname"><span class="pre">load_normal_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normal_positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_vectors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_normal_positions" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.load_protein_positions">
+<span class="sig-name descname"><span class="pre">load_protein_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">protein_positions_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.load_protein_positions" title="Permalink to this definition">#</a></dt>
+<dd><p>load all</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.make_xyz_string">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_xyz_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_cloud</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string" title="Permalink to this definition">#</a></dt>
+<dd><p>In memory XYZ string to load point cloud</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_xyz_string_protein</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_cloud</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein" title="Permalink to this definition">#</a></dt>
+<dd><p>In memory XYZ string to load point cloud</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters">
+<span class="sig-name descname"><span class="pre">update_highlight_clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.update_highlight_fits">
+<span class="sig-name descname"><span class="pre">update_highlight_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.update_highlight_fits" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.view_update">
+<span class="sig-name descname"><span class="pre">view_update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.view_update" title="Permalink to this definition">#</a></dt>
+<dd><p>Update view of molecules</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.py3dmol_controls.seg_visualization.view_zoomto">
+<span class="sig-name descname"><span class="pre">view_zoomto</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.py3dmol_controls.seg_visualization.view_zoomto" title="Permalink to this definition">#</a></dt>
+<dd><p>zoomTo shortcut</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -370,34 +540,12 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="parametrization.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">colabseg.parametrization module</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="segmentation_backend.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">colabseg.segmentation_backend module</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -405,6 +553,35 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization"><code class="docutils literal notranslate"><span class="pre">seg_visualization</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.add_bounding_box"><code class="docutils literal notranslate"><span class="pre">seg_visualization.add_bounding_box()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.cluster_checkbox"><code class="docutils literal notranslate"><span class="pre">seg_visualization.cluster_checkbox()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.highlight_cluster"><code class="docutils literal notranslate"><span class="pre">seg_visualization.highlight_cluster()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.highlight_clusters"><code class="docutils literal notranslate"><span class="pre">seg_visualization.highlight_clusters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.highlight_fits"><code class="docutils literal notranslate"><span class="pre">seg_visualization.highlight_fits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_all_models()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_fit"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_all_models_fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_all_models_from_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_model_from_file"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_model_from_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_normal_positions"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_normal_positions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.load_protein_positions"><code class="docutils literal notranslate"><span class="pre">seg_visualization.load_protein_positions()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string"><code class="docutils literal notranslate"><span class="pre">seg_visualization.make_xyz_string()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein"><code class="docutils literal notranslate"><span class="pre">seg_visualization.make_xyz_string_protein()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters"><code class="docutils literal notranslate"><span class="pre">seg_visualization.update_highlight_clusters()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.update_highlight_fits"><code class="docutils literal notranslate"><span class="pre">seg_visualization.update_highlight_fits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.view_update"><code class="docutils literal notranslate"><span class="pre">seg_visualization.view_update()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.py3dmol_controls.seg_visualization.view_zoomto"><code class="docutils literal notranslate"><span class="pre">seg_visualization.view_zoomto()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
@@ -427,8 +604,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -446,7 +623,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>
@@ -454,10 +631,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
 </p></div>
       
     </div>

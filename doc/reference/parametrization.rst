@@ -1,7 +1,20 @@
-colabseg.parametrization module
-===============================
+Parametrization
+===============
 
-.. automodule:: colabseg.parametrization
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. currentmodule:: colabseg.parametrization
+
+Constructor
+~~~~~~~~~~~
+.. autosummary::
+   :toctree: api/
+
+   Parametrization
+
+Available Parametrizations
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autosummary::
+   :toctree: api/
+
+   Sphere
+   Ellipsoid
+   Cylinder

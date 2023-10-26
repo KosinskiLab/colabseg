@@ -17,32 +17,31 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=a5c4661c" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
     <link rel="stylesheet" type="text/css" href="_static/css/general.css?v=e68c333d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
 
-    <script src="_static/documentation_options.js?v=1b390748"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=e031e9a9"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=4ea706d9"></script>
-    <script src="_static/tabs.js?v=3030b3cb"></script>
     <script src="_static/design-tabs.js?v=36754332"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <link rel="index" title="Index" href="#" />
@@ -57,6 +56,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -97,7 +105,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -108,12 +117,12 @@
   
   
   
+  
     <p class="title logo__title">colabseg 0.1 documentation</p>
   
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -128,6 +137,13 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="reference/index.html">
                         API reference
@@ -151,23 +167,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -183,8 +201,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -194,13 +212,15 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
@@ -231,6 +251,13 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="quickstart/index.html">
+                        Quickstart
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="reference/index.html">
                         API reference
                       </a>
@@ -255,10 +282,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -274,8 +301,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/KosinskiLab/colabseg" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -311,7 +338,26 @@ document.write(`
 
 <div class="genindex-jumpbox">
  <a href="#Symbols"><strong>Symbols</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="Symbols">Symbols</h2>
@@ -327,16 +373,559 @@ document.write(`
   </ul></td>
 </tr></table>
 
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.add_bounding_box.html#colabseg.py3dmol_controls.seg_visualization.add_bounding_box">add_bounding_box() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.add_bounding_box">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.adjustLength.html#colabseg.new_gui_functions.ImageIO.adjustLength">adjustLength() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.adjustLength">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.analyze_protein_membrane_min_distance.html#colabseg.new_gui_functions.ColabSegData.analyze_protein_membrane_min_distance">analyze_protein_membrane_min_distance() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.analyze_protein_membrane_min_distance">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.backup_step_to_previous.html#colabseg.new_gui_functions.ColabSegData.backup_step_to_previous">backup_step_to_previous() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.backup_step_to_previous">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.boot_gui.html#colabseg.segmentation_gui.JupyterFramework.boot_gui">boot_gui() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.boot_gui">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.byte_order.html#colabseg.new_gui_functions.ImageIO.byte_order">byte_order (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.byte_order">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins.html#colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins">calculate_and_plot_distances_proteins() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii.html#colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii">calculate_and_plot_sphere_radii() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.calculate_normals.html#colabseg.new_gui_functions.ColabSegData.calculate_normals">calculate_normals() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.calculate_normals">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.checkFile.html#colabseg.new_gui_functions.ImageIO.checkFile">checkFile() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.checkFile">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.cluster_checkbox.html#colabseg.py3dmol_controls.seg_visualization.cluster_checkbox">cluster_checkbox() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.cluster_checkbox">[1]</a>
+</li>
+      <li>
+    colabseg.image_io
+
+      <ul>
+        <li><a href="reference/image_io.html#module-colabseg.image_io">module</a>
+</li>
+      </ul></li>
+      <li>
+    colabseg.new_gui_functions
+
+      <ul>
+        <li><a href="reference/new_gui_functions.html#module-colabseg.new_gui_functions">module</a>
+</li>
+      </ul></li>
+      <li>
+    colabseg.py3dmol_controls
+
+      <ul>
+        <li><a href="reference/py3dmol_controls.html#module-colabseg.py3dmol_controls">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    colabseg.segmentation_gui
+
+      <ul>
+        <li><a href="reference/segmentation_gui.html#module-colabseg.segmentation_gui">module</a>
+</li>
+      </ul></li>
+      <li>
+    colabseg.utilities
+
+      <ul>
+        <li><a href="reference/helpers.html#module-colabseg.utilities">module</a>
+</li>
+      </ul></li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.html#colabseg.new_gui_functions.ColabSegData">ColabSegData (class in colabseg.new_gui_functions)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.compile_xyz_string.html#colabseg.new_gui_functions.ColabSegData.compile_xyz_string">compile_xyz_string() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.compile_xyz_string">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.convert_tomo.html#colabseg.new_gui_functions.ColabSegData.convert_tomo">convert_tomo() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.convert_tomo">[1]</a>
+</li>
+      <li><a href="reference/helpers.html#colabseg.utilities.create_sphere_points">create_sphere_points() (in module colabseg.utilities)</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.crop_fit.html#colabseg.segmentation_gui.JupyterFramework.crop_fit">crop_fit() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.crop_fit">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.crop_fit_around_membrane.html#colabseg.new_gui_functions.ColabSegData.crop_fit_around_membrane">crop_fit_around_membrane() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.crop_fit_around_membrane">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.parametrization.Cylinder.html#colabseg.parametrization.Cylinder">Cylinder (class in colabseg.parametrization)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.dbscan_clustering.html#colabseg.new_gui_functions.ColabSegData.dbscan_clustering">dbscan_clustering() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.dbscan_clustering">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.dbscan_recluster.html#colabseg.segmentation_gui.JupyterFramework.dbscan_recluster">dbscan_recluster() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.dbscan_recluster">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.delete_cluster.html#colabseg.new_gui_functions.ColabSegData.delete_cluster">delete_cluster() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.delete_cluster">[1]</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.delete_cluster.html#colabseg.segmentation_gui.JupyterFramework.delete_cluster">(JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.delete_cluster">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.delete_fit.html#colabseg.new_gui_functions.ColabSegData.delete_fit">delete_fit() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.delete_fit">[1]</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.delete_fit.html#colabseg.segmentation_gui.JupyterFramework.delete_fit">(JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.delete_fit">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.delete_multiple_clusters.html#colabseg.new_gui_functions.ColabSegData.delete_multiple_clusters">delete_multiple_clusters() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.delete_multiple_clusters">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.delete_normals.html#colabseg.new_gui_functions.ColabSegData.delete_normals">delete_normals() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.delete_normals">[1]</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.delete_normals.html#colabseg.segmentation_gui.JupyterFramework.delete_normals">(JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.delete_normals">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.delete_protein_position.html#colabseg.new_gui_functions.ColabSegData.delete_protein_position">delete_protein_position() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.delete_protein_position">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.eigenvalue_outlier_removal.html#colabseg.new_gui_functions.ColabSegData.eigenvalue_outlier_removal">eigenvalue_outlier_removal() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.eigenvalue_outlier_removal">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.parametrization.Ellipsoid.html#colabseg.parametrization.Ellipsoid">Ellipsoid (class in colabseg.parametrization)</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.em.html#colabseg.new_gui_functions.ImageIO.em">em (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.em">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emByteOrderTab.html#colabseg.new_gui_functions.ImageIO.emByteOrderTab">emByteOrderTab (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emByteOrderTab">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emByteOrderTabInv.html#colabseg.new_gui_functions.ImageIO.emByteOrderTabInv">emByteOrderTabInv (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emByteOrderTabInv">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emDataTypeTab.html#colabseg.new_gui_functions.ImageIO.emDataTypeTab">emDataTypeTab (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emDataTypeTab">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emDataTypeTabInv.html#colabseg.new_gui_functions.ImageIO.emDataTypeTabInv">emDataTypeTabInv (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emDataTypeTabInv">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emDefaultHeader.html#colabseg.new_gui_functions.ImageIO.emDefaultHeader">emDefaultHeader (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emDefaultHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emDefaultShape.html#colabseg.new_gui_functions.ImageIO.emDefaultShape">emDefaultShape (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emDefaultShape">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.emHeaderFields.html#colabseg.new_gui_functions.ImageIO.emHeaderFields">emHeaderFields (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.emHeaderFields">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions.html#colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions">execute_delete_protein_positions() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html#colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position">execute_load_protein_position() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.extract_slice.html#colabseg.new_gui_functions.ColabSegData.extract_slice">extract_slice() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.extract_slice">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.fileFormats.html#colabseg.new_gui_functions.ImageIO.fileFormats">fileFormats (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.fileFormats">[1]</a>
+</li>
+      <li><a href="reference/image_io.html#colabseg.image_io.FileTypeError">FileTypeError</a>
+</li>
+      <li><a href="reference/api/colabseg.parametrization.Cylinder.fit.html#colabseg.parametrization.Cylinder.fit">fit() (Cylinder static method)</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.parametrization.Ellipsoid.fit.html#colabseg.parametrization.Ellipsoid.fit">(Ellipsoid static method)</a>
+</li>
+        <li><a href="reference/api/colabseg.parametrization.Parametrization.fit.html#colabseg.parametrization.Parametrization.fit">(Parametrization method)</a>
+</li>
+        <li><a href="reference/api/colabseg.parametrization.Sphere.fit.html#colabseg.parametrization.Sphere.fit">(Sphere static method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html#colabseg.segmentation_gui.JupyterFramework.fit_idx_conv">fit_idx_conv() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.fit_idx_conv">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.fit_rbf.html#colabseg.segmentation_gui.JupyterFramework.fit_rbf">fit_rbf() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.fit_rbf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.fit_sphere.html#colabseg.segmentation_gui.JupyterFramework.fit_sphere">fit_sphere() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.fit_sphere">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.fix.html#colabseg.new_gui_functions.ImageIO.fix">fix() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.fix">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.fixHeader.html#colabseg.new_gui_functions.ImageIO.fixHeader">fixHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.fixHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.flip_normals.html#colabseg.new_gui_functions.ColabSegData.flip_normals">flip_normals() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.flip_normals">[1]</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.flip_normals.html#colabseg.segmentation_gui.JupyterFramework.flip_normals">(JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.flip_normals">[1]</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.html#colabseg.tensorvoting_wrapper.generate_tensor_voting_gui">generate_tensor_voting_gui (class in colabseg.tensorvoting_wrapper)</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.get_and_plot_normals.html#colabseg.segmentation_gui.JupyterFramework.get_and_plot_normals">get_and_plot_normals() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.get_and_plot_normals">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.get_lamina_rotation_matrix.html#colabseg.new_gui_functions.ColabSegData.get_lamina_rotation_matrix">get_lamina_rotation_matrix() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.get_lamina_rotation_matrix">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.get_selected_sphere_radii.html#colabseg.new_gui_functions.ColabSegData.get_selected_sphere_radii">get_selected_sphere_radii() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.get_selected_sphere_radii">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.getFromEMHeader.html#colabseg.new_gui_functions.ImageIO.getFromEMHeader">getFromEMHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.getFromEMHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.getPixelsize.html#colabseg.new_gui_functions.ImageIO.getPixelsize">getPixelsize() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.getPixelsize">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.getTiltAngle.html#colabseg.new_gui_functions.ImageIO.getTiltAngle">getTiltAngle() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.getTiltAngle">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.gui_elements_cluster_analysis.html#colabseg.segmentation_gui.JupyterFramework.gui_elements_cluster_analysis">gui_elements_cluster_analysis() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.gui_elements_cluster_analysis">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.gui_elements_loading.html#colabseg.segmentation_gui.JupyterFramework.gui_elements_loading">gui_elements_loading() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.gui_elements_loading">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.highlight_cluster.html#colabseg.py3dmol_controls.seg_visualization.highlight_cluster">highlight_cluster() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.highlight_cluster">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.highlight_clusters.html#colabseg.py3dmol_controls.seg_visualization.highlight_clusters">highlight_clusters() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.highlight_clusters">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.highlight_fits.html#colabseg.py3dmol_controls.seg_visualization.highlight_fits">highlight_fits() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.highlight_fits">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/image_io.html#colabseg.image_io.ImageIO">ImageIO (class in colabseg.image_io)</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.html#colabseg.new_gui_functions.ImageIO">(class in colabseg.new_gui_functions)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_rbf.html#colabseg.new_gui_functions.ColabSegData.interpolate_membrane_rbf">interpolate_membrane_rbf() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.interpolate_membrane_rbf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.interpolate_membrane_sphere.html#colabseg.new_gui_functions.ColabSegData.interpolate_membrane_sphere">interpolate_membrane_sphere() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.interpolate_membrane_sphere">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.html#colabseg.segmentation_gui.JupyterFramework">JupyterFramework (class in colabseg.segmentation_gui)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_all_models.html#colabseg.py3dmol_controls.seg_visualization.load_all_models">load_all_models() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_all_models">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_all_models_fit.html#colabseg.py3dmol_controls.seg_visualization.load_all_models_fit">load_all_models_fit() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_all_models_fit">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file.html#colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file">load_all_models_from_file() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_all_models_from_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_from_point_cloud.html#colabseg.segmentation_gui.JupyterFramework.load_from_point_cloud">load_from_point_cloud() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_from_point_cloud">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_from_stl_file.html#colabseg.segmentation_gui.JupyterFramework.load_from_stl_file">load_from_stl_file() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_from_stl_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.load_hdf.html#colabseg.new_gui_functions.ColabSegData.load_hdf">load_hdf() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.load_hdf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_model_from_file.html#colabseg.py3dmol_controls.seg_visualization.load_model_from_file">load_model_from_file() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_model_from_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_mrc_file.html#colabseg.segmentation_gui.JupyterFramework.load_mrc_file">load_mrc_file() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_mrc_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_normal_positions.html#colabseg.py3dmol_controls.seg_visualization.load_normal_positions">load_normal_positions() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_normal_positions">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.load_point_cloud.html#colabseg.new_gui_functions.ColabSegData.load_point_cloud">load_point_cloud() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.load_point_cloud">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.load_protein_position.html#colabseg.new_gui_functions.ColabSegData.load_protein_position">load_protein_position() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.load_protein_position">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.load_protein_positions.html#colabseg.py3dmol_controls.seg_visualization.load_protein_positions">load_protein_positions() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.load_protein_positions">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_raw_image.html#colabseg.segmentation_gui.JupyterFramework.load_raw_image">load_raw_image() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_raw_image">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_state_hdf.html#colabseg.segmentation_gui.JupyterFramework.load_state_hdf">load_state_hdf() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_state_hdf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.load_stl_file.html#colabseg.new_gui_functions.ColabSegData.load_stl_file">load_stl_file() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.load_stl_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.load_tomogram.html#colabseg.new_gui_functions.ColabSegData.load_tomogram">load_tomogram() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.load_tomogram">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.load_viz.html#colabseg.segmentation_gui.JupyterFramework.load_viz">load_viz() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.load_viz">[1]</a>
+</li>
+      <li><a href="reference/helpers.html#colabseg.utilities.lstsq_sphere_fitting">lstsq_sphere_fitting() (in module colabseg.utilities)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.machineByteOrder.html#colabseg.new_gui_functions.ImageIO.machineByteOrder">machineByteOrder (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.machineByteOrder">[1]</a>
+</li>
+      <li><a href="reference/helpers.html#colabseg.utilities.make_plot_array">make_plot_array() (in module colabseg.utilities)</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string.html#colabseg.py3dmol_controls.seg_visualization.make_xyz_string">make_xyz_string() (seg_visualization static method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.make_xyz_string">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein.html#colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein">make_xyz_string_protein() (seg_visualization static method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.make_xyz_string_protein">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.merge_clusters.html#colabseg.new_gui_functions.ColabSegData.merge_clusters">merge_clusters() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.merge_clusters">[1]</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.merge_clusters.html#colabseg.segmentation_gui.JupyterFramework.merge_clusters">(JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.merge_clusters">[1]</a>
+</li>
+      </ul></li>
       <li>
     module
 
       <ul>
         <li><a href="index.html#module-project">|project|</a>
 </li>
+        <li><a href="reference/image_io.html#module-colabseg.image_io">colabseg.image_io</a>
+</li>
+        <li><a href="reference/new_gui_functions.html#module-colabseg.new_gui_functions">colabseg.new_gui_functions</a>
+</li>
+        <li><a href="reference/py3dmol_controls.html#module-colabseg.py3dmol_controls">colabseg.py3dmol_controls</a>
+</li>
+        <li><a href="reference/segmentation_gui.html#module-colabseg.segmentation_gui">colabseg.segmentation_gui</a>
+</li>
+        <li><a href="reference/helpers.html#module-colabseg.utilities">colabseg.utilities</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrc.html#colabseg.new_gui_functions.ImageIO.mrc">mrc (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrc">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrcDataTypeTab.html#colabseg.new_gui_functions.ImageIO.mrcDataTypeTab">mrcDataTypeTab (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrcDataTypeTab">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrcDataTypeTabInv.html#colabseg.new_gui_functions.ImageIO.mrcDataTypeTabInv">mrcDataTypeTabInv (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrcDataTypeTabInv">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrcDefaultHeader.html#colabseg.new_gui_functions.ImageIO.mrcDefaultHeader">mrcDefaultHeader (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrcDefaultHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrcDefaultPixel.html#colabseg.new_gui_functions.ImageIO.mrcDefaultPixel">mrcDefaultPixel (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrcDefaultPixel">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.mrcDefaultShape.html#colabseg.new_gui_functions.ImageIO.mrcDefaultShape">mrcDefaultShape (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.mrcDefaultShape">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.outlier_removal.html#colabseg.segmentation_gui.JupyterFramework.outlier_removal">outlier_removal() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.outlier_removal">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.parametrization.Parametrization.html#colabseg.parametrization.Parametrization">Parametrization (class in colabseg.parametrization)</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.parseMRCHeader.html#colabseg.new_gui_functions.ImageIO.parseMRCHeader">parseMRCHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.parseMRCHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.pixelsize.html#colabseg.new_gui_functions.ImageIO.pixelsize">pixelsize (ImageIO property)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.pixelsize">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.plain_fit_and_rotate_lamina.html#colabseg.new_gui_functions.ColabSegData.plain_fit_and_rotate_lamina">plain_fit_and_rotate_lamina() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.plain_fit_and_rotate_lamina">[1]</a>
+</li>
+      <li><a href="reference/helpers.html#colabseg.utilities.plane_fit">plane_fit() (in module colabseg.utilities)</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.putInEMHeader.html#colabseg.new_gui_functions.ImageIO.putInEMHeader">putInEMHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.putInEMHeader">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/helpers.html#colabseg.utilities.R_2vect">R_2vect() (in module colabseg.utilities)</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.raw.html#colabseg.new_gui_functions.ImageIO.raw">raw (ImageIO attribute)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.raw">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.read.html#colabseg.new_gui_functions.ImageIO.read">read() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.read">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readData.html#colabseg.new_gui_functions.ImageIO.readData">readData() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readData">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readEM.html#colabseg.new_gui_functions.ImageIO.readEM">readEM() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readEM">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readEMHeader.html#colabseg.new_gui_functions.ImageIO.readEMHeader">readEMHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readEMHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readHeader.html#colabseg.new_gui_functions.ImageIO.readHeader">readHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readMRC.html#colabseg.new_gui_functions.ImageIO.readMRC">readMRC() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readMRC">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readMRCHeader.html#colabseg.new_gui_functions.ImageIO.readMRCHeader">readMRCHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readMRCHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readRaw.html#colabseg.new_gui_functions.ImageIO.readRaw">readRaw() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readRaw">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.readRawHeader.html#colabseg.new_gui_functions.ImageIO.readRawHeader">readRawHeader() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.readRawHeader">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.reload_gui.html#colabseg.segmentation_gui.JupyterFramework.reload_gui">reload_gui() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.reload_gui">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.reload_original_values.html#colabseg.new_gui_functions.ColabSegData.reload_original_values">reload_original_values() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.reload_original_values">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.reload_previous_step.html#colabseg.new_gui_functions.ColabSegData.reload_previous_step">reload_previous_step() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.reload_previous_step">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.remove_eigenvalue_outliers.html#colabseg.segmentation_gui.JupyterFramework.remove_eigenvalue_outliers">remove_eigenvalue_outliers() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.remove_eigenvalue_outliers">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.reset_input.html#colabseg.segmentation_gui.JupyterFramework.reset_input">reset_input() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.reset_input">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.reset_optimal_default_values.html#colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.reset_optimal_default_values">reset_optimal_default_values() (generate_tensor_voting_gui method)</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.rotate_back.html#colabseg.segmentation_gui.JupyterFramework.rotate_back">rotate_back() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.rotate_back">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.rotate_flat.html#colabseg.segmentation_gui.JupyterFramework.rotate_flat">rotate_flat() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.rotate_flat">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.run_tv_code.html#colabseg.tensorvoting_wrapper.generate_tensor_voting_gui.run_tv_code">run_tv_code() (generate_tensor_voting_gui method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.parametrization.Cylinder.sample.html#colabseg.parametrization.Cylinder.sample">sample() (Cylinder static method)</a>
+
+      <ul>
+        <li><a href="reference/api/colabseg.parametrization.Ellipsoid.sample.html#colabseg.parametrization.Ellipsoid.sample">(Ellipsoid static method)</a>
+</li>
+        <li><a href="reference/api/colabseg.parametrization.Parametrization.sample.html#colabseg.parametrization.Parametrization.sample">(Parametrization method)</a>
+</li>
+        <li><a href="reference/api/colabseg.parametrization.Sphere.sample.html#colabseg.parametrization.Sphere.sample">(Sphere static method)</a>
+</li>
+      </ul></li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_clusters_mrc.html#colabseg.segmentation_gui.JupyterFramework.save_clusters_mrc">save_clusters_mrc() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_clusters_mrc">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_clusters_txt.html#colabseg.segmentation_gui.JupyterFramework.save_clusters_txt">save_clusters_txt() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_clusters_txt">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_distance_file.html#colabseg.segmentation_gui.JupyterFramework.save_distance_file">save_distance_file() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_distance_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_distance_plot.html#colabseg.segmentation_gui.JupyterFramework.save_distance_plot">save_distance_plot() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_distance_plot">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.save_hdf.html#colabseg.new_gui_functions.ColabSegData.save_hdf">save_hdf() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.save_hdf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_normals_file.html#colabseg.segmentation_gui.JupyterFramework.save_normals_file">save_normals_file() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_normals_file">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_radii_file.html#colabseg.segmentation_gui.JupyterFramework.save_radii_file">save_radii_file() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_radii_file">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_radii_plot.html#colabseg.segmentation_gui.JupyterFramework.save_radii_plot">save_radii_plot() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_radii_plot">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.save_state_hdf.html#colabseg.segmentation_gui.JupyterFramework.save_state_hdf">save_state_hdf() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.save_state_hdf">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.save_values_txt.html#colabseg.new_gui_functions.ColabSegData.save_values_txt">save_values_txt() (ColabSegData static method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.save_values_txt">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.html#colabseg.py3dmol_controls.seg_visualization">seg_visualization (class in colabseg.py3dmol_controls)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.setData.html#colabseg.new_gui_functions.ImageIO.setData">setData() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.setData">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.setFileFormat.html#colabseg.new_gui_functions.ImageIO.setFileFormat">setFileFormat() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.setFileFormat">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.setTiltAngle.html#colabseg.new_gui_functions.ImageIO.setTiltAngle">setTiltAngle() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.setTiltAngle">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.parametrization.Sphere.html#colabseg.parametrization.Sphere">Sphere (class in colabseg.parametrization)</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.statistical_outlier_removal.html#colabseg.new_gui_functions.ColabSegData.statistical_outlier_removal">statistical_outlier_removal() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.statistical_outlier_removal">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.tiltAngle.html#colabseg.new_gui_functions.ImageIO.tiltAngle">tiltAngle (ImageIO property)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.tiltAngle">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_cluster.html#colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_cluster">trim_cluster_egdes_cluster() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_cluster">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_fit.html#colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_fit">trim_cluster_egdes_fit() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.trim_cluster_egdes_fit">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.trim_top_bottom.html#colabseg.segmentation_gui.JupyterFramework.trim_top_bottom">trim_top_bottom() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.trim_top_bottom">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.undo_step.html#colabseg.segmentation_gui.JupyterFramework.undo_step">undo_step() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.undo_step">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.segmentation_gui.JupyterFramework.update_downsampling.html#colabseg.segmentation_gui.JupyterFramework.update_downsampling">update_downsampling() (JupyterFramework method)</a>, <a href="reference/segmentation_gui.html#colabseg.segmentation_gui.JupyterFramework.update_downsampling">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters.html#colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters">update_highlight_clusters() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.update_highlight_clusters">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.update_highlight_fits.html#colabseg.py3dmol_controls.seg_visualization.update_highlight_fits">update_highlight_fits() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.update_highlight_fits">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.view_update.html#colabseg.py3dmol_controls.seg_visualization.view_update">view_update() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.view_update">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.py3dmol_controls.seg_visualization.view_zoomto.html#colabseg.py3dmol_controls.seg_visualization.view_zoomto">view_zoomto() (seg_visualization method)</a>, <a href="reference/py3dmol_controls.html#colabseg.py3dmol_controls.seg_visualization.view_zoomto">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.write.html#colabseg.new_gui_functions.ImageIO.write">write() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.write">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.write_output_mrc.html#colabseg.new_gui_functions.ColabSegData.write_output_mrc">write_output_mrc() (ColabSegData method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.write_output_mrc">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.write_txt.html#colabseg.new_gui_functions.ColabSegData.write_txt">write_txt() (ColabSegData static method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.write_txt">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ColabSegData.write_xyz.html#colabseg.new_gui_functions.ColabSegData.write_xyz">write_xyz() (ColabSegData static method)</a>, <a href="reference/new_gui_functions.html#colabseg.new_gui_functions.ColabSegData.write_xyz">[1]</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.writeData.html#colabseg.new_gui_functions.ImageIO.writeData">writeData() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.writeData">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.writeEM.html#colabseg.new_gui_functions.ImageIO.writeEM">writeEM() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.writeEM">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.writeMRC.html#colabseg.new_gui_functions.ImageIO.writeMRC">writeMRC() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.writeMRC">[1]</a>
+</li>
+      <li><a href="reference/api/colabseg.new_gui_functions.ImageIO.writeRaw.html#colabseg.new_gui_functions.ImageIO.writeRaw">writeRaw() (ImageIO method)</a>, <a href="reference/image_io.html#colabseg.image_io.ImageIO.writeRaw">[1]</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -346,16 +935,12 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -373,8 +958,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -392,7 +977,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>
@@ -400,10 +985,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.2.
 </p></div>
       
     </div>

@@ -55,6 +55,9 @@ class Parametrization(ABC):
 
 
 class Sphere(Parametrization):
+    """
+    Parametrize a point cloud as sphere.
+    """
     @staticmethod
     def fit(positions: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
@@ -75,6 +78,7 @@ class Sphere(Parametrization):
         References
         ----------
         .. [1]  https://gist.github.com/WuyangLI/4bf4b067fed46789352d5019af1c11b2
+
         """
         # add column of ones to pos_xyz to construct matrix A
         pos_xyz = positions
@@ -129,6 +133,10 @@ class Sphere(Parametrization):
 
 
 class Ellipsoid(Parametrization):
+    """
+    Parametrize a point cloud as ellipsoid.
+    """
+
     @staticmethod
     def fit(positions) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
@@ -241,6 +249,10 @@ class Ellipsoid(Parametrization):
 
 
 class Cylinder(Parametrization):
+    """
+    Parametrize a point cloud as cylinder.
+    """
+
     @staticmethod
     def fit(
         positions: np.ndarray, initial_parameters: np.ndarray = None

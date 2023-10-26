@@ -7,14 +7,7 @@ API reference
 
 .. toctree::
 
-   demo_widget
-   image_io
-   microscope_db
-   new_gui_functions
-   notebook_viz_launcher
+   data_structures
+   gui_interactions
    parametrization
-   py3dmol_controls
-   segmentation_backend
-   segmentation_gui
-   tensorvoting_wrapper
-   utilities
+   helpers

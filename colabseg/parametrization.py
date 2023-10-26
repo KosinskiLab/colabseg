@@ -59,7 +59,17 @@ class Sphere(Parametrization):
     Parametrize a point cloud as sphere.
     """
 
-    def __init__(self, radius, center):
+    def __init__(self, radius: np.ndarray, center: np.ndarray):
+        """
+        Initialize the Ellipsoid parametrization.
+
+        Parameters
+        ----------
+        radius : np.ndarray
+            Radius of the sphere
+        center : np.ndarray
+            Center of the sphere along each axis.
+        """
         self.radius = radius
         self.center = center
 
@@ -75,10 +85,8 @@ class Sphere(Parametrization):
 
         Returns
         -------
-        np.ndarray
-            Radius of the sphere
-        np.ndarray
-            Center of the sphere along each axis.
+        Sphere
+            Class instance with fitted parameters.
 
         References
         ----------
@@ -104,12 +112,12 @@ class Sphere(Parametrization):
             + sol[3]
         )
         return cls(
-            radius = radius,
-            center = np.array([sol[0] / 2.0, sol[1] / 2.0, sol[2] / 2.0])
+            radius=radius, center=np.array([sol[0] / 2.0, sol[1] / 2.0, sol[2] / 2.0])
         )
 
-    def sample(self, n_samples: int, radius: np.ndarray = None,
-        center: np.ndarray = None) -> np.ndarray:
+    def sample(
+        self, n_samples: int, radius: np.ndarray = None, center: np.ndarray = None
+    ) -> np.ndarray:
         """
         Samples points from the surface of a sphere.
 
@@ -147,8 +155,20 @@ class Ellipsoid(Parametrization):
     Parametrize a point cloud as ellipsoid.
     """
 
-    def __init__(self, radii, center, orientations):
-        self.radius = radii
+    def __init__(self, radii: np.ndarray, center: np.ndarray, orientations: np.ndarray):
+        """
+        Initialize the Ellipsoid parametrization.
+
+        Parameters
+        ----------
+        radii : np.ndarray
+            Radii of the ellipse along each axis
+        center : np.ndarray
+            Center of the ellipse along each axis
+        orientations : np.ndarray
+            Square orientation matrix
+        """
+        self.radii = radii
         self.center = center
         self.orientations = orientations
 
@@ -164,12 +184,8 @@ class Ellipsoid(Parametrization):
 
         Returns
         -------
-        np.ndarray
-            Radii of the ellipse along each axis
-        np.ndarray
-            Center of the ellipse along each axis
-        np.ndarray
-            Square orientation matrix
+        Ellipsoid
+            Class instance with fitted parameters.
 
         Raises
         ------
@@ -222,15 +238,14 @@ class Ellipsoid(Parametrization):
 
         center = np.add(positions_mean, center)
 
-        return cls(
-            radii = radii,
-            center = center,
-            orientations = evecs
-        )
+        return cls(radii=radii, center=center, orientations=evecs)
 
     def sample(
-        self, n_samples: int, radii: np.ndarray = None,
-        center: np.ndarray= None, orientations: np.ndarray= None
+        self,
+        n_samples: int,
+        radii: np.ndarray = None,
+        center: np.ndarray = None,
+        orientations: np.ndarray = None,
     ) -> np.ndarray:
         """
         Samples points from the surface of an ellisoid.
@@ -275,7 +290,23 @@ class Cylinder(Parametrization):
     Parametrize a point cloud as cylinder.
     """
 
-    def __init__(self, centers, angles, radius, height):
+    def __init__(
+        self, centers: np.ndarray, angles: np.ndarray, radius: float, height: float
+    ):
+        """
+        Initialize the Cylinder parametrization.
+
+        Parameters
+        ----------
+        centers : np.ndarray
+            Center coordinates of the cylinder in X and Y.
+        angles: np.ndarray
+            Orientation angles alpha and beta.
+        radius: float
+            Radius of the cylinder.
+        height : float
+            Height of the cylinder.
+        """
         self.centers = centers
         self.angles = angles
         self.radius = radius
@@ -283,8 +314,7 @@ class Cylinder(Parametrization):
 
     @classmethod
     def fit(
-        cls,
-        positions: np.ndarray, initial_parameters: np.ndarray = None
+        cls, positions: np.ndarray, initial_parameters: np.ndarray = None
     ) -> Tuple[np.ndarray, np.ndarray, float]:
         """
         Fit a 3D point cloud to a cylinder.
@@ -299,14 +329,8 @@ class Cylinder(Parametrization):
 
         Returns
         -------
-        np.ndarray
-            Center coordinates of the cylinder in X and Y.
-        angles: np.ndarray
-            Orientation angles alpha and beta.
-        Radius: float
-            Radius of the cylinder.
-        Height : float
-            Height of the cylinder.
+        Sphere
+            Class instance with fitted parameters.
 
         Raises
         ------
@@ -344,12 +368,7 @@ class Cylinder(Parametrization):
         radius = parameters[4]
         height = positions[:, 2].max() - positions[:, 2].min()
 
-        return cls(
-            centers = centers,
-            angles = angles,
-            radius = radius,
-            height = height
-        )
+        return cls(centers=centers, angles=angles, radius=radius, height=height)
 
     def sample(
         self,
@@ -398,8 +417,5 @@ class Cylinder(Parametrization):
 
         return np.column_stack((x, y, z))
 
-PARAMETRIZATION_TYPE = {
-    "sphere" : Sphere,
-    "ellipsoid" : Ellipsoid,
-    "cylinder" : Cylinder
-}
+
+PARAMETRIZATION_TYPE = {"sphere": Sphere, "ellipsoid": Ellipsoid, "cylinder": Cylinder}

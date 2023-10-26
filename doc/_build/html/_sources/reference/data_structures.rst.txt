@@ -9,12 +9,12 @@ ColabSegData
 .. autosummary::
    :toctree: api/
 
-   new_gui_functions.ColabSegData
+   ColabSegData
 
 ImageIO
 ~~~~~~~
 .. autosummary::
    :toctree: api/
 
-   image_io.ImageIO
+   ImageIO
 

@@ -48,6 +48,7 @@ jobs:
           python -mpip install Sphinx pydata-sphinx-theme sphinx_design numpydoc sphinx_copybutton
           cd doc
           make clean
+          python -mpip list
           make html
           mkdir -p ../public
           mv _build/html/* ../public/

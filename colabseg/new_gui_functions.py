@@ -495,6 +495,10 @@ class ColabSegData(object):
             hf.create_dataset("image_array", data=self.image_array, compression='gzip')
             hf.create_dataset("position_list", data=self.position_list, compression='gzip')
             hf.create_dataset("intensity_list", data=self.intensity_list, compression='gzip')
+            hf.create_dataset("protein_positions_list", data=self.protein_positions_list, compression='gzip')
+
+            for key in self.analysis_properties.keys():
+                hf.create_dataset("{}".format(key), data=self.analysis_properties[key], compression='gzip')
 
             cluster_list_tv = hf.create_group('cluster_list_tv')
             for idx, arr in enumerate(self.cluster_list_tv):
@@ -525,6 +529,9 @@ class ColabSegData(object):
             self.lamina_R = hf.attrs["lamina_R"]
             self.intensity_list = np.asarray(hf["intensity_list"])
             self.position_list = np.asarray(hf["position_list"])
+
+            for key in self.analysis_properties.keys():
+                self.analysis_properties[key] = hf[key]
 
             self.cluster_list_tv = []
             for i in hf["cluster_list_tv"]:
@@ -615,7 +622,3 @@ class ColabSegData(object):
 #TODO add another clustering method?
 #TODO give access to other open3d features
 #TODO add new protein stuff to state file hdf5 for saving etc.
-
-
-# LATER:
-# TODO: enable triangulation step + my modeling part

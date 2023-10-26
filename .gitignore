@@ -152,5 +152,5 @@ cython_debug/
 #.idea/
 .DS_Store
 doc/_build
-doc/reference/api/
+doc/reference/api
 

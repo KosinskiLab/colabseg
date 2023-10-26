@@ -31,9 +31,7 @@ from copy import copy
 import io
 from io import open
 
-
 import numpy
-
 
 from . import microscope_db
 

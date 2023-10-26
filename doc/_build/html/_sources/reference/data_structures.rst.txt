@@ -2,17 +2,19 @@
 Data structures
 ===============
 
+.. currentmodule:: colabseg
+
 ColabSegData
 ~~~~~~~~~~~~
 .. autosummary::
    :toctree: api/
 
-   colabseg.new_gui_functions.ColabSegData
+   new_gui_functions.ColabSegData
 
 ImageIO
 ~~~~~~~
 .. autosummary::
    :toctree: api/
 
-   colabseg.image_io.ImageIO
+   image_io.ImageIO
 

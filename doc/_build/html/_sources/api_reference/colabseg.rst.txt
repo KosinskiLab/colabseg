@@ -1,0 +1,28 @@
+colabseg package
+================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   colabseg.demo_widget
+   colabseg.image_io
+   colabseg.microscope_db
+   colabseg.new_gui_functions
+   colabseg.notebook_viz_launcher
+   colabseg.parametrization
+   colabseg.py3dmol_controls
+   colabseg.segmentation_backend
+   colabseg.segmentation_gui
+   colabseg.tensorvoting_wrapper
+   colabseg.utilities
+
+Module contents
+---------------
+
+.. automodule:: colabseg
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -12,7 +12,6 @@ import open3d as o3d
 from pyto.io.image_io import ImageIO
 
 
-
 def load_and_binarize_seg(filename, min_val=0):
     """load an mrc file and binarize it"""
     seg = io.load_tomo(filename)
@@ -74,21 +73,21 @@ def com_cluster_points(position_list, intensity_list, cutoff):
         if len(np.where(tag == 0)[0]) == 0:
             acc = True
             break
-        randint = np.random.randint(0,len(np.where(tag == 0)[0]))
+        randint = np.random.randint(0, len(np.where(tag == 0)[0]))
         randint = np.where(tag == 0)[0][randint]
         print(len(np.where(tag == 0)[0]))
-        #randint = np.random.randint(0, len(position_list))
-        #if 0 not in tag:
+        # randint = np.random.randint(0, len(position_list))
+        # if 0 not in tag:
         #    acc = True
         if tag[randint] != 0:
             continue
         pos = position_list[randint]
-        dist_arr = distance_array(position_list[randint],position_list)
+        dist_arr = distance_array(position_list[randint], position_list)
         indices = np.where(dist_arr[0] < cutoff)[0]
         pos_cluster = position_list[dist_arr[0] < cutoff]
         cluster_labels = intensity_list[dist_arr[0] < 80]
         cluster_label = np.bincount(cluster_labels).argmax()
-        center = np.average(pos_cluster,axis=0)
+        center = np.average(pos_cluster, axis=0)
         for index in indices:
             tag[index] = 1
         com_list.append(center)
@@ -114,7 +113,12 @@ def separate_clusters(com_list, cluster_index_list):
         distances = pcd.compute_nearest_neighbor_distance()
         avg_dist = np.mean(distances)
         radius = 1.0 * avg_dist
-        mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_ball_pivoting(pcd, o3d.utility.DoubleVector([radius * 0.5, radius * 1.0, radius * 1.5, radius * 2.0]))
+        mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_ball_pivoting(
+            pcd,
+            o3d.utility.DoubleVector(
+                [radius * 0.5, radius * 1.0, radius * 1.5, radius * 2.0]
+            ),
+        )
         o3d.io.write_triangle_mesh("./output_cluster_{}.ply".format(index), mesh)
         write_xyz(np.asarray(pcd.points), "./output_cluster_{}.xyz".format(index))
         np.savetxt("./output_cluster_{}.txt".format(index), np.asarray(pcd.points))
@@ -124,12 +128,14 @@ def separate_clusters(com_list, cluster_index_list):
 
 
 def get_all_edge_lengths(mesh):
-    """"calculate all edge lengths"""
+    """ "calculate all edge lengths"""
     position_array = mesh.points()
     edge_vertices_array = ev.indices()
     edge_lengths = []
     for edge in edge_vertices_array:
-        el = np.linalg.norm((position_array[[edge[1]]][0] - position_array[[edge[0]]][0]))
+        el = np.linalg.norm(
+            (position_array[[edge[1]]][0] - position_array[[edge[0]]][0])
+        )
         edge_lengths.append(el)
     return edge_lengths
 
@@ -148,15 +154,14 @@ def write_xyz(point_cloud, filename):
 
 # @jit(nopython=True)
 def angle_between_degree(v1, v2):
-    """ Returns the angle in radians between vectors 'v1' and 'v2'"""
+    """Returns the angle in radians between vectors 'v1' and 'v2'"""
     v1_u = unit_vector(v1)
     v2_u = unit_vector(v2)
     return math.degrees(math.acos(max(-1.0, min(calc_dot(v1_u, v2_u), 1.0))))
 
 
 def R_2vect(vector_orig, vector_fin):
-    """Calculate the rotation matrix required to rotate from one vector to another.
-    """
+    """Calculate the rotation matrix required to rotate from one vector to another."""
 
     # Convert the vectors to unit vectors.
     vector_orig = vector_orig / norm(vector_orig)
@@ -182,15 +187,15 @@ def R_2vect(vector_orig, vector_fin):
 
     # Calculate the rotation matrix elements.
     R = np.array([[0.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
-    R[0, 0] = 1.0 + (1.0 - ca) * (x ** 2 - 1.0)
+    R[0, 0] = 1.0 + (1.0 - ca) * (x**2 - 1.0)
     R[0, 1] = -z * sa + (1.0 - ca) * x * y
     R[0, 2] = y * sa + (1.0 - ca) * x * z
     R[1, 0] = z * sa + (1.0 - ca) * x * y
-    R[1, 1] = 1.0 + (1.0 - ca) * (y ** 2 - 1.0)
+    R[1, 1] = 1.0 + (1.0 - ca) * (y**2 - 1.0)
     R[1, 2] = -x * sa + (1.0 - ca) * y * z
     R[2, 0] = -y * sa + (1.0 - ca) * x * z
     R[2, 1] = x * sa + (1.0 - ca) * y * z
-    R[2, 2] = 1.0 + (1.0 - ca) * (z ** 2 - 1.0)
+    R[2, 2] = 1.0 + (1.0 - ca) * (z**2 - 1.0)
     return R
 
 
@@ -209,7 +214,7 @@ def calc_norm(a):
 
 # @jit(nopython=True)
 def unit_vector(vector):
-    """ Returns the unit vector of the vector. """
+    """Returns the unit vector of the vector."""
     return vector / calc_norm(vector)
 
 
@@ -220,7 +225,7 @@ def calc_dot(a, b):
 
 # @jit(nopython=True)
 def angle_between(v1, v2):
-    """ Returns the angle in radians between vectors 'v1' and 'v2'"""
+    """Returns the angle in radians between vectors 'v1' and 'v2'"""
     v1_u = unit_vector(v1)
     v2_u = unit_vector(v2)
     return math.acos(max(-1.0, min(calc_dot(v1_u, v2_u), 1.0)))

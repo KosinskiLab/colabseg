@@ -4,15 +4,17 @@ from typing import Tuple
 import numpy as np
 from scipy import optimize
 
+
 class Parametrization(ABC):
     """
     A strategy class to represent parametrizations of point clouds
     """
+
     def __init__(self, *args, **kwargs):
         pass
 
     @abstractmethod
-    def fit(self, positions : np.ndarray, *args, **kwargs):
+    def fit(self, positions: np.ndarray, *args, **kwargs):
         """
         Fit a parametrization to a point cloud.
 
@@ -32,7 +34,7 @@ class Parametrization(ABC):
         """
 
     @abstractmethod
-    def sample(self, n_samples : int, *args, **kwargs):
+    def sample(self, n_samples: int, *args, **kwargs):
         """
         Samples points from the surface of the parametrization.
 
@@ -53,9 +55,8 @@ class Parametrization(ABC):
 
 
 class Sphere(Parametrization):
-
     @staticmethod
-    def fit(positions : np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def fit(positions: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """
         Fit an sphere to a set of 3D points.
 
@@ -79,22 +80,25 @@ class Sphere(Parametrization):
         pos_xyz = positions
         row_num = pos_xyz.shape[0]
         A = np.ones((row_num, 4))
-        A[:,0:3] = pos_xyz
+        A[:, 0:3] = pos_xyz
 
         # construct vector f
         f = np.sum(np.multiply(pos_xyz, pos_xyz), axis=1)
 
-        sol, residules, rank, singval = np.linalg.lstsq(A,f, rcond = None)
+        sol, residules, rank, singval = np.linalg.lstsq(A, f, rcond=None)
 
         # solve the radius
         radius = np.sqrt(
-            (sol[0]*sol[0]/4.0)+(sol[1]*sol[1]/4.0)+(sol[2]*sol[2]/4.0)+sol[3]
+            (sol[0] * sol[0] / 4.0)
+            + (sol[1] * sol[1] / 4.0)
+            + (sol[2] * sol[2] / 4.0)
+            + sol[3]
         )
 
-        return radius, np.array([sol[0]/2.0, sol[1]/2.0, sol[2]/2.0])
+        return radius, np.array([sol[0] / 2.0, sol[1] / 2.0, sol[2] / 2.0])
 
     @staticmethod
-    def sample(n_samples : int, radius : np.ndarray, center : np.ndarray) -> np.ndarray:
+    def sample(n_samples: int, radius: np.ndarray, center: np.ndarray) -> np.ndarray:
         """
         Samples points from the surface of a sphere.
 
@@ -112,19 +116,19 @@ class Sphere(Parametrization):
         np.ndarray
             Sampled points.
         """
-        sp = np.linspace(0, 2.0*np.pi, num=n_samples)
+        sp = np.linspace(0, 2.0 * np.pi, num=n_samples)
         x0, y0, z0 = center
         nx = sp.shape[0]
         u = np.repeat(sp, nx)
         v = np.tile(sp, nx)
-        x = x0 + np.cos(u)*np.sin(v)*radius
-        y = y0 + np.sin(u)*np.sin(v)*radius
-        z = z0 + np.cos(v)*radius
-        positions_xyz = np.column_stack([x,y,z])
+        x = x0 + np.cos(u) * np.sin(v) * radius
+        y = y0 + np.sin(u) * np.sin(v) * radius
+        z = z0 + np.cos(v) * radius
+        positions_xyz = np.column_stack([x, y, z])
         return positions_xyz
 
-class Ellipsoid(Parametrization):
 
+class Ellipsoid(Parametrization):
     @staticmethod
     def fit(positions) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
@@ -158,26 +162,30 @@ class Ellipsoid(Parametrization):
         positions_mean = positions.mean(axis=0)
         positions -= positions_mean
 
-        D = np.array([
-            np.square(positions[:, 0]),
-            np.square(positions[:, 1]),
-            np.square(positions[:, 2]),
-            2 * positions[:, 0] * positions[:, 1],
-            2 * positions[:, 0] * positions[:, 2],
-            2 * positions[:, 1] * positions[:, 2],
-            2 * positions[:, 0],
-            2 * positions[:, 1],
-            2 * positions[:, 2],
-            np.ones_like(positions[:, 0])
-        ]).T
-        v, *_= np.linalg.lstsq(D, np.ones_like(positions[:, 0]), rcond=None)
+        D = np.array(
+            [
+                np.square(positions[:, 0]),
+                np.square(positions[:, 1]),
+                np.square(positions[:, 2]),
+                2 * positions[:, 0] * positions[:, 1],
+                2 * positions[:, 0] * positions[:, 2],
+                2 * positions[:, 1] * positions[:, 2],
+                2 * positions[:, 0],
+                2 * positions[:, 1],
+                2 * positions[:, 2],
+                np.ones_like(positions[:, 0]),
+            ]
+        ).T
+        v, *_ = np.linalg.lstsq(D, np.ones_like(positions[:, 0]), rcond=None)
 
-        A = np.array([
-            [v[0], v[3], v[4], v[6]],
-            [v[3], v[1], v[5], v[7]],
-            [v[4], v[5], v[2], v[8]],
-            [v[6], v[7], v[8], -1]
-        ])
+        A = np.array(
+            [
+                [v[0], v[3], v[4], v[6]],
+                [v[3], v[1], v[5], v[7]],
+                [v[4], v[5], v[2], v[8]],
+                [v[6], v[7], v[8], -1],
+            ]
+        )
 
         center = np.linalg.solve(-A[:3, :3], v[6:9])
 
@@ -195,8 +203,8 @@ class Ellipsoid(Parametrization):
 
     @staticmethod
     def sample(
-        n_samples : int, radii : np.ndarray,
-        center : np.ndarray, orientations : np.ndarray) -> np.ndarray:
+        n_samples: int, radii: np.ndarray, center: np.ndarray, orientations: np.ndarray
+    ) -> np.ndarray:
         """
         Samples points from the surface of an ellisoid.
 
@@ -227,15 +235,16 @@ class Ellipsoid(Parametrization):
         points = np.array([x, y, z]).T * radii
 
         points = np.dot(points, orientations.T)
-        np.add(points, center, out = points)
+        np.add(points, center, out=points)
 
         return points
 
-class Cylinder(Parametrization):
 
+class Cylinder(Parametrization):
     @staticmethod
-    def fit(positions: np.ndarray, initial_parameters : np.ndarray=None
-        ) -> Tuple[np.ndarray, np.ndarray, float]:
+    def fit(
+        positions: np.ndarray, initial_parameters: np.ndarray = None
+    ) -> Tuple[np.ndarray, np.ndarray, float]:
         """
         Fit a 3D point cloud to a cylinder.
 
@@ -269,15 +278,15 @@ class Cylinder(Parametrization):
         """
 
         def fit_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
-            term1 = - np.cos(p[3]) * (p[0] - positions[:, 0])
+            term1 = -np.cos(p[3]) * (p[0] - positions[:, 0])
             term2 = positions[:, 2] * np.cos(p[2]) * np.sin(p[3])
             term3 = np.sin(p[2]) * np.sin(p[3]) * (p[1] - positions[:, 1])
             term4 = positions[:, 2] * np.sin(p[2])
             term5 = np.cos(p[2]) * (p[1] - positions[:, 1])
-            return (term1 - term2 - term3)**2 + (term4 - term5)**2
+            return (term1 - term2 - term3) ** 2 + (term4 - term5) ** 2
 
         def error_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
-            return fit_function(p, positions) - p[4]**2
+            return fit_function(p, positions) - p[4] ** 2
 
         if initial_parameters is None:
             initial_parameters = np.zeros(5)
@@ -297,14 +306,19 @@ class Cylinder(Parametrization):
         return centers, angles, radius, height
 
     @staticmethod
-    def sample(n_samples: int, centers: np.ndarray,
-        angles: np.ndarray, radius: float, height: float) -> np.ndarray:
+    def sample(
+        n_samples: int,
+        centers: np.ndarray,
+        angles: np.ndarray,
+        radius: float,
+        height: float,
+    ) -> np.ndarray:
         """
         Sample points from the surface of a cylinder.
 
         Parameters
         ----------
-        num_samples : int
+        n_samples : int
             Number of points to sample.
         centers : np.ndarray
             Center coordinates [Xc, Yc].
@@ -324,8 +338,8 @@ class Cylinder(Parametrization):
         Xc, Yc = centers
 
         # Randomly choose an angle theta and height h
-        theta = np.random.uniform(0, 2 * np.pi, num_samples)
-        h = np.random.uniform(0, height, num_samples)
+        theta = np.random.uniform(0, 2 * np.pi, n_samples)
+        h = np.random.uniform(0, height, n_samples)
 
         # Convert cylindrical to Cartesian coordinates
         x = Xc + radius * np.cos(theta)

@@ -1,4 +1,3 @@
-
 #
 # THIS CODE IS COPIED FROM PYTO:
 # https://github.com/vladanl/Pyto/tree/master/pyto/io
@@ -17,7 +16,8 @@ from builtins import zip
 from builtins import str
 from builtins import range
 from builtins import object
-#from past.utils import old_div
+
+# from past.utils import old_div
 from past.builtins import basestring
 
 import sys
@@ -25,10 +25,12 @@ import struct
 import re
 import os.path
 import logging
-#import warnings
+
+# import warnings
 from copy import copy, deepcopy
 import io
 from io import open
+
 try:
     import tifffile as tf
 except ModuleNotFoundError:
@@ -40,25 +42,29 @@ import scipy.ndimage as ndimage
 
 from . import microscope_db
 
+
 class FileTypeError(IOError):
     """
     Exception reised when nonexistant file type is given.
     """
+
     def __init__(self, requested, defined):
         self.requested = requested
         self.defined = defined
 
     def __str__(self):
-        msg = "Defined file formats are: \n\t" \
-               + str(list(set(self.defined.values()))) \
-               + "\nand defined extensions are: \n\t" \
-               + str(set(self.defined.keys()))
+        msg = (
+            "Defined file formats are: \n\t"
+            + str(list(set(self.defined.values())))
+            + "\nand defined extensions are: \n\t"
+            + str(set(self.defined.keys()))
+        )
         if self.requested is None:
             msg = msg + " File format not understood. "
         else:
-            msg = msg + " File format: " + self.requested \
-               + " doesn't exist. "
+            msg = msg + " File format: " + self.requested + " doesn't exist. "
         return msg
+
 
 class ImageIO(object):
     """
@@ -76,7 +82,6 @@ class ImageIO(object):
       - self.file_: file instance
     """
 
-
     ##########################################################
     #
     # Initialization
@@ -85,14 +90,16 @@ class ImageIO(object):
 
     # determine machine byte order
     byte_order = sys.byteorder
-    if byte_order == 'big':
-        machineByteOrder = '>'
-    elif byte_order == 'little':
-        machineByteOrder = '<'
+    if byte_order == "big":
+        machineByteOrder = ">"
+    elif byte_order == "little":
+        machineByteOrder = "<"
     else:
-        machineByteOrder = '<'
-        logging.warning("Machine byte order could not be determined, set to "\
-                            + " '<' (little endian).")
+        machineByteOrder = "<"
+        logging.warning(
+            "Machine byte order could not be determined, set to "
+            + " '<' (little endian)."
+        )
 
     def __init__(self, file=None):
         """
@@ -101,10 +108,9 @@ class ImageIO(object):
         file if file is a file instance.
         """
 
-
         # initialize attributes
         self.byteOrder = None
-        self.defaultArrayOrder = 'C'
+        self.defaultArrayOrder = "C"
         self.arrayOrder = None
         self.dataType = None
         self.shape = None
@@ -136,18 +142,27 @@ class ImageIO(object):
     #########################################################
 
     # File formats and extensions
-    fileFormats = { 'em': 'em',
-                    'EM': 'em',
-                    'raw': 'raw',
-                    'dat': 'raw',
-                    'RAW': 'raw',
-                    'mrc': 'mrc',
-                    'rec': 'mrc',
-                    'mrcs': 'mrc'
-                   }
+    fileFormats = {
+        "em": "em",
+        "EM": "em",
+        "raw": "raw",
+        "dat": "raw",
+        "RAW": "raw",
+        "mrc": "mrc",
+        "rec": "mrc",
+        "mrcs": "mrc",
+    }
 
-    def read(self, file=None, fileFormat=None, byteOrder=None, dataType=None,
-             arrayOrder=None, shape=None, memmap=False):
+    def read(
+        self,
+        file=None,
+        fileFormat=None,
+        byteOrder=None,
+        dataType=None,
+        arrayOrder=None,
+        shape=None,
+        memmap=False,
+    ):
         """
         Reads image file in em, mrc or raw data formats and saves the
         data in numpy.array format.
@@ -219,27 +234,41 @@ class ImageIO(object):
         # determine the file format
         self.setFileFormat(file_=file, fileFormat=fileFormat)
         if self.fileFormat is None:
-            raise FileTypeError(requested=self.fileFormat,
-                                defined=self.fileFormats)
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         # call the appropriate read method
-        if self.fileFormat == 'em':
+        if self.fileFormat == "em":
             self.readEM(
-                file=file, byteOrder=byteOrder, shape=shape,
-                dataType = dataType, arrayOrder=arrayOrder, memmap=memmap)
+                file=file,
+                byteOrder=byteOrder,
+                shape=shape,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                memmap=memmap,
+            )
             self.header = self.emHeader
-        elif self.fileFormat == 'mrc':
+        elif self.fileFormat == "mrc":
             self.readMRC(
-                file=file, byteOrder=byteOrder, shape=shape,
-                dataType = dataType, arrayOrder=arrayOrder, memmap=memmap)
+                file=file,
+                byteOrder=byteOrder,
+                shape=shape,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                memmap=memmap,
+            )
             self.header = self.mrcHeader
-        elif self.fileFormat == 'raw':
+        elif self.fileFormat == "raw":
             self.readRaw(
-                file=file, byteOrder=byteOrder, dataType=dataType,
-                arrayOrder=arrayOrder, shape=shape, memmap=memmap)
+                file=file,
+                byteOrder=byteOrder,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                shape=shape,
+                memmap=memmap,
+            )
             self.header = self.rawHeader
-        else: raise FileTypeError(requested=self.fileFormat,
-                                  defined=self.fileFormats)
+        else:
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         return
 
@@ -251,24 +280,35 @@ class ImageIO(object):
         # determine the file format
         self.setFileFormat(file_=file, fileFormat=fileFormat)
         if self.fileFormat is None:
-            raise FileTypeError(requested=self.fileFormat,
-                                defined=self.fileFormats)
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         # call the appropriate read method
-        if self.fileFormat == 'em':
+        if self.fileFormat == "em":
             self.readEMHeader(file=file, byteOrder=byteOrder)
-        elif self.fileFormat == 'mrc':
+        elif self.fileFormat == "mrc":
             self.readMRCHeader(file=file, byteOrder=byteOrder)
-        elif self.fileFormat == 'raw':
-            self.rawHeader = ''
-        else: raise FileTypeError(requested=self.fileFormat,
-                                  defined=self.fileFormats)
+        elif self.fileFormat == "raw":
+            self.rawHeader = ""
+        else:
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         return
 
-    def write(self, file=None, data=None, fileFormat=None, byteOrder=None,
-              dataType=None, arrayOrder=None, shape=None, length=None,
-              pixel=None, header=None, extended=None, casting='unsafe'):
+    def write(
+        self,
+        file=None,
+        data=None,
+        fileFormat=None,
+        byteOrder=None,
+        dataType=None,
+        arrayOrder=None,
+        shape=None,
+        length=None,
+        pixel=None,
+        header=None,
+        extended=None,
+        casting="unsafe",
+    ):
         """
         Writes image file (header if applicable and data).
         Values of all non-None arguments are saved as properties with same
@@ -325,32 +365,51 @@ class ImageIO(object):
         # determine the file format
         self.setFileFormat(file_=file, fileFormat=fileFormat)
         if self.fileFormat is None:
-            raise FileTypeError(requested=self.fileFormat,
-                                defined=self.fileFormats)
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         # just in case dataType is given as numpy.dtype
         if isinstance(dataType, numpy.dtype):
             dataType = str(dataType)
 
         # call the appropriate write method
-        if self.fileFormat  == 'em':
+        if self.fileFormat == "em":
             self.writeEM(
-                file=file, data=data, header=header, byteOrder=byteOrder,
-                dataType=dataType, arrayOrder=arrayOrder, shape=shape,
-                casting=casting)
-        elif self.fileFormat  == 'mrc':
+                file=file,
+                data=data,
+                header=header,
+                byteOrder=byteOrder,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                shape=shape,
+                casting=casting,
+            )
+        elif self.fileFormat == "mrc":
             self.writeMRC(
-                file=file, data=data, header=header, byteOrder=byteOrder,
-                dataType=dataType, arrayOrder=arrayOrder, shape=shape,
-                length=length, pixel=pixel, extended=extended, casting=casting)
-        elif self.fileFormat == 'raw':
+                file=file,
+                data=data,
+                header=header,
+                byteOrder=byteOrder,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                shape=shape,
+                length=length,
+                pixel=pixel,
+                extended=extended,
+                casting=casting,
+            )
+        elif self.fileFormat == "raw":
             self.writeRaw(
-                file=file, data=data, header=header, byteOrder=byteOrder,
-                dataType=dataType, arrayOrder=arrayOrder, shape=shape,
-                casting=casting)
+                file=file,
+                data=data,
+                header=header,
+                byteOrder=byteOrder,
+                dataType=dataType,
+                arrayOrder=arrayOrder,
+                shape=shape,
+                casting=casting,
+            )
         else:
-            raise FileTypeError(requested=self.fileFormat,
-                                defined=self.fileFormats)
+            raise FileTypeError(requested=self.fileFormat, defined=self.fileFormats)
 
         return self.file_
 
@@ -361,71 +420,123 @@ class ImageIO(object):
     ###########################################################
 
     # EM file format properties
-    em = { 'headerSize': 512,
-           'headerFormat': '4b 3i 80s 40i 20s 8s 228s',
-           'defaultByteOrder': machineByteOrder,
-           #'arrayOrder': 'FORTRAN'
-           'arrayOrder': 'F'
-                 }
+    em = {
+        "headerSize": 512,
+        "headerFormat": "4b 3i 80s 40i 20s 8s 228s",
+        "defaultByteOrder": machineByteOrder,
+        #'arrayOrder': 'FORTRAN'
+        "arrayOrder": "F",
+    }
     emHeaderFields = (
-        'machine', 'newOS9', 'noHeader', 'dataTypeCode', 'lengthX', 'lengthY',
-        'lengthZ', 'comment',
-        'voltage', 'cs', 'aperture', 'magnification', 'postmagnification',
-        'exposureTime','_pixelsize', 'emCode', 'ccdPixelsize', 'ccdLength',
-        'defocus', 'astigmatism', 'astigmatismAngle', 'focusIncrement',
-        'countsPerelectron',
-        'intensity', 'energySlitWidth', 'energyOffset', '_tiltAngle',
-        'tiltAxis',
-        'field_21', 'field_22', 'field_23', 'markerX', 'markerY',
-        'resolution', 'density', 'contrast', 'field_29', 'massCentreX',
-        'massCentreY', 'massCentreZ', 'height', 'field_34',
-        'widthDreistrahlbereich',
-        'widthAchromRing', 'lambda', 'deltaTheta', 'field_39', 'field_40',
-        'username', 'date', 'userdata')
-    emDefaultHeader = [6, 0, 0, 0, 1, 1, 1, 80*b' '] \
-                      + numpy.zeros(40, 'int8').tolist() \
-                      + [20*b' ', 8*b' ', 228*b' ']
+        "machine",
+        "newOS9",
+        "noHeader",
+        "dataTypeCode",
+        "lengthX",
+        "lengthY",
+        "lengthZ",
+        "comment",
+        "voltage",
+        "cs",
+        "aperture",
+        "magnification",
+        "postmagnification",
+        "exposureTime",
+        "_pixelsize",
+        "emCode",
+        "ccdPixelsize",
+        "ccdLength",
+        "defocus",
+        "astigmatism",
+        "astigmatismAngle",
+        "focusIncrement",
+        "countsPerelectron",
+        "intensity",
+        "energySlitWidth",
+        "energyOffset",
+        "_tiltAngle",
+        "tiltAxis",
+        "field_21",
+        "field_22",
+        "field_23",
+        "markerX",
+        "markerY",
+        "resolution",
+        "density",
+        "contrast",
+        "field_29",
+        "massCentreX",
+        "massCentreY",
+        "massCentreZ",
+        "height",
+        "field_34",
+        "widthDreistrahlbereich",
+        "widthAchromRing",
+        "lambda",
+        "deltaTheta",
+        "field_39",
+        "field_40",
+        "username",
+        "date",
+        "userdata",
+    )
+    emDefaultHeader = (
+        [6, 0, 0, 0, 1, 1, 1, 80 * b" "]
+        + numpy.zeros(40, "int8").tolist()
+        + [20 * b" ", 8 * b" ", 228 * b" "]
+    )
     emDefaultShape = [0, 0, 0]
-    #emDefaultDataType = 0
-    emByteOrderTab = { 5: '>',  # Mac
-                       6: '<'   # PC (Intel)
-                       }
-    emByteOrderTabInv = dict( list(zip(list(emByteOrderTab.values()),
-                                  list(emByteOrderTab.keys()))) )
-    emDataTypeTab = {1: 'uint8',
-                     2: 'uint16',
-                     4: 'int32',
-                     5: 'float32',
-                     8: 'complex64',
-                     9: 'float64'
-                     }
-    emDataTypeTabInv = dict( list(zip(list(emDataTypeTab.values()),
-                                  list(emDataTypeTab.keys()))) )
+    # emDefaultDataType = 0
+    emByteOrderTab = {5: ">", 6: "<"}  # Mac  # PC (Intel)
+    emByteOrderTabInv = dict(
+        list(zip(list(emByteOrderTab.values()), list(emByteOrderTab.keys())))
+    )
+    emDataTypeTab = {
+        1: "uint8",
+        2: "uint16",
+        4: "int32",
+        5: "float32",
+        8: "complex64",
+        9: "float64",
+    }
+    emDataTypeTabInv = dict(
+        list(zip(list(emDataTypeTab.values()), list(emDataTypeTab.keys())))
+    )
 
-
-    def readEM(self, file=None, byteOrder=None, dataType=None,
-               arrayOrder=None, shape=None, memmap=False):
+    def readEM(
+        self,
+        file=None,
+        byteOrder=None,
+        dataType=None,
+        arrayOrder=None,
+        shape=None,
+        memmap=False,
+    ):
         """
         Reads EM file.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # set defaults
-        self.arrayOrder = ImageIO.em['arrayOrder']
+        self.arrayOrder = ImageIO.em["arrayOrder"]
 
         # parse arguments
-        if byteOrder is not None: self.byteOrder = byteOrder
-        if dataType is not None: self.dataType = dataType
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
-        if shape is not None: self.shape = shape
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
+        if dataType is not None:
+            self.dataType = dataType
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
+        if shape is not None:
+            self.shape = shape
 
         # use defaults if needed
         if self.byteOrder is None:
-            self.byteOrder = ImageIO.em['defaultByteOrder']
+            self.byteOrder = ImageIO.em["defaultByteOrder"]
         if self.arrayOrder is None:
-            self.arrayOrder = ImageIO.em['arrayOrder']
+            self.arrayOrder = ImageIO.em["arrayOrder"]
 
         # read the header
         self.readEMHeader(file=self.file_)
@@ -436,37 +547,46 @@ class ImageIO(object):
         return
 
     def readEMHeader(self, file=None, byteOrder=None):
-        'Reads a header of an EM file'
+        "Reads a header of an EM file"
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # read the header
-        self.headerString = self.file_.read(ImageIO.em['headerSize'])
+        self.headerString = self.file_.read(ImageIO.em["headerSize"])
 
         # determine byte order
         if byteOrder is not None:  # explicit byte order
             self.byteOrder = byteOrder
-        else:                   # determine byte order form the file
-            (self.machine, tmp) = struct.unpack('b 511s', self.headerString)
+        else:  # determine byte order form the file
+            (self.machine, tmp) = struct.unpack("b 511s", self.headerString)
             self.byteOrder = ImageIO.emByteOrderTab[self.machine]
-        format = self.byteOrder + ImageIO.em['headerFormat']
+        format = self.byteOrder + ImageIO.em["headerFormat"]
 
         # unpack the header with the right byte order
-        self.emHeader = list( struct.unpack(format, self.headerString) )
+        self.emHeader = list(struct.unpack(format, self.headerString))
 
         # parse data type and shape (important)
-        self.dataType = ImageIO.emDataTypeTab[ self.emHeader[3] ]
-        self.shape =  self.emHeader[4:7]
+        self.dataType = ImageIO.emDataTypeTab[self.emHeader[3]]
+        self.shape = self.emHeader[4:7]
 
         # parse the rest of the header
-        for (attr, val) in zip(ImageIO.emHeaderFields, self.emHeader):
+        for attr, val in zip(ImageIO.emHeaderFields, self.emHeader):
             self.__dict__[attr] = val
 
         return
 
-    def writeEM(self, file=None, header=None, byteOrder=None, shape=None,
-                dataType=None, arrayOrder=None, data=None, casting='unsafe'):
+    def writeEM(
+        self,
+        file=None,
+        header=None,
+        byteOrder=None,
+        shape=None,
+        dataType=None,
+        arrayOrder=None,
+        data=None,
+        casting="unsafe",
+    ):
         """
         Writes EM file (header and data).
         File can be a file name (string) or an instance of file. If not given
@@ -493,24 +613,26 @@ class ImageIO(object):
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='wb')
+        self.checkFile(file_=file, mode="wb")
 
         # set emHeader
         if header is not None:
             self.emHeader = header
 
         # byteOrder: use the argument, self.byteOrder, or the default value
-        if byteOrder is not None: self.byteOrder = byteOrder
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
         if self.byteOrder is None:
-            #if self.emHeader is not None:
+            # if self.emHeader is not None:
             #    self.byteOrder = ImageIO.emByteOrderTab[self.emHeader[0]]
-            #else:
-            self.byteOrder = ImageIO.em['defaultByteOrder']
+            # else:
+            self.byteOrder = ImageIO.em["defaultByteOrder"]
 
         # arrayOrder: use the argument, self.arrayOrder, or the default value
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
         if self.arrayOrder is None:
-            self.arrayOrder = ImageIO.em['arrayOrder']
+            self.arrayOrder = ImageIO.em["arrayOrder"]
 
         # data: use the argument or the self.data, set self.shape and
         # self.dataType
@@ -520,57 +642,56 @@ class ImageIO(object):
         # dataType: use the argument or self.dataType
         if dataType is not None:
             self.dataType = dataType
-        #if self.dataType is None:
+        # if self.dataType is None:
         #    self.dataType = self.emDefaultDataType
-        #if self.dataType is None:
-            #if self.emHeader is not None:
-            #    self.dataType = ImageIO.emDataTypeTab[self.emHeader[3]]
+        # if self.dataType is None:
+        # if self.emHeader is not None:
+        #    self.dataType = ImageIO.emDataTypeTab[self.emHeader[3]]
 
         # convert data to another dtype if needed
         wrong_data_type = False
         try:
-            if self.dataType == 'uint8':
-                if self.data.dtype.name != 'uint8':
-                    self.data = self.data.astype(dtype='uint8', casting=casting)
-            elif self.dataType == 'uint16':
-                if self.data.dtype.name != 'uint16':
-                    self.data =  self.data.astype(dtype='uint16',
-                                                  casting=casting)
-            elif self.dataType == 'int32':
-                if self.data.dtype.name != 'int32':
-                    self.data =  self.data.astype(dtype='int32',
-                                                  casting=casting)
-            elif self.dataType == 'float32':
-                if self.data.dtype.name != 'float32':
-                    self.data = self.data.astype(dtype='float32',
-                                                 casting=casting)
-            elif self.dataType == 'complex64':
-                if self.data.dtype.name != 'complex64':
-                    self.data = self.data.astype(dtype='complex64',
-                                                 casting=casting)
-            elif self.dataType == 'float64':
-                if self.data.dtype.name != 'float64':
-                    self.data = self.data.astype(dtype='float64',
-                                                 casting=casting)
+            if self.dataType == "uint8":
+                if self.data.dtype.name != "uint8":
+                    self.data = self.data.astype(dtype="uint8", casting=casting)
+            elif self.dataType == "uint16":
+                if self.data.dtype.name != "uint16":
+                    self.data = self.data.astype(dtype="uint16", casting=casting)
+            elif self.dataType == "int32":
+                if self.data.dtype.name != "int32":
+                    self.data = self.data.astype(dtype="int32", casting=casting)
+            elif self.dataType == "float32":
+                if self.data.dtype.name != "float32":
+                    self.data = self.data.astype(dtype="float32", casting=casting)
+            elif self.dataType == "complex64":
+                if self.data.dtype.name != "complex64":
+                    self.data = self.data.astype(dtype="complex64", casting=casting)
+            elif self.dataType == "float64":
+                if self.data.dtype.name != "float64":
+                    self.data = self.data.astype(dtype="float64", casting=casting)
             else:
                 wrong_data_type = True
         except TypeError:
-            print("Error most likely because trying to cast " +
-                  self.data.dtype.name + " array to " + self.dataType +
-                  " type. This may cause errors, so change argument dataType "
-                  "to an appropriate one.")
+            print(
+                "Error most likely because trying to cast "
+                + self.data.dtype.name
+                + " array to "
+                + self.dataType
+                + " type. This may cause errors, so change argument dataType "
+                "to an appropriate one."
+            )
             raise
         if wrong_data_type:
             raise TypeError(
                 "Data type " + self.dataType + " is not valid for EM"
                 " format. Allowed types are: "
-                + str(list(ImageIO.emDataTypeTab.values())))
-
+                + str(list(ImageIO.emDataTypeTab.values()))
+            )
 
         # shape: use the argument, self.shape, or use default
-        #if shape is not None: self.shape = shape
+        # if shape is not None: self.shape = shape
         # probably not needed (15.01.08)
-        #if self.shape is None:
+        # if self.shape is None:
         #    if self.emHeader is not None:
         #        self.shape = self.emHeader[4:8]
         #    else:
@@ -587,29 +708,32 @@ class ImageIO(object):
             try:
                 self.emHeader[3] = ImageIO.emDataTypeTabInv[self.dataType]
             except KeyError:
-                print("Data type " + self.dataType
-                      + " is not valid for EM format."
-                      + "Allowed types are: "
-                      + str(list(ImageIO.emDataTypeTab.values())))
+                print(
+                    "Data type "
+                    + self.dataType
+                    + " is not valid for EM format."
+                    + "Allowed types are: "
+                    + str(list(ImageIO.emDataTypeTab.values()))
+                )
                 raise
-            for k in range( len(self.shape) ):
-                self.emHeader[4+k] = self.shape[k]
+            for k in range(len(self.shape)):
+                self.emHeader[4 + k] = self.shape[k]
         except (AttributeError, LookupError):
-            print(
-                "Need to specify byte order, data type and shape of the data.")
+            print("Need to specify byte order, data type and shape of the data.")
             raise
 
         # convert emHeader to a string and write it
-        self.headerString = struct.pack(ImageIO.em['headerFormat'],
-                                        *tuple(self.emHeader))
+        self.headerString = struct.pack(
+            ImageIO.em["headerFormat"], *tuple(self.emHeader)
+        )
         self.file_.write(self.headerString)
 
         # write data if exist
-        if self.data is not None: self.writeData()
+        if self.data is not None:
+            self.writeData()
         self.file_.flush()
 
         return
-
 
     #####################################################
     #
@@ -618,61 +742,70 @@ class ImageIO(object):
     #####################################################
 
     # MRC file format properties
-    mrc = { 'headerSize': 1024,
-           'headerFormat': '10i 6f 3i 3f 2i h 30s 4h 6f 6h 12f i 800s',
-            'defaultByteOrder': machineByteOrder,
-            #'defaultArrayOrder': 'FORTRAN',
-            'defaultArrayOrder': 'F',
-            'defaultAxisOrder': (1,2,3)
-            }
-    mrcDefaultShape = [1,1,1]
-    mrcDefaultPixel = [1,1,1]
+    mrc = {
+        "headerSize": 1024,
+        "headerFormat": "10i 6f 3i 3f 2i h 30s 4h 6f 6h 12f i 800s",
+        "defaultByteOrder": machineByteOrder,
+        #'defaultArrayOrder': 'FORTRAN',
+        "defaultArrayOrder": "F",
+        "defaultAxisOrder": (1, 2, 3),
+    }
+    mrcDefaultShape = [1, 1, 1]
+    mrcDefaultPixel = [1, 1, 1]
     mrcDefaultHeader = (
-        numpy.ones(3, 'int32').tolist()
-        + numpy.zeros(7, 'int32').tolist()
-        + numpy.zeros(6, 'float32').tolist()
-        + list( mrc['defaultAxisOrder'] )
-        + numpy.zeros(3, 'float32').tolist()
-        + numpy.zeros(2, 'int32').tolist()
-        + numpy.zeros(1, 'int16').tolist()
-        + [30*b' ']
-        + numpy.zeros(4, 'int16').tolist()
-        + numpy.zeros(6, 'float32').tolist()
-        + numpy.zeros(6, 'int16').tolist()
-        + numpy.zeros(12, 'float32').tolist()
-        + numpy.zeros(1, 'int32').tolist()
-        + [800*b' '])
+        numpy.ones(3, "int32").tolist()
+        + numpy.zeros(7, "int32").tolist()
+        + numpy.zeros(6, "float32").tolist()
+        + list(mrc["defaultAxisOrder"])
+        + numpy.zeros(3, "float32").tolist()
+        + numpy.zeros(2, "int32").tolist()
+        + numpy.zeros(1, "int16").tolist()
+        + [30 * b" "]
+        + numpy.zeros(4, "int16").tolist()
+        + numpy.zeros(6, "float32").tolist()
+        + numpy.zeros(6, "int16").tolist()
+        + numpy.zeros(12, "float32").tolist()
+        + numpy.zeros(1, "int32").tolist()
+        + [800 * b" "]
+    )
 
     # type 3 not implemented, added imod type 6
-    mrcDataTypeTab = {0: 'ubyte',
-                      1: 'int16',
-                      2: 'float32',
-                      4: 'complex64',
-                      6: 'uint16'
-                     }
-    mrcDataTypeTabInv = dict( list(zip(list(mrcDataTypeTab.values()),
-                                  list(mrcDataTypeTab.keys()))) )
+    mrcDataTypeTab = {0: "ubyte", 1: "int16", 2: "float32", 4: "complex64", 6: "uint16"}
+    mrcDataTypeTabInv = dict(
+        list(zip(list(mrcDataTypeTab.values()), list(mrcDataTypeTab.keys())))
+    )
 
-    def readMRC(self, file=None, byteOrder=None, dataType=None,
-                arrayOrder=None, shape=None, memmap=False):
+    def readMRC(
+        self,
+        file=None,
+        byteOrder=None,
+        dataType=None,
+        arrayOrder=None,
+        shape=None,
+        memmap=False,
+    ):
         """
         Reads mrc file.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # parse arguments
-        if byteOrder is not None: self.byteOrder = byteOrder
-        if dataType is not None: self.dataType = dataType
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
-        if shape is not None: self.shape = shape
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
+        if dataType is not None:
+            self.dataType = dataType
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
+        if shape is not None:
+            self.shape = shape
 
         # use defaults if needed
         if self.byteOrder is None:
-            self.byteOrder = ImageIO.mrc['defaultByteOrder']
+            self.byteOrder = ImageIO.mrc["defaultByteOrder"]
         if self.arrayOrder is None:
-            self.arrayOrder = ImageIO.mrc['defaultArrayOrder']
+            self.arrayOrder = ImageIO.mrc["defaultArrayOrder"]
 
         # read the header
         self.readMRCHeader(file=self.file_)
@@ -701,36 +834,38 @@ class ImageIO(object):
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # set byte order
-        if byteOrder is not None: self.byteOrder = byteOrder
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
         if self.byteOrder is None:
-            self.byteOrder = ImageIO.mrc['defaultByteOrder']
+            self.byteOrder = ImageIO.mrc["defaultByteOrder"]
 
         # read and unpack the header
-        format = self.byteOrder + ImageIO.mrc['headerFormat']
-        self.headerString = self.file_.read(ImageIO.mrc['headerSize'])
-        self.mrcHeader = list( struct.unpack(format, self.headerString) )
+        format = self.byteOrder + ImageIO.mrc["headerFormat"]
+        self.headerString = self.file_.read(ImageIO.mrc["headerSize"])
+        self.mrcHeader = list(struct.unpack(format, self.headerString))
 
         # check the data type
         data_type = ImageIO.mrcDataTypeTab.get(self.mrcHeader[3], None)
         if data_type is None:
-
             # byte order might be wrong: switch and unpack the header again
-            if self.byteOrder == '<':
-                header_byte_order = '>'
+            if self.byteOrder == "<":
+                header_byte_order = ">"
             else:
-                header_byte_order = '<'
-            format = header_byte_order + ImageIO.mrc['headerFormat']
-            self.mrcHeader = list( struct.unpack(format, self.headerString) )
+                header_byte_order = "<"
+            format = header_byte_order + ImageIO.mrc["headerFormat"]
+            self.mrcHeader = list(struct.unpack(format, self.headerString))
 
             # check new data type
             data_type = ImageIO.mrcDataTypeTab.get(self.mrcHeader[3], None)
             if data_type is None:
                 raise ValueError(
                     "Could not determine the byte order or the data type "
-                    + "of file " + file)
+                    + "of file "
+                    + file
+                )
             else:
                 self.byteOrder = header_byte_order
 
@@ -757,32 +892,32 @@ class ImageIO(object):
             self.mrcHeader = header
 
         # parse shape and data type
-        self.shape =  self.mrcHeader[0:3]  # C: z fastest changing
-        self.dataType = ImageIO.mrcDataTypeTab[ self.mrcHeader[3] ]
+        self.shape = self.mrcHeader[0:3]  # C: z fastest changing
+        self.dataType = ImageIO.mrcDataTypeTab[self.mrcHeader[3]]
         self.axisOrder = self.mrcHeader[16:19]  # read but not used
 
         # pixel size and length
         self.pixel = copy(self.mrcDefaultPixel)
-        for ind in [0,1,2]:
+        for ind in [0, 1, 2]:
             try:
-                self.pixel[ind] = (
-                    float(self.mrcHeader[ind+10]) / (10. * self.mrcHeader[ind]))
+                self.pixel[ind] = float(self.mrcHeader[ind + 10]) / (
+                    10.0 * self.mrcHeader[ind]
+                )
             except ZeroDivisionError:
                 self.pixel[ind] = 1
-        #self.pixel = [
+        # self.pixel = [
         #    float(self.mrcHeader[10]) / self.mrcHeader[0],
         #    float(self.mrcHeader[11]) / self.mrcHeader[1],
         #    float(self.mrcHeader[12]) / self.mrcHeader[2]]
-        self.length = [self.mrcHeader[10], self.mrcHeader[11],
-                       self.mrcHeader[12]]
+        self.length = [self.mrcHeader[10], self.mrcHeader[11], self.mrcHeader[12]]
 
         # labels (titles)
         try:
-            self.n_labels = struct.unpack('i', self.headerString[220:224])[0]
+            self.n_labels = struct.unpack("i", self.headerString[220:224])[0]
             self.labels = []
             l_begin = 224
             for label_ind in range(self.n_labels):
-                self.labels.append(self.headerString[l_begin:l_begin+80])
+                self.labels.append(self.headerString[l_begin : l_begin + 80])
                 l_begin += 80
         except AttributeError:
             pass
@@ -790,14 +925,24 @@ class ImageIO(object):
         # read extended header if present
         self.extendedHeaderLength = self.mrcHeader[23]
         if header is None:
-            self.extendedHeaderString = self.file_.read(
-                self.extendedHeaderLength)
+            self.extendedHeaderString = self.file_.read(self.extendedHeaderLength)
 
         return
 
-    def writeMRC(self, file=None, header=None, byteOrder=None, shape=None,
-                 dataType=None, arrayOrder=None, length=None, pixel=None,
-                 data=None, extended=None, casting='unsafe'):
+    def writeMRC(
+        self,
+        file=None,
+        header=None,
+        byteOrder=None,
+        shape=None,
+        dataType=None,
+        arrayOrder=None,
+        length=None,
+        pixel=None,
+        data=None,
+        extended=None,
+        casting="unsafe",
+    ):
         """
         Writes MRC file (header and data).
         Values of all non-None arguments are saved as properties with same
@@ -835,21 +980,23 @@ class ImageIO(object):
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='wb')
+        self.checkFile(file_=file, mode="wb")
 
         # set attributes from header
         if header is not None:
             self.parseMRCHeader(header=header)
 
         # buteOrder: use the argument, self.byteOrder, or the default value
-        if byteOrder is not None: self.byteOrder = byteOrder
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
         if self.byteOrder is None:
-            self.byteOrder = ImageIO.mrc['defaultByteOrder']
+            self.byteOrder = ImageIO.mrc["defaultByteOrder"]
 
         # arrayOrder: use the argument, self.arrayOrder, or the default value
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
         if self.arrayOrder is None:
-            self.arrayOrder = ImageIO.mrc['defaultArrayOrder']
+            self.arrayOrder = ImageIO.mrc["defaultArrayOrder"]
 
         # pixel size: use the argument, self.pixel, or the default value
         if pixel is not None:
@@ -861,9 +1008,9 @@ class ImageIO(object):
         # sets self.data, self.shape and self.dataType
         if data is not None:
             self.setData(data, shape=shape, pixel=self.pixel)
-        #else:
-            # adjust length for mrc header in case self.data was set before
-            # self.fileFormat was set
+        # else:
+        # adjust length for mrc header in case self.data was set before
+        # self.fileFormat was set
         #    if (self.fileFormat is not None) and (self.fileFormat == 'mrc'):
         #        self.adjustLength(shape=None, pixel=self.pixel)
 
@@ -875,46 +1022,49 @@ class ImageIO(object):
                 self.dataType = ImageIO.mrcDataTypeTab[self.mrcHeader[3]]
 
         # unit8 and ubyte are the same
-        if self.dataType == 'uint8':
-            self.dataType = 'ubyte'
+        if self.dataType == "uint8":
+            self.dataType = "ubyte"
 
         # convert data to another dtype if needed
         wrong_data_type = False
         try:
-            if (self.dataType == 'ubyte') or (self.dataType == 'uint8'):
-                if self.data.dtype.name != 'uint8':
-                    self.data = self.data.astype(dtype='uint8', casting=casting)
-            elif self.dataType == 'int16':
-                if self.data.dtype.name != 'int16':
-                    self.data = self.data.astype(dtype='int16', casting=casting)
-            elif self.dataType == 'float32':
-                if self.data.dtype.name != 'float32':
-                    self.data = self.data.astype(dtype='float32',
-                                                 casting=casting)
-            elif self.dataType == 'complex64':
-                if self.data.dtype.name != 'complex64':
-                    self.data = self.data.astype(dtype='complex64',
-                                                 casting=casting)
+            if (self.dataType == "ubyte") or (self.dataType == "uint8"):
+                if self.data.dtype.name != "uint8":
+                    self.data = self.data.astype(dtype="uint8", casting=casting)
+            elif self.dataType == "int16":
+                if self.data.dtype.name != "int16":
+                    self.data = self.data.astype(dtype="int16", casting=casting)
+            elif self.dataType == "float32":
+                if self.data.dtype.name != "float32":
+                    self.data = self.data.astype(dtype="float32", casting=casting)
+            elif self.dataType == "complex64":
+                if self.data.dtype.name != "complex64":
+                    self.data = self.data.astype(dtype="complex64", casting=casting)
             else:
                 wrong_data_type = True
         except TypeError:
-            print("Error most likely because trying to cast " +
-                  self.data.dtype.name + " array to " + str(self.dataType) +
-                  " type. This may cause errors, so change argument dataType "
-                  "to an appropriate one.")
+            print(
+                "Error most likely because trying to cast "
+                + self.data.dtype.name
+                + " array to "
+                + str(self.dataType)
+                + " type. This may cause errors, so change argument dataType "
+                "to an appropriate one."
+            )
             raise
         if wrong_data_type:
             raise TypeError(
                 "Data type " + str(self.dataType) + " is not valid for MRC"
                 " format. Allowed types are: "
-                + str(list(ImageIO.mrcDataTypeTab.values())))
+                + str(list(ImageIO.mrcDataTypeTab.values()))
+            )
 
         # axisOrder: self.axisOrder or default
         if self.axisOrder is None:
-            self.axisOrder = ImageIO.mrc['defaultAxisOrder']
+            self.axisOrder = ImageIO.mrc["defaultAxisOrder"]
 
         # shape: use the argument, self.shape, get from header, or use default
-        #if shape is not None: self.shape = shape
+        # if shape is not None: self.shape = shape
         if self.shape is None:
             self.shape = copy(ImageIO.mrcDefaultShape)
 
@@ -934,11 +1084,12 @@ class ImageIO(object):
             raise
 
         # length: use the argument, self.length, or shape * pixel_in_A
-        if length is not None: self.length = length
+        if length is not None:
+            self.length = length
         if self.length is None:
             try:
                 self.adjustLength()
-                #self.length = 10 * numpy.asarray(self.shape) \
+                # self.length = 10 * numpy.asarray(self.shape) \
                 #    * numpy.asarray(self.pixel)
             except (AttributeError, LookupError):
                 print("Need to specify shape of the data.")
@@ -954,16 +1105,20 @@ class ImageIO(object):
 
         # add shape, data type and axisOrder to the header
         try:
-            for k in range( len(self.shape) ):
+            for k in range(len(self.shape)):
                 self.mrcHeader[k] = self.shape[k]
-                self.mrcHeader[k+7] = self.shape[k]
-                self.mrcHeader[k+10] = self.length[k]
+                self.mrcHeader[k + 7] = self.shape[k]
+                self.mrcHeader[k + 10] = self.length[k]
             try:
                 self.mrcHeader[3] = ImageIO.mrcDataTypeTabInv[self.dataType]
             except KeyError:
-                print("Data type " + str(self.dataType) + " is not valid for "
-                      + "MRC format. Allowed types are: "
-                      + str(list(ImageIO.mrcDataTypeTab.values())))
+                print(
+                    "Data type "
+                    + str(self.dataType)
+                    + " is not valid for "
+                    + "MRC format. Allowed types are: "
+                    + str(list(ImageIO.mrcDataTypeTab.values()))
+                )
                 raise
             self.mrcHeader[16:19] = self.axisOrder
         except (AttributeError, LookupError):
@@ -977,14 +1132,16 @@ class ImageIO(object):
             self.mrcHeader[21] = self.data.mean()
 
         # convert header to a string and write it
-        self.headerString = struct.pack(ImageIO.mrc['headerFormat'],
-                                        *tuple(self.mrcHeader))
+        self.headerString = struct.pack(
+            ImageIO.mrc["headerFormat"], *tuple(self.mrcHeader)
+        )
         if extended is not None:
             self.headerString = self.headerString + extended
         self.file_.write(self.headerString)
 
         # write data if exist
-        if self.data is not None: self.writeData()
+        if self.data is not None:
+            self.writeData()
         self.file_.flush()
 
         return
@@ -1002,8 +1159,10 @@ class ImageIO(object):
         """
 
         # set variables
-        if shape is None: shape = self.shape
-        if pixel is None: pixel = self.pixel
+        if shape is None:
+            shape = self.shape
+        if pixel is None:
+            pixel = self.pixel
 
         # calculate length in all 3 dimensions
         shape = numpy.asarray(shape)
@@ -1017,7 +1176,7 @@ class ImageIO(object):
     #
     ######################################################
 
-    #def readTiff()
+    # def readTiff()
 
     #####################################################
     #
@@ -1026,33 +1185,47 @@ class ImageIO(object):
     ######################################################
 
     # raw file format properties
-    raw = { 'defaultHeaderSize': 0,
-            'defaultByteOrder': machineByteOrder,
-            #'defaultArrayOrder': 'FORTRAN'
-            'defaultArrayOrder': 'F'
-            }
+    raw = {
+        "defaultHeaderSize": 0,
+        "defaultByteOrder": machineByteOrder,
+        #'defaultArrayOrder': 'FORTRAN'
+        "defaultArrayOrder": "F",
+    }
 
     def readRaw(
-            self, file=None, dataType=None, shape=None,
-            byteOrder=None, arrayOrder=None, headerSize=None, memmap=False):
+        self,
+        file=None,
+        dataType=None,
+        shape=None,
+        byteOrder=None,
+        arrayOrder=None,
+        headerSize=None,
+        memmap=False,
+    ):
         """
         Reads raw data file.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # set defaults
-        self.byteOrder = ImageIO.raw['defaultByteOrder']
-        self.arrayOrder = ImageIO.raw['defaultArrayOrder']
+        self.byteOrder = ImageIO.raw["defaultByteOrder"]
+        self.arrayOrder = ImageIO.raw["defaultArrayOrder"]
 
         # parse arguments
-        if file is not None: self.file_ = file
-        if byteOrder is not None: self.byteOrder = byteOrder
-        if dataType is not None: self.dataType = dataType
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
-        if shape is not None: self.shape = shape
-        if headerSize is not None: self.rawHeaderSize = headerSize
+        if file is not None:
+            self.file_ = file
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
+        if dataType is not None:
+            self.dataType = dataType
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
+        if shape is not None:
+            self.shape = shape
+        if headerSize is not None:
+            self.rawHeaderSize = headerSize
 
         # read header
         self.readRawHeader(file=self.file_, size=self.rawHeaderSize)
@@ -1073,23 +1246,31 @@ class ImageIO(object):
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='rb')
+        self.checkFile(file_=file, mode="rb")
 
         # determine header size
         if size is not None:
             self.rawHeaderSize = size
         elif self.rawHeaderSize is None:
-            self.rawHeaderSize = self.raw['defaultHeaderSize']
+            self.rawHeaderSize = self.raw["defaultHeaderSize"]
 
         # read the header
         if (size is not None) and (size > 0):
             self.headerString = self.file_.read(self.rawHeaderSize)
         else:
-            self.headerString = ''
+            self.headerString = ""
 
     def writeRaw(
-        self, file=None, header=None, data=None, shape=None,
-        dataType=None, byteOrder=None, arrayOrder=None, casting='unsafe'):
+        self,
+        file=None,
+        header=None,
+        data=None,
+        shape=None,
+        dataType=None,
+        byteOrder=None,
+        arrayOrder=None,
+        casting="unsafe",
+    ):
         """
         Writes raw data.
         Values of all non-None arguments are saved as properties with same
@@ -1107,18 +1288,21 @@ class ImageIO(object):
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode='wb')
+        self.checkFile(file_=file, mode="wb")
 
         # set defaults
-        self.arrayOrder = ImageIO.raw['defaultArrayOrder']
-        self.byteOrder = ImageIO.raw['defaultByteOrder']
+        self.arrayOrder = ImageIO.raw["defaultArrayOrder"]
+        self.byteOrder = ImageIO.raw["defaultByteOrder"]
 
         # parse arguments
-        if file is not None: self.file_ = file
+        if file is not None:
+            self.file_ = file
         if data is not None:
-            self.setData(data, shape=shape)    # sets self.shape also
-        if byteOrder is not None: self.byteOrder = byteOrder
-        if arrayOrder is not None: self.arrayOrder = arrayOrder
+            self.setData(data, shape=shape)  # sets self.shape also
+        if byteOrder is not None:
+            self.byteOrder = byteOrder
+        if arrayOrder is not None:
+            self.arrayOrder = arrayOrder
 
         # data type
         if dataType is not None:
@@ -1127,13 +1311,16 @@ class ImageIO(object):
             self.dataType = self.data.dtype.name
         if self.dataType != self.data.dtype.name:
             try:
-                 self.data = self.data.astype(dtype=self.dataType,
-                                             casting=casting)
+                self.data = self.data.astype(dtype=self.dataType, casting=casting)
             except TypeError:
-                print("Error most likely because trying to cast " +
-                      self.data.dtype.name + " array to " + self.dataType +
-                      " type. This may cause errors, so change argument "
-                      "dataType to an appropriate one.")
+                print(
+                    "Error most likely because trying to cast "
+                    + self.data.dtype.name
+                    + " array to "
+                    + self.dataType
+                    + " type. This may cause errors, so change argument "
+                    "dataType to an appropriate one."
+                )
                 raise
 
         # write header
@@ -1144,7 +1331,6 @@ class ImageIO(object):
         self.writeData()
 
         return
-
 
     ########################################################
     #
@@ -1187,7 +1373,7 @@ class ImageIO(object):
             self.dataType = self.data.dtype.name
 
         # adjust length for mrc files
-        if (self.fileFormat is not None) and (self.fileFormat == 'mrc'):
+        if (self.fileFormat is not None) and (self.fileFormat == "mrc"):
             self.adjustLength(shape=None, pixel=pixel)
 
     def readData(self, shape=None, memmap=False):
@@ -1206,14 +1392,18 @@ class ImageIO(object):
             ext_head_len = self.extendedHeaderLength
         except AttributeError:
             ext_head_len = 0
-        total_head_len = len(self.headerString)+ext_head_len
+        total_head_len = len(self.headerString) + ext_head_len
 
         # read data in numpy.ndarray
         if memmap:
             self.data = numpy.memmap(
-                self.file_, mode='r', shape=tuple(self.shape),
-                dtype=self.dataType, offset=total_head_len,
-                order=self.arrayOrder)
+                self.file_,
+                mode="r",
+                shape=tuple(self.shape),
+                dtype=self.dataType,
+                offset=total_head_len,
+                order=self.arrayOrder,
+            )
             self.memmap = True
         else:
             self.data = numpy.fromfile(file=self.file_, dtype=self.dataType)
@@ -1227,12 +1417,13 @@ class ImageIO(object):
         self.data = self.data.reshape(self.shape, order=self.arrayOrder)
 
         # chage byte order (to little-endian) if needed
-        if self.byteOrder == '>':
+        if self.byteOrder == ">":
             if memmap:
                 raise ValueError(
                     "Can not change byte order to '>' because this file is "
                     + " read using memory map. Run "
-                    + "without memory map (set memmap argument to False).")
+                    + "without memory map (set memmap argument to False)."
+                )
             else:
                 self.data = self.data.byteswap(True)
 
@@ -1251,11 +1442,10 @@ class ImageIO(object):
         # change dataType, byteOrder and arrayOrder if needed
         try:
             if self.data.dtype != self.dataType:
-                self.data= numpy.asarray(self.data, dtype=self.dataType)
-            if self.byteOrder == '>':
+                self.data = numpy.asarray(self.data, dtype=self.dataType)
+            if self.byteOrder == ">":
                 self.data = self.data.byteswap(True)
-            self.data = self.data.reshape(self.data.size,
-                                          order=self.arrayOrder )
+            self.data = self.data.reshape(self.data.size, order=self.arrayOrder)
         except (AttributeError, LookupError):
             print("Need to specify data.")
             raise
@@ -1278,20 +1468,18 @@ class ImageIO(object):
         """
 
         if fileFormat is not None:
-
             # fileFormat argiment given
             self.fileFormat = fileFormat
 
         else:
-
             # parse file_ argument
             if file_ is None:
                 file_ = self.fileName
 
             # find the extension of file_ to determine the format
-            if isinstance(file_, basestring):   # file argument is a file name
+            if isinstance(file_, basestring):  # file argument is a file name
                 splitFileName = os.path.splitext(file_)
-                extension = splitFileName[-1].lstrip('.')
+                extension = splitFileName[-1].lstrip(".")
                 self.fileFormat = ImageIO.fileFormats.get(extension)
             else:
                 # fileFormat not set here, raise an exception later if needed
@@ -1314,7 +1502,7 @@ class ImageIO(object):
 
         # use self.fileName if file_ is None
         if file_ is None:
-            #print("file is None")
+            # print("file is None")
             file_ = self.fileName
 
         # needed because file type not defined in Python3
@@ -1332,11 +1520,13 @@ class ImageIO(object):
             self.file_ = file_
 
         else:
-            raise IOError("Argument file_: " + str(file_)
-                          + "is neither a string nor a file object")
+            raise IOError(
+                "Argument file_: "
+                + str(file_)
+                + "is neither a string nor a file object"
+            )
 
         return
-
 
     ########################################################
     #
@@ -1350,32 +1540,34 @@ class ImageIO(object):
         """
 
         # ToDo: get from header directly?
-        if self.fileFormat == 'em':
-            return self._tiltAngle / 1000.
+        if self.fileFormat == "em":
+            return self._tiltAngle / 1000.0
 
         else:
-            raise ValueError("Sorry can't get tilt angle for " +
-                                      self.fileFormat + " file.")
+            raise ValueError(
+                "Sorry can't get tilt angle for " + self.fileFormat + " file."
+            )
 
     def setTiltAngle(self, angle):
         """
         Sets self._tiltAngle to angle*1000 and puts that value in emHeader.
         Works only for em format.
         """
-        if self.fileFormat == 'em':
-
+        if self.fileFormat == "em":
             # set the attribute
             self._tiltAngle = angle * 1000
 
             # put in the emHeader
-            self.putInEMHeader(name='_tiltAngle', value=self._tiltAngle)
+            self.putInEMHeader(name="_tiltAngle", value=self._tiltAngle)
 
         else:
-            raise ValueError("Sorry, can't get tilt angle for " +
-                                      self.fileFormat + " file.")
+            raise ValueError(
+                "Sorry, can't get tilt angle for " + self.fileFormat + " file."
+            )
 
-    tiltAngle = property(fget=getTiltAngle, fset=setTiltAngle,
-                         doc='Tilt angle (in deg)')
+    tiltAngle = property(
+        fget=getTiltAngle, fset=setTiltAngle, doc="Tilt angle (in deg)"
+    )
 
     def getPixelsize(self, diff=1e-6):
         """
@@ -1385,24 +1577,23 @@ class ImageIO(object):
         returned. Pixelsizes are considered the same if they do not differ
         more than arg diff.
         """
-        if self.fileFormat == 'em':
-            return self._pixelsize / 1000.
-        elif self.fileFormat == 'mrc':
+        if self.fileFormat == "em":
+            return self._pixelsize / 1000.0
+        elif self.fileFormat == "mrc":
             if isinstance(self.pixel, (int, float)):
                 return self.pixel
             else:
-                same = [numpy.abs(self.pixel[0] - pix) < diff
-                        for pix in self.pixel]
+                same = [numpy.abs(self.pixel[0] - pix) < diff for pix in self.pixel]
                 if numpy.asarray(same).all():
                     return self.pixel[0]
                 else:
                     return self.pixel
         else:
-            raise ValueError("Sorry can't get pixel size for " +
-                                      self.fileFormat + " file.")
+            raise ValueError(
+                "Sorry can't get pixel size for " + self.fileFormat + " file."
+            )
 
-    pixelsize = property(fget=getPixelsize,
-                         doc="Pixel size (at specimen level) in nm")
+    pixelsize = property(fget=getPixelsize, doc="Pixel size (at specimen level) in nm")
 
     def fix(self, mode=None, microscope=None):
         """
@@ -1454,110 +1645,122 @@ class ImageIO(object):
         or self.mrcHeader for mrc files.
         """
 
-        if self.fileFormat == 'em':
-
-            if mode == 'polara_fei-tomo':
-
+        if self.fileFormat == "em":
+            if mode == "polara_fei-tomo":
                 # put voltage
-                self.putInEMHeader(name='voltage', value=300000)
+                self.putInEMHeader(name="voltage", value=300000)
 
                 # put cs
-                self.putInEMHeader(name='cs', value=2000)
+                self.putInEMHeader(name="cs", value=2000)
 
                 # put CCD pixel size
                 ccd_pixelsize = microscope_db.ccd_pixelsize[microscope]
-                self.putInEMHeader(name='ccdPixelsize', value=ccd_pixelsize)
+                self.putInEMHeader(name="ccdPixelsize", value=ccd_pixelsize)
 
                 # put CCD length (pixel size * number of pixels)
-                self.putInEMHeader(name='ccdLength',
-                                   value=microscope_db.n_pixels[microscope] \
-                                       * ccd_pixelsize)
+                self.putInEMHeader(
+                    name="ccdLength",
+                    value=microscope_db.n_pixels[microscope] * ccd_pixelsize,
+                )
 
                 # get nominal magnification and determine (real) pixel size
-                mag = self.getFromEMHeader('magnification')
+                mag = self.getFromEMHeader("magnification")
                 pixelsize = microscope_db.pixelsize[microscope][mag]
-                self.putInEMHeader(name='_pixelsize', value=pixelsize)
+                self.putInEMHeader(name="_pixelsize", value=pixelsize)
 
-            elif mode == 'krios_fei-tomo':
-
+            elif mode == "krios_fei-tomo":
                 # put voltage
-                self.putInEMHeader(name='voltage', value=300000)
+                self.putInEMHeader(name="voltage", value=300000)
 
                 # put cs
-                self.putInEMHeader(name='cs', value=2000)
+                self.putInEMHeader(name="cs", value=2000)
 
                 # put CCD pixel size
-                #ccd_pixelsize = microscope_db.ccd_pixelsize[microscope]
-                #self.putInEMHeader(name='ccdPixelsize', value=ccd_pixelsize)
+                # ccd_pixelsize = microscope_db.ccd_pixelsize[microscope]
+                # self.putInEMHeader(name='ccdPixelsize', value=ccd_pixelsize)
 
                 # put CCD length (pixel size * number of pixels)
                 # The value might be correct
-                #self.putInEMHeader(
+                # self.putInEMHeader(
                 #    name='ccdLength',
                 #    value=microscope_db.n_pixels[microscope] * ccd_pixelsize)
 
                 # get nominal magnification and determine (real) pixel size
                 # not needed because correct value there already
-                #mag = self.getFromEMHeader('magnification')
-                #pixelsize = microscope_db.pixelsize[microscope][mag]
-                #self.putInEMHeader(name='_pixelsize', value=pixelsize)
+                # mag = self.getFromEMHeader('magnification')
+                # pixelsize = microscope_db.pixelsize[microscope][mag]
+                # self.putInEMHeader(name='_pixelsize', value=pixelsize)
 
-            elif mode == 'cm300':
-                microscope = 'cm300'
+            elif mode == "cm300":
+                microscope = "cm300"
 
                 # put voltage
-                self.putInEMHeader(name='voltage', value=300000)
+                self.putInEMHeader(name="voltage", value=300000)
 
                 # put cs
-                self.putInEMHeader(name='cs', value=2000)
+                self.putInEMHeader(name="cs", value=2000)
 
                 # get magnification and determine (real) pixel size
-                mag = self.getFromEMHeader('magnification')
+                mag = self.getFromEMHeader("magnification")
                 nom_mag = microscope_db.nominal_mag[microscope][mag]
                 pixelsize = microscope_db.pixelsize[microscope][nom_mag]
-                self.putInEMHeader(name='_pixelsize', value=pixelsize)
+                self.putInEMHeader(name="_pixelsize", value=pixelsize)
 
                 # correct em code
-                self.putInEMHeader(name='emCode', value=0)
+                self.putInEMHeader(name="emCode", value=0)
 
                 # put CCD pixel size
                 ccd_pixelsize = microscope_db.ccd_pixelsize[microscope]
-                self.putInEMHeader(name='ccdPixelsize', value=ccd_pixelsize)
+                self.putInEMHeader(name="ccdPixelsize", value=ccd_pixelsize)
 
                 # put CCD length (pixel size * number of pixels)
-                self.putInEMHeader(name='ccdLength',
-                                   value=microscope_db.n_pixels[microscope] * \
-                                       ccd_pixelsize)
+                self.putInEMHeader(
+                    name="ccdLength",
+                    value=microscope_db.n_pixels[microscope] * ccd_pixelsize,
+                )
 
             elif mode is None:
                 pass
 
             else:
-                raise ValueError("Sorry, mode: " + str(mode) +
-                     " is not recognized for an " + self.fileFormat + " file.")
+                raise ValueError(
+                    "Sorry, mode: "
+                    + str(mode)
+                    + " is not recognized for an "
+                    + self.fileFormat
+                    + " file."
+                )
 
-        elif self.fileFormat == 'mrc':
-
+        elif self.fileFormat == "mrc":
             if mode is None:
                 pass
 
             else:
-                raise ValueError("Sorry, mode: " + mode +
-                     " is not recognized for an " + self.fileFormat + " file.")
+                raise ValueError(
+                    "Sorry, mode: "
+                    + mode
+                    + " is not recognized for an "
+                    + self.fileFormat
+                    + " file."
+                )
 
-        elif self.fileFormat == 'raw':
-
+        elif self.fileFormat == "raw":
             if mode is None:
                 pass
 
             else:
-                raise ValueError("Sorry, mode: " + mode +
-                     " is not recognized for an " + self.fileFormat + " file.")
+                raise ValueError(
+                    "Sorry, mode: "
+                    + mode
+                    + " is not recognized for an "
+                    + self.fileFormat
+                    + " file."
+                )
 
         else:
-            raise ValueError("Sorry, file format: " + self.fileFormat
-                                      + " is not recognized.")
-
+            raise ValueError(
+                "Sorry, file format: " + self.fileFormat + " is not recognized."
+            )
 
     def getFromEMHeader(self, name):
         """
@@ -1568,10 +1771,11 @@ class ImageIO(object):
 
         # find position of name in self.emHeaderFields
         ind = 0
-        reg = re.compile(name + '\\b')
+        reg = re.compile(name + "\\b")
         for field in self.emHeaderFields:
-            if reg.match(field)is not None: break
-            ind +=1
+            if reg.match(field) is not None:
+                break
+            ind += 1
 
         # return the value
         return self.emHeader[ind]
@@ -1584,10 +1788,11 @@ class ImageIO(object):
 
         # find position of name in self.emHeaderFields
         ind = 0
-        reg = re.compile(name + '\\b')
+        reg = re.compile(name + "\\b")
         for field in self.emHeaderFields:
-            if reg.match(field)is not None: break
-            ind +=1
+            if reg.match(field) is not None:
+                break
+            ind += 1
 
         # put the value in
         self.emHeader[ind] = value

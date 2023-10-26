@@ -14,15 +14,13 @@ import filecmp
 import os
 
 
-@pytest.mark.parametrize(
-    "filename", ["test_slices_zipped.mrc.gz", "test_slices.mrc"]
-)
+@pytest.mark.parametrize("filename", ["test_slices_zipped.mrc.gz", "test_slices.mrc"])
 def test_load_tomogram(filename):
     """Test loading the load_tomogram"""
     data_structure = ColabSegData()
     data_structure.load_tomogram("./test_data/{}".format(filename))
     data_structure.convert_tomo()
-    assert len(data_structure.position_list) == 104400*3
+    assert len(data_structure.position_list) == 104400 * 3
     assert len(data_structure.cluster_list_tv[0]) == 104400
     assert len(data_structure.cluster_list_tv) == 3
 
@@ -50,9 +48,7 @@ def test_convert_tomogram(data_structure_fixture):
 def test_get_lamina_rotation_matrix(data_structure_fixture):
     """get rotation matrix from xyz  points"""
     data_structure_fixture.get_lamina_rotation_matrix()
-    reference_R = np.array([[ 1.,  0., -0.],
-       [ 0.,  1.,  0.],
-       [ 0., -0.,  1.]])
+    reference_R = np.array([[1.0, 0.0, -0.0], [0.0, 1.0, 0.0], [0.0, -0.0, 1.0]])
     np.testing.assert_array_equal(data_structure_fixture.lamina_R, reference_R)
 
 
@@ -75,11 +71,11 @@ def test_reload_original_values(data_structure_fixture):
     data_structure_fixture.reload_original_values()
     assert len(data_structure_fixture.cluster_list_tv) == 3
     assert len(data_structure_fixture.cluster_list_tv[0]) == 104400
-    assert len(data_structure_fixture.position_list) == 104400*3
+    assert len(data_structure_fixture.position_list) == 104400 * 3
 
 
 def test_delete_fit(data_structure_fixture):
-    """Test delting a fit """
+    """Test delting a fit"""
     assert len(data_structure_fixture.cluster_list_fits) == 3
     data_structure_fixture.delete_fit(0)
     assert len(data_structure_fixture.cluster_list_fits) == 2
@@ -94,7 +90,7 @@ def test_interpolate_membrane_rbf(data_structure_fixture):
 def test_delete_multiple_clusters(data_structure_fixture):
     """DOCSTRING"""
     assert len(data_structure_fixture.cluster_list_tv) == 3
-    data_structure_fixture.delete_multiple_clusters(cluster_indices=[0,1])
+    data_structure_fixture.delete_multiple_clusters(cluster_indices=[0, 1])
     assert len(data_structure_fixture.cluster_list_tv) == 1
 
 
@@ -108,14 +104,14 @@ def test_delete_cluster(data_structure_fixture):
 def test_merge_clusters(data_structure_fixture):
     """DOCSTRING"""
     assert len(data_structure_fixture.cluster_list_tv) == 3
-    data_structure_fixture.merge_clusters([1,2])
+    data_structure_fixture.merge_clusters([1, 2])
     assert len(data_structure_fixture.cluster_list_tv) == 2
-    assert len(data_structure_fixture.cluster_list_tv[1]) == 104400*2
+    assert len(data_structure_fixture.cluster_list_tv[1]) == 104400 * 2
 
 
 def test_dbscan_clustering(data_structure_fixture):
     """Test DBSCAN clustering with open3d"""
-    data_structure_fixture.merge_clusters([0,1])
+    data_structure_fixture.merge_clusters([0, 1])
     data_structure_fixture.dbscan_clustering(cluster_index=1)
     assert len(data_structure_fixture.cluster_list_tv) == 3
 
@@ -128,12 +124,13 @@ def test_write_output_mrc(data_structure_fixture, tmp_path):
     p = d / "test_output_file.mrc"
 
     positions = np.asarray(data_structure_fixture.position_list)
-    assert len(positions) == 104400*3
+    assert len(positions) == 104400 * 3
     data_structure_fixture.write_output_mrc(positions=positions, output_filename=p)
     new_mrc = ColabSegData()
-    #new_mrc.load_tomogram(p)
-    #new_mrc.convert_tomo()
-    #len(new_mrc.position_list) == len(data_structure_fixture.position_list)
+    # new_mrc.load_tomogram(p)
+    # new_mrc.convert_tomo()
+    # len(new_mrc.position_list) == len(data_structure_fixture.position_list)
+
 
 # STATIC Methods
 def test_write_txt(data_structure_fixture, tmp_path):
@@ -145,7 +142,7 @@ def test_write_txt(data_structure_fixture, tmp_path):
 
     positions = np.asarray(data_structure_fixture.position_list)
     data_structure_fixture.write_txt(positions, p)
-    len(np.loadtxt(p)) == 104400*3
+    len(np.loadtxt(p)) == 104400 * 3
 
 
 def test_write_xyz(data_structure_fixture, tmp_path):
@@ -160,7 +157,7 @@ def test_write_xyz(data_structure_fixture, tmp_path):
 
     with open(p) as file:
         lines = file.readlines()
-    assert len(lines) == 104400*3 + 2
+    assert len(lines) == 104400 * 3 + 2
     # +2 because there are the header lines above the file
 
 
@@ -174,10 +171,16 @@ def test_save_hdf(data_structure_fixture, tmp_path):
     data_structure_loaded = ColabSegData()
     data_structure_loaded.load_hdf(p)
 
-    assert len(data_structure_loaded.position_list) == len(data_structure_fixture.position_list)
-    assert len(data_structure_loaded.cluster_list_fits) == len(data_structure_fixture.cluster_list_fits)
-    assert len(data_structure_loaded.cluster_list_tv) == len(data_structure_fixture.cluster_list_tv)
-    assert len(data_structure_loaded.position_list) == 104400*3
+    assert len(data_structure_loaded.position_list) == len(
+        data_structure_fixture.position_list
+    )
+    assert len(data_structure_loaded.cluster_list_fits) == len(
+        data_structure_fixture.cluster_list_fits
+    )
+    assert len(data_structure_loaded.cluster_list_tv) == len(
+        data_structure_fixture.cluster_list_tv
+    )
+    assert len(data_structure_loaded.position_list) == 104400 * 3
     assert len(data_structure_loaded.cluster_list_tv[0]) == 104400
 
 
@@ -185,10 +188,16 @@ def test_load_hdf(data_structure_fixture):
     """Test loading a state as hdf5 file"""
     data_structure_loaded = ColabSegData()
     data_structure_loaded.load_hdf("./test_data/test.h5")
-    assert len(data_structure_loaded.position_list) == len(data_structure_fixture.position_list)
-    assert len(data_structure_loaded.cluster_list_fits) == len(data_structure_fixture.cluster_list_fits)
-    assert len(data_structure_loaded.cluster_list_tv) == len(data_structure_fixture.cluster_list_tv)
-    assert len(data_structure_loaded.position_list) == 104400*3
+    assert len(data_structure_loaded.position_list) == len(
+        data_structure_fixture.position_list
+    )
+    assert len(data_structure_loaded.cluster_list_fits) == len(
+        data_structure_fixture.cluster_list_fits
+    )
+    assert len(data_structure_loaded.cluster_list_tv) == len(
+        data_structure_fixture.cluster_list_tv
+    )
+    assert len(data_structure_loaded.position_list) == 104400 * 3
     assert len(data_structure_loaded.cluster_list_tv[0]) == 104400
 
 
@@ -215,14 +224,16 @@ def test_eigenvalue_outlier_removal(data_structure_fixture):
     data_structure.convert_tomo()
     data_structure.get_lamina_rotation_matrix()
     print(len(data_structure.cluster_list_tv[0]))
-    data_structure.eigenvalue_outlier_removal(0, k_n = 300, thresh = 0.05)
+    data_structure.eigenvalue_outlier_removal(0, k_n=300, thresh=0.05)
     print(len(data_structure.cluster_list_tv[0]))
     data_structure_removed = ColabSegData()
     data_structure_removed.load_tomogram("./test_data/removed.mrc")
     data_structure_removed.convert_tomo()
     data_structure_removed.get_lamina_rotation_matrix()
-    #data_structure.write_output_mrc(positions=np.asarray(data_structure.cluster_list_tv[0]), output_filename="./removed.mrc")
-    np.testing.assert_array_equal(data_structure.cluster_list_tv[0], data_structure_removed.cluster_list_tv[0])
+    # data_structure.write_output_mrc(positions=np.asarray(data_structure.cluster_list_tv[0]), output_filename="./removed.mrc")
+    np.testing.assert_array_equal(
+        data_structure.cluster_list_tv[0], data_structure_removed.cluster_list_tv[0]
+    )
 
 
 def test_calculate_normals(data_structure_fixture):

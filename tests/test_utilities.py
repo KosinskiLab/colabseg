@@ -11,22 +11,29 @@ from colabseg.utilities import *
 
 def test_plane_fit():
     """Test the plane fit"""
-    xy_plane_points = np.array([
-    [0,0,0],
-    [1,0,0],
-    [0,1,0],
-    [1,1,0],
-    [2,2,0],
-    [3,3,0],
-    [2,0,0],
-    [0,2,0],
-    [3,0,0],
-    [0,3,0]])
+    xy_plane_points = np.array(
+        [
+            [0, 0, 0],
+            [1, 0, 0],
+            [0, 1, 0],
+            [1, 1, 0],
+            [2, 2, 0],
+            [3, 3, 0],
+            [2, 0, 0],
+            [0, 2, 0],
+            [3, 0, 0],
+            [0, 3, 0],
+        ]
+    )
 
     X, Y, Z = plane_fit(xy_plane_points)
-    normal_vector = np.cross([X[0][0]-X[0][1], Y[0][0]-Y[0][1], Z[0][0]-Z[0][1]], [X[0][0]-X[1][1], Y[0][0]-Y[1][1], Z[0][0]-Z[1][1]], axis=0)
+    normal_vector = np.cross(
+        [X[0][0] - X[0][1], Y[0][0] - Y[0][1], Z[0][0] - Z[0][1]],
+        [X[0][0] - X[1][1], Y[0][0] - Y[1][1], Z[0][0] - Z[1][1]],
+        axis=0,
+    )
 
-    np.testing.assert_array_equal(normal_vector, np.array([0,0,1]))
+    np.testing.assert_array_equal(normal_vector, np.array([0, 0, 1]))
 
 
 def test_make_plot_array():
@@ -71,6 +78,7 @@ def test_R_2vect():
     np.testing.assert_array_almost_equal(comparison, R_2vect([1, 0, 0], [0, 1, 0]))
     np.testing.assert_array_equal(comparison.astype(int), R_test.astype(int))
 
+
 def test_create_sphere_points():
     """Test creation of sphere points. Compare with a sample file"""
     sphere_points = np.loadtxt("./test_data/sphere_test_position_111.txt")
@@ -83,8 +91,14 @@ def test_create_sphere_points():
 
     np.testing.assert_array_almost_equal(sphere_points, generated_sphere_points)
 
+
 @pytest.mark.parametrize(
-    "sphere_file, r0_result, center_result", [("missing_wedge_sphere.txt", 1, [0,0,0]), ("sphere_test_position_000.txt", 1, [0,0,0]), ("sphere_test_position_111.txt", 1, [1,1,1])]
+    "sphere_file, r0_result, center_result",
+    [
+        ("missing_wedge_sphere.txt", 1, [0, 0, 0]),
+        ("sphere_test_position_000.txt", 1, [0, 0, 0]),
+        ("sphere_test_position_111.txt", 1, [1, 1, 1]),
+    ],
 )
 def test_lstsq_sphere_fitting(sphere_file, r0_result, center_result):
     """Test the least squared fitting of a sphere

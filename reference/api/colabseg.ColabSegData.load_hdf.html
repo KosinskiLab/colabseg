@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="ColabSegData.load_point_cloud" href="colabseg.ColabSegData.load_point_cloud.html" />
-    <link rel="prev" title="ColabSegData.interpolate_membrane_sphere" href="colabseg.ColabSegData.interpolate_membrane_sphere.html" />
+    <link rel="prev" title="ColabSegData.interpolate_membrane_rbf" href="colabseg.ColabSegData.interpolate_membrane_rbf.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -338,8 +338,8 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.eigenvalue_outlier_removal.html">ColabSegData.eigenvalue_outlier_removal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.extract_slice.html">ColabSegData.extract_slice</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.get_selected_sphere_radii.html">ColabSegData.get_selected_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_closed_surface.html">ColabSegData.interpolate_membrane_closed_surface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_rbf.html">ColabSegData.interpolate_membrane_rbf</a></li>
-<li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_sphere.html">ColabSegData.interpolate_membrane_sphere</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">ColabSegData.load_hdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.load_point_cloud.html">ColabSegData.load_point_cloud</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.load_protein_position.html">ColabSegData.load_protein_position</a></li>
@@ -372,8 +372,8 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.flip_normals.html">ColabSegData.flip_normals</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.get_lamina_rotation_matrix.html">ColabSegData.get_lamina_rotation_matrix</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.get_selected_sphere_radii.html">ColabSegData.get_selected_sphere_radii</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_closed_surface.html">ColabSegData.interpolate_membrane_closed_surface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_rbf.html">ColabSegData.interpolate_membrane_rbf</a></li>
-<li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.interpolate_membrane_sphere.html">ColabSegData.interpolate_membrane_sphere</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">ColabSegData.load_hdf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.load_point_cloud.html">ColabSegData.load_point_cloud</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.load_protein_position.html">ColabSegData.load_protein_position</a></li>
@@ -479,6 +479,8 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.dbscan_recluster.html">JupyterFramework.dbscan_recluster</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.delete_fit.html">JupyterFramework.delete_fit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html">JupyterFramework.fit_cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid.html">JupyterFramework.fit_ellipsoid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
@@ -511,6 +513,8 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.delete_normals.html">JupyterFramework.delete_normals</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions.html">JupyterFramework.execute_delete_protein_positions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html">JupyterFramework.fit_cylinder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid.html">JupyterFramework.fit_ellipsoid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
@@ -704,12 +708,12 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="colabseg.ColabSegData.interpolate_membrane_sphere.html"
+       href="colabseg.ColabSegData.interpolate_membrane_rbf.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">ColabSegData.interpolate_membrane_sphere</p>
+        <p class="prev-next-title">ColabSegData.interpolate_membrane_rbf</p>
       </div>
     </a>
     <a class="right-next"

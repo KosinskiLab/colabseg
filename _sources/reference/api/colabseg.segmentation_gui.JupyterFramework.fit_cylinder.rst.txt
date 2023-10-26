@@ -1,0 +1,6 @@
+JupyterFramework.fit\_cylinder
+=======================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.fit_cylinder

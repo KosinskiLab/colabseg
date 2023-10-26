@@ -1,0 +1,6 @@
+JupyterFramework.fit\_ellipsoid
+========================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.fit_ellipsoid

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ImageIO.mrcDefaultShape &#8212; colabseg 0.1 documentation</title>
+    <title>JupyterFramework.fit_ellipsoid &#8212; colabseg 0.1 documentation</title>
   
   
   
@@ -44,11 +44,11 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=4ea706d9"></script>
     <script src="../../_static/design-tabs.js?v=36754332"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/api/colabseg.ImageIO.mrcDefaultShape';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reference/api/colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="ImageIO.pixelsize" href="colabseg.ImageIO.pixelsize.html" />
-    <link rel="prev" title="ImageIO.mrcDefaultPixel" href="colabseg.ImageIO.mrcDefaultPixel.html" />
+    <link rel="next" title="JupyterFramework.fit_idx_conv" href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html" />
+    <link rel="prev" title="JupyterFramework.fit_cylinder" href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -322,7 +322,7 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../data_structures.html">Data structures</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data_structures.html">Data structures</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="colabseg.ColabSegData.html">colabseg.ColabSegData</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.analyze_protein_membrane_min_distance.html">ColabSegData.analyze_protein_membrane_min_distance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.backup_step_to_previous.html">ColabSegData.backup_step_to_previous</a></li>
@@ -393,7 +393,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ColabSegData.write_xyz.html">ColabSegData.write_xyz</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="colabseg.ImageIO.html">colabseg.ImageIO</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="colabseg.ImageIO.html">colabseg.ImageIO</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.adjustLength.html">ImageIO.adjustLength</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.checkFile.html">ImageIO.checkFile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.fix.html">ImageIO.fix</a></li>
@@ -462,7 +462,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.mrcDataTypeTabInv.html">ImageIO.mrcDataTypeTabInv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.mrcDefaultHeader.html">ImageIO.mrcDefaultHeader</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.mrcDefaultPixel.html">ImageIO.mrcDefaultPixel</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">ImageIO.mrcDefaultShape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.mrcDefaultShape.html">ImageIO.mrcDefaultShape</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.pixelsize.html">ImageIO.pixelsize</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.raw.html">ImageIO.raw</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.ImageIO.tiltAngle.html">ImageIO.tiltAngle</a></li>
@@ -470,8 +470,8 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../gui_interactions.html">GUI Interactions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.html">colabseg.segmentation_gui.JupyterFramework</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../gui_interactions.html">GUI Interactions</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.html">colabseg.segmentation_gui.JupyterFramework</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.boot_gui.html">JupyterFramework.boot_gui</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_distances_proteins.html">JupyterFramework.calculate_and_plot_distances_proteins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.calculate_and_plot_sphere_radii.html">JupyterFramework.calculate_and_plot_sphere_radii</a></li>
@@ -480,7 +480,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.delete_fit.html">JupyterFramework.delete_fit</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html">JupyterFramework.fit_cylinder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid.html">JupyterFramework.fit_ellipsoid</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">JupyterFramework.fit_ellipsoid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
@@ -514,7 +514,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_delete_protein_positions.html">JupyterFramework.execute_delete_protein_positions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.execute_load_protein_position.html">JupyterFramework.execute_load_protein_position</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html">JupyterFramework.fit_cylinder</a></li>
-<li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid.html">JupyterFramework.fit_ellipsoid</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">JupyterFramework.fit_ellipsoid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html">JupyterFramework.fit_idx_conv</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_rbf.html">JupyterFramework.fit_rbf</a></li>
 <li class="toctree-l3"><a class="reference internal" href="colabseg.segmentation_gui.JupyterFramework.fit_sphere.html">JupyterFramework.fit_sphere</a></li>
@@ -668,9 +668,9 @@ document.write(`
     <li class="breadcrumb-item"><i class="fa-solid fa-ellipsis"></i></li>
     
     
-    <li class="breadcrumb-item"><a href="colabseg.ImageIO.html" class="nav-link">colabseg.ImageIO</a></li>
+    <li class="breadcrumb-item"><a href="colabseg.segmentation_gui.JupyterFramework.html" class="nav-link">colabseg.segmentation_gui.JupyterFramework</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">ImageIO.mrcD...</li>
+    <li class="breadcrumb-item active" aria-current="page">JupyterFrame...</li>
   </ul>
 </nav>
 </div>
@@ -687,12 +687,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="imageio-mrcdefaultshape">
-<h1>ImageIO.mrcDefaultShape<a class="headerlink" href="#imageio-mrcdefaultshape" title="Permalink to this heading">#</a></h1>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="colabseg.ImageIO.mrcDefaultShape">
-<span class="sig-prename descclassname"><span class="pre">ImageIO.</span></span><span class="sig-name descname"><span class="pre">mrcDefaultShape</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">1,</span> <span class="pre">1]</span></em><a class="headerlink" href="#colabseg.ImageIO.mrcDefaultShape" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+  <section id="jupyterframework-fit-ellipsoid">
+<h1>JupyterFramework.fit_ellipsoid<a class="headerlink" href="#jupyterframework-fit-ellipsoid" title="Permalink to this heading">#</a></h1>
+<dl class="py method">
+<dt class="sig sig-object py" id="colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid">
+<span class="sig-prename descclassname"><span class="pre">JupyterFramework.</span></span><span class="sig-name descname"><span class="pre">fit_ellipsoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid" title="Permalink to this definition">#</a></dt>
+<dd><p>Fit lstsq ellipsoid to selected cluster</p>
+</dd></dl>
 
 </section>
 
@@ -707,20 +708,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="colabseg.ImageIO.mrcDefaultPixel.html"
+       href="colabseg.segmentation_gui.JupyterFramework.fit_cylinder.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">ImageIO.mrcDefaultPixel</p>
+        <p class="prev-next-title">JupyterFramework.fit_cylinder</p>
       </div>
     </a>
     <a class="right-next"
-       href="colabseg.ImageIO.pixelsize.html"
+       href="colabseg.segmentation_gui.JupyterFramework.fit_idx_conv.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ImageIO.pixelsize</p>
+        <p class="prev-next-title">JupyterFramework.fit_idx_conv</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -739,13 +740,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.ImageIO.mrcDefaultShape"><code class="docutils literal notranslate"><span class="pre">ImageIO.mrcDefaultShape</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid"><code class="docutils literal notranslate"><span class="pre">JupyterFramework.fit_ellipsoid()</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/reference/api/colabseg.ImageIO.mrcDefaultShape.rst.txt">
+    <a href="../../_sources/reference/api/colabseg.segmentation_gui.JupyterFramework.fit_ellipsoid.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

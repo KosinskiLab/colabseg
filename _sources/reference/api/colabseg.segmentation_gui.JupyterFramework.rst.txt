@@ -21,6 +21,8 @@
       JupyterFramework.delete_normals
       JupyterFramework.execute_delete_protein_positions
       JupyterFramework.execute_load_protein_position
+      JupyterFramework.fit_cylinder
+      JupyterFramework.fit_ellipsoid
       JupyterFramework.fit_idx_conv
       JupyterFramework.fit_rbf
       JupyterFramework.fit_sphere

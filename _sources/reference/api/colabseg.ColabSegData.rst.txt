@@ -28,8 +28,8 @@
       ColabSegData.flip_normals
       ColabSegData.get_lamina_rotation_matrix
       ColabSegData.get_selected_sphere_radii
+      ColabSegData.interpolate_membrane_closed_surface
       ColabSegData.interpolate_membrane_rbf
-      ColabSegData.interpolate_membrane_sphere
       ColabSegData.load_hdf
       ColabSegData.load_point_cloud
       ColabSegData.load_protein_position

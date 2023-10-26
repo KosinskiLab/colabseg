@@ -10,7 +10,8 @@
 
 **Date**: |today| **Version**: |release|
 
-|project| is an open source library providing data structures and routines for template matching with focus on structural and electron microscopy data. The core of |project| is implemented and intended to be used within the `Python <https://www.python.org/>`_ programming language.
+|project| is an open source library for interactive editing, processing, and visualizing membrane segmentations from cryo-ET data.
+
 
 .. grid:: 2
 

@@ -613,7 +613,7 @@ class ColabSegData(object):
             self.position_list = np.asarray(hf["position_list"])
 
             for key in self.analysis_properties.keys():
-                self.analysis_properties[key] = hf[key]
+                self.analysis_properties[key] = hf[str(key)]
 
             self.cluster_list_tv = []
             for i in hf["cluster_list_tv"]:

@@ -4,6 +4,12 @@ Data structures
 
 .. currentmodule:: colabseg
 
+ColabSegData
+~~~~~~~~~~~~
+.. autosummary::
+   :toctree: api/
+
+   new_gui_functions.ColabSegData
 
 ImageIO
 ~~~~~~~

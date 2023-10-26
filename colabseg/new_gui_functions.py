@@ -3,11 +3,19 @@
 #
 # Marc Siggel, December 2021
 
-import numpy as np
+import os
 import subprocess
+
+import h5py
+import numpy as np
+import open3d as o3d
+import scipy.spatial as spatial
 from scipy import interpolate
 from scipy.spatial.distance import cdist
-import scipy.spatial as spatial
+from pyntcloud import PyntCloud
+from tqdm.notebook import tqdm
+
+from .image_io import ImageIO
 from .utilities import (
     plane_fit,
     make_plot_array,
@@ -15,13 +23,6 @@ from .utilities import (
     create_sphere_points,
     lstsq_sphere_fitting,
 )
-import os
-import open3d as o3d
-from pyntcloud import PyntCloud
-from tqdm.notebook import trange, tqdm
-import h5py
-from .image_io import ImageIO
-
 
 class ColabSegData(object):
     """Docstring for ColabSegData data structure framework."""

@@ -27,18 +27,13 @@ import os.path
 import logging
 
 # import warnings
-from copy import copy, deepcopy
+from copy import copy
 import io
 from io import open
 
-try:
-    import tifffile as tf
-except ModuleNotFoundError:
-    pass
 
 import numpy
-import scipy
-import scipy.ndimage as ndimage
+
 
 from . import microscope_db
 

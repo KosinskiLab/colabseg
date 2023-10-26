@@ -3,18 +3,14 @@
 #
 # Marc Siggel, December 2021
 
-# import py3Dmol
 import numpy as np
-
-# import MDAnalysis as mda
-import ipywidgets
-from ipywidgets import interact, fixed, IntSlider, widgets
+from ipywidgets import widgets
 from IPython.display import display, clear_output
-from .new_gui_functions import ColabSegData
-from .py3dmol_controls import seg_visualization
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 
+from .new_gui_functions import ColabSegData
+from .py3dmol_controls import seg_visualization
 
 class JupyterFramework(object):
     """Docstring JupyterFramework for GUI"""

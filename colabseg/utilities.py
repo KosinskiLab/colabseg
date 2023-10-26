@@ -3,13 +3,10 @@
 #
 # Marc Siggel, December 2021
 # from pyto.io.image_io import ImageIO
-import json
-import numpy as np
-import os
 import math
 import scipy
-from scipy import interpolate
 
+import numpy as np
 
 def plane_fit(atom_coordinates, order=1):
     """simple plane fit for estimating"""

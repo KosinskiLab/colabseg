@@ -9,7 +9,30 @@ import scipy
 import numpy as np
 
 def plane_fit(atom_coordinates, order=1):
-    """simple plane fit for estimating"""
+    """
+    Fit a plane to given atom coordinates.
+
+    Parameters
+    ----------
+    atom_coordinates : ndarray
+        A 2D array of shape (n, 3) where each row is a 3D coordinate (x, y, z).
+    order : int, optional
+        Order of the plane fit.
+        1 indicates linear and 2 indicates quadratic. Default is 1.
+
+    Returns
+    -------
+    X : ndarray
+        2D array of x-coordinates for the meshgrid.
+    Y : ndarray
+        2D array of y-coordinates for the meshgrid.
+    Z : ndarray
+        2D array of z-coordinates for the meshgrid.
+
+    Notes
+    -----
+    The function uses least squares to fit a plane to the input coordinates.
+    """
     data = atom_coordinates
     # print(data[:, 0])
     ymin = np.amin(data[:, 1])
@@ -52,7 +75,29 @@ def plane_fit(atom_coordinates, order=1):
 
 
 def make_plot_array(xmin, xmax, ymin, ymax, interp=0.1):
-    # interp < 1 downsamples
+    """
+    Create a meshgrid based on the given boundaries and interpolation factor.
+
+    Parameters
+    ----------
+    xmin : float
+        Minimum x value.
+    xmax : float
+        Maximum x value.
+    ymin : float
+        Minimum y value.
+    ymax : float
+        Maximum y value.
+    interp : float, optional
+        Interpolation factor, less than 1 for downsampling. Default is 0.1.
+
+    Returns
+    -------
+    xx : ndarray
+        2D array of x-coordinates for the meshgrid.
+    yy : ndarray
+        2D array of y-coordinates for the meshgrid.
+    """
     x = np.arange(xmin, xmax, 1.0 / interp)
     y = np.arange(ymin, ymax, 1.0 / interp)
     xx, yy = np.meshgrid(x, y)
@@ -60,7 +105,26 @@ def make_plot_array(xmin, xmax, ymin, ymax, interp=0.1):
 
 
 def R_2vect(vector_orig, vector_fin):
-    """Calculate the rotation matrix required to rotate from one vector to another."""
+    """
+    Calculate the rotation matrix to rotate from one vector to another.
+
+    Parameters
+    ----------
+    vector_orig : ndarray
+        Original vector, shape (3,).
+    vector_fin : ndarray
+        Final vector, shape (3,).
+
+    Returns
+    -------
+    R : ndarray
+        Rotation matrix of shape (3, 3).
+
+    Notes
+    -----
+    The rotation matrix is determined based on the cross product of the two vectors
+    and the rotation angle.
+    """
 
     # Convert the vectors to unit vectors.
     vector_orig = vector_orig / np.linalg.norm(vector_orig)
@@ -100,16 +164,30 @@ def R_2vect(vector_orig, vector_fin):
 
 def create_sphere_points(radius, x0, y0, z0, n=72):
     """
-    create 3D points that fall on a defined sphere
-    Args:
-       radius: the radius of the sphere
-       x0: x coordinate of the sphere center
-       y0: y coordinate of the sphere center
-       z0: z coordinate of the sphere center
-       n: number of angle slices. 2*pi angle range is evenly splitted into n slices
-    Returns:
-        coordinates of n*n 3D points: positions
-    Source: https://gist.github.com/WuyangLI/eb4cf9d2df6680ff16255732efd0d242
+    Create 3D points that fall on a defined sphere.
+
+    Parameters
+    ----------
+    radius : float
+        Radius of the sphere.
+    x0 : float
+        X-coordinate of the sphere center.
+    y0 : float
+        Y-coordinate of the sphere center.
+    z0 : float
+        Z-coordinate of the sphere center.
+    n : int, optional
+        Number of angle slices. 2*pi angle range is evenly split into n slices.
+        Default is 72.
+
+    Returns
+    -------
+    positions_xyz : ndarray
+        Coordinates of 3D points on the sphere, shape (n*n, 3).
+
+    References
+    ----------
+    .. [1] https://gist.github.com/WuyangLI/eb4cf9d2df6680ff16255732efd0d242
     """
     sp = np.linspace(0, 2.0 * np.pi, num=n)
     nx = sp.shape[0]
@@ -124,12 +202,32 @@ def create_sphere_points(radius, x0, y0, z0, n=72):
 
 def lstsq_sphere_fitting(positions):
     """
-    lstsq_sphere_fitting: fit a given set of 3D points (x, y, z) to a sphere.
-    Args:
-       positions: a two dimentional numpy array, of which each row represents (x, y, z) coordinates of a point
-    Returns:
-       radius, x0, y0, z0
-    Source: https://gist.github.com/WuyangLI/4bf4b067fed46789352d5019af1c11b2
+    Fit a set of 3D points to a sphere using least squares.
+
+    Parameters
+    ----------
+    positions : ndarray
+        A 2D array of shape (n, 3) where each row represents a 3D coordinate (x, y, z).
+
+    Returns
+    -------
+    float
+        Radius of the fitted sphere.
+    float
+        X-coordinate of the sphere center.
+    float
+        Y-coordinate of the sphere center.
+    float
+        Z-coordinate of the sphere center.
+
+    Notes
+    -----
+    The function constructs a matrix A based on the positions and uses least squares
+    to determine the sphere's parameters.
+
+    References
+    ----------
+    .. [1] https://gist.github.com/WuyangLI/4bf4b067fed46789352d5019af1c11b2
     """
     # add column of ones to pos_xyz to construct matrix A
     pos_xyz = positions

@@ -44,6 +44,7 @@ html_context = {
     "doc_path": "doc",
 }
 html_theme_options = {
+    "navigation_with_keys" : True,
     "use_edit_page_button": False,
     "navigation_depth": 3,
     "show_nav_level": 0,

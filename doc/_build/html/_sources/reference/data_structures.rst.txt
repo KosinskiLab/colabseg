@@ -14,5 +14,5 @@ ImageIO
 .. autosummary::
    :toctree: api/
 
-   colabseg.new_gui_functions.ImageIO
+   colabseg.image_io.ImageIO
 

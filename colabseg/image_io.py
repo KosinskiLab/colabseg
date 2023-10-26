@@ -40,14 +40,39 @@ from . import microscope_db
 
 class FileTypeError(IOError):
     """
-    Exception reised when nonexistant file type is given.
-    """
+    Exception raised when nonexistent file type is given.
 
+    Attributes
+    ----------
+    requested : str
+        The requested file type/format.
+    defined : dict
+        Dictionary of defined file formats with their extensions.
+
+    """
     def __init__(self, requested, defined):
+        """
+        Initialize FileTypeError.
+
+        Parameters
+        ----------
+        requested : str
+            The requested file type/format.
+        defined : dict
+            Dictionary of defined file formats with their extensions.
+        """
         self.requested = requested
         self.defined = defined
 
     def __str__(self):
+        """
+        Returns a formatted error message string.
+
+        Returns
+        -------
+        str
+            The error message string.
+        """
         msg = (
             "Defined file formats are: \n\t"
             + str(list(set(self.defined.values())))
@@ -64,25 +89,26 @@ class FileTypeError(IOError):
 class ImageIO(object):
     """
     Reads and writes EM image files in em, mrc and raw formats.
-    An image file in em or mrc format can be read in the following way:
-      myImage = ImageIO()
-      myImage.read(file='my_file.em')
-    ow written as:
-      myImage = ImageIO()
-      myImage.write(file='my_file.em', data=my_array, header=my_header)
-    Raw file reading and writting is the same except that more arguments are
-    required to read (see self.read).
-    Important attributes:
-      - self.fileName: file name
-      - self.file_: file instance
+
+    Attributes
+    ----------
+    fileName : str
+        The name of the file being processed.
+    file_ : file instance
+        File instance if it's already open.
+
+    Examples
+    --------
+    Reading an image file:
+
+    >>> myImage = ImageIO()
+    >>> myImage.read(file='my_file.em')
+
+    Writing an image:
+
+    >>> myImage = ImageIO()
+    >>> myImage.write(file='my_file.em', data=my_array, header=my_header)
     """
-
-    ##########################################################
-    #
-    # Initialization
-    #
-    #########################################################
-
     # determine machine byte order
     byte_order = sys.byteorder
     if byte_order == "big":
@@ -98,9 +124,12 @@ class ImageIO(object):
 
     def __init__(self, file=None):
         """
-        Initializes variables.
-        Sets self.fileName to file if file is a string, or sets self.file_ to
-        file if file is a file instance.
+        Initializes ImageIO object.
+
+        Parameters
+        ----------
+        file : str or file instance, optional
+            Either the file name or an already opened file instance.
         """
 
         # initialize attributes
@@ -159,73 +188,34 @@ class ImageIO(object):
         memmap=False,
     ):
         """
-        Reads image file in em, mrc or raw data formats and saves the
-        data in numpy.array format.
-        For reading em and mrc files (having correct extension) only file
-        argument is necessary:
-          image = Image()
-          image.read(file='myfile.em')
-        or to prvent reading the whole file into memory:
-          image.read(file='myfile.em', memmap=True)
-        Alternatively, file name can be given in the constructor:
-          image = Image(file='myfile.em')
-          image.read()
-        If other arguments are given they will override the corresponding
-        values obtained form image header (use if you know what you're
-        doing).
-        For reading raw files, arguments dataType and shape need to
-        be specified:
-          read(file='myfile.raw', dataType='float32', shape=(200,150,70))
-        By default, arguments byteOrder='<' (little-endian) and
-        arrayOrder='F'.
-        For mrc and em files, array order is determined from arg arrayOrder,
-        from self.arrayOrder, or it is set to the default ("F") in
-        this order. Data is read according the determined array order.
-        That is, array order is not read from the file header.
-        File format is determined from the extension:
-          - 'em' and 'EM' for em format
-          - 'mrc', 'rec' and 'mrcs' for mrc format
-          - 'raw', 'dat' and 'RAW' for raw format
-        This can be overriden by specifying fileFormat argument.
-        Byte order is read from the header for em files. For mrc, data type
-        is read from the header using the system byte order and if that fails
-        using the other one. In case that also fails ValueError is raised.
-        The data is read according to
-        Array order is not read from the header. Instead, array order
-        specified by arg arrayOrder or self.arrayOrder is used for
-        reading the data.
-        If arg memmap is True, instead into a ndarray, the data is read to
-        a memory map. That means that the complete data is not read into
-        the memory, but the required parts are read on demand. This is useful
-        when working with large images, but might not always work properly
-        because the memory map is not quite properly a subclass of
-        numpy.ndarray (from Numpy doc).
-        Data from mrc files is always read as 3D because mrc header always
-        contains lengths for all three dimensions (the length of the last
-        dimeension is 1 for 2D images). In such cases one can obtain the
-        2D ndarray using:
-          self.data.reshape(self.data.shape[0:2])
-        Arguments:
-          - file: file name
-          - fileFormat: 'em', 'mrc', or 'raw'
-          - byteOrder: '<' (little-endian), '>' (big-endian)
-          - dataType: any of the numpy types, e.g.: 'int8', 'int16', 'int32',
-            'float32', 'float64'
-          - arrayOrder: 'C' (z-axis fastest), or 'F' (x-axis fastest)
-          - shape: (x_dim, y_dim, z_dim), needs to be compatible with the
-          data read
-          - memmap: Flag indicating if the data is read to a memory map,
-          instead of reading it into a ndarray
-        Sets the following attributes (in addition to the arguments):
-          - data: data in numpy.array form
-          - emHeader / mrcHeader: tuple of all header values (em/mrc) files
-          - header: emHeader for em file, mrcHeader for mrc file or raw header
-          for raw file
-          - headerString: string containing a header
-        Alternatively, any argument can be omitted if an attribute of the
-        same name is set.
-        """
+        Reads image file in em, mrc or raw data formats.
 
+        Parameters
+        ----------
+        file : str, optional
+            File name.
+        fileFormat : {'em', 'mrc', 'raw'}, optional
+            The format of the file.
+        byteOrder : {'<', '>'}, optional
+            Byte order: '<' for little-endian and '>' for big-endian.
+        dataType : str, optional
+            Data type like 'int8', 'int16', etc.
+        arrayOrder : {'C', 'F'}, optional
+            Array order: 'C' for z-axis fastest, 'F' for x-axis fastest.
+        shape : tuple, optional
+            Shape of the data in the format (x_dim, y_dim, z_dim).
+        memmap : bool, optional
+            If True, data is read to a memory map.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        FileTypeError
+            If the specified file format is not recognized.
+        """
         # determine the file format
         self.setFileFormat(file_=file, fileFormat=fileFormat)
         if self.fileFormat is None:
@@ -269,7 +259,25 @@ class ImageIO(object):
 
     def readHeader(self, file=None, fileFormat=None, byteOrder=None):
         """
-        Reads heder of an image file in em, mrc or raw data formats.
+        Reads the header of an image file in em, mrc or raw data formats.
+
+        Parameters
+        ----------
+        file : str, optional
+            File name.
+        fileFormat : {'em', 'mrc', 'raw'}, optional
+            The format of the file.
+        byteOrder : {'<', '>'}, optional
+            Byte order: '<' for little-endian and '>' for big-endian.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        FileTypeError
+            If the specified file format is not recognized.
         """
 
         # determine the file format
@@ -305,56 +313,43 @@ class ImageIO(object):
         casting="unsafe",
     ):
         """
-        Writes image file (header if applicable and data).
-        Values of all non-None arguments are saved as properties with same
-        names.
-        If fileFormat is not given it is determined from the file extension.
-        Data (image) has to be specified by arg data or previously set
-        self.data attribute.
-        Data type and shape are determined by args dataType and shape,
-        previously set attributes self.dataType and self.shape, or by the data
-        type and shape of the data, in this order.
-        If data type (determined as described above) is not one of the
-        data types used for the specified file format (ubyte, int16, float32,
-        complex64 for mrc and uint8, uint16, int32, float32, float64,
-        complex64 for em), then the value of arg dataType has to be one of the
-        appropriate data types. Otherwise an exception is raised.
-        If data type (determined as described above) is different from the
-        type of actual data, the data is converted to the data type. Note that
-        if these two types are incompatible according to arg casting, an
-        exception is raised.
-        Values for byteOrder and arrayOrder are set to the first value found
-        from the following: the arguments, properties with same names, or
-        emHeader / mrcHeader default values.
-        The data is converted to the (prevously determined) shape and array
-        order and then written. That means that the shape and the array order
-        may be changed in the original array (argument data or self.data).
-        However, array order is not written the header.
-        If data is not given, only a header is writen.
-        Additional header parameters are determined for mrc format. Nxstart,
-        nystart and nzstart are set to 0, while mx, my and mz to the
-        corresponding data size (grid size). xlen, ylen and zlen are taken from
-        arg length if given, or obtained by multiplying data size with pixel
-        size (in nm).
-        Arguments:
-          - file: file name
-          - data: (ndarray) image
-          - fileFormat: 'em', 'mrc', or 'raw'
-          - byteOrder: '<' (little-endian), '>' (big-endian)
-          - dataType: any of the numpy types specified as strings, e.g.:
-            'int8', 'int16', 'int32', 'float32', 'float64', or as
-            numpy.dtype
-          - arrayOrder: 'C' (z-axis fastest), or 'F' (x-axis fastest)
-          - shape: (x_dim, y_dim, z_dim)
-          - length: (list aor ndarray) length in each dimension in nm (used
-          only for mrc format)
-          - pixel: pixel size in nm (used only for mrc format if length is
-          None)
-          - header: (list) image header
-          - extended: (str) extended header string, only for mrc
-          - casting: Controls what kind of data casting may occur: 'no',
-          'equiv', 'safe', 'same_kind', 'unsafe'. Identical to numpy.astype()
-          method.
+        Writes image file with specified header and data.
+
+        Parameters
+        ----------
+        file : str, optional
+            File name.
+        data : ndarray
+            Image data.
+        fileFormat : {'em', 'mrc', 'raw'}, optional
+            The format of the file.
+        byteOrder : {'<', '>'}, optional
+            Byte order: '<' for little-endian and '>' for big-endian.
+        dataType : str, optional
+            Data type like 'int8', 'int16', etc.
+        arrayOrder : {'C', 'F'}, optional
+            Array order: 'C' for z-axis fastest, 'F' for x-axis fastest.
+        shape : tuple, optional
+            Shape of the data in the format (x_dim, y_dim, z_dim).
+        length : list or ndarray, optional
+            Length in each dimension in nm (used only for mrc format).
+        pixel : float, optional
+            Pixel size in nm (used only for mrc format if length is None).
+        header : list, optional
+            Image header.
+        extended : str, optional
+            Extended header string (only for mrc format).
+        casting : {'no', 'equiv', 'safe', 'same_kind', 'unsafe'}, optional
+            Type of data casting that may occur.
+
+        Returns
+        -------
+        None
+
+        Raises
+        ------
+        FileTypeError
+            If the specified file format is not recognized.
         """
 
         # determine the file format
@@ -508,11 +503,26 @@ class ImageIO(object):
         memmap=False,
     ):
         """
-        Reads EM file.
-        """
+        Reads EM file format.
 
+        Parameters
+        ----------
+        file : str, optional
+            Path to the file to read.
+        byteOrder : {None, '<', '>'}, optional
+            Byte order for reading the file. '<' means little endian and '>' means
+            big endian.
+        dataType : str, optional
+            Data type to interpret the data.
+        arrayOrder : str, optional
+            Order in which to read the array.
+        shape : tuple of int, optional
+            Shape of the data array.
+        memmap : bool, default False
+            If true, use memory mapping to read data.
+        """
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # set defaults
         self.arrayOrder = ImageIO.em["arrayOrder"]
@@ -542,10 +552,19 @@ class ImageIO(object):
         return
 
     def readEMHeader(self, file=None, byteOrder=None):
-        "Reads a header of an EM file"
+        """
+        Reads the header of an EM file.
 
+        Parameters
+        ----------
+        file : str, optional
+            Path to the file to read header from.
+        byteOrder : {None, '<', '>'}, optional
+            Byte order for reading the file. '<' means little endian and '>' means
+            big endian.
+        """
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # read the header
         self.headerString = self.file_.read(ImageIO.em["headerSize"])
@@ -583,32 +602,31 @@ class ImageIO(object):
         casting="unsafe",
     ):
         """
-        Writes EM file (header and data).
-        File can be a file name (string) or an instance of file. If not given
-        self.fileName determines the file name.
-        Values of all non-None arguments are saved as properties with same
-        names.
-        Data (image) has to be specified by arg data or previously set
-        self.data attribute.
-        Data type and shape are determined by args dataType and shape,
-        previously set attributes self.dataType and self.shape, or by the data
-        type and shape of the data, in this order.
-        If data type (determined as described above) is not one of the em
-        data types (uint8, uint16, int32, float32, float64, complex64), then
-        the value of arg dataType has to be one of the em data types. Otherwise
-        an exception is raised.
-        If data type (determined as described above) is different from the
-        type of actual data, the data is converted to the data type. Note that
-        if these two types are incompatible according to arg casting, an
-        exception is raised.
-        Values for byteOrder and arrayOrder are set to the first value found
-        from the arguments, properties with same names, from emHeader of
-        default values.
-        If data is not given, only a header is written.
+        Writes data to an EM file format.
+
+        Parameters
+        ----------
+        file : str, optional
+            Path to the file to write to.
+        header : list, optional
+            Header information for the file.
+        byteOrder : {None, '<', '>'}, optional
+            Byte order for writing the file. '<' means little endian and '>' means
+            big endian.
+        shape : tuple of int, optional
+            Shape of the data array.
+        dataType : str, optional
+            Data type of the data to write.
+        arrayOrder : str, optional
+            Order in which to write the array.
+        data : ndarray, optional
+            Data array to write.
+        casting : str, default "unsafe"
+            Casting rule for numpy. Check numpy documentation for more details.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode="wb")
+        self.checkFile(file=file, mode="wb")
 
         # set emHeader
         if header is not None:
@@ -780,11 +798,27 @@ class ImageIO(object):
         memmap=False,
     ):
         """
-        Reads mrc file.
+        Reads MRC file format.
+
+        Parameters
+        ----------
+        file : str, optional
+            Path to the file to read.
+        byteOrder : {None, '<', '>'}, optional
+            Byte order for reading the file. '<' means little endian and '>' means
+            big endian.
+        dataType : str, optional
+            Data type to interpret the data.
+        arrayOrder : str, optional
+            Order in which to read the array.
+        shape : tuple of int, optional
+            Shape of the data array.
+        memmap : bool, default False
+            If true, use memory mapping to read data.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # parse arguments
         if byteOrder is not None:
@@ -812,24 +846,20 @@ class ImageIO(object):
 
     def readMRCHeader(self, file=None, byteOrder=None):
         """
-        Reads a header of an mrc file.
-        To dermine the byte order the file header is read according to the
-        system byte order. If the data type is not recognized, the other
-        byte order is used and the data type is checked again. If it still
-        doesn't work, ValueError is raised.
-        Sets attributes:
-          - headerString
-          - mrcHeader
-          - byteOrder
-          - shape
-          - dataType
-          - axisOrder
-          - pixel: pixel size in nm
-          - length: linght in all dimensions in nm
+        Reads the header of an MRC file.
+
+        Parameters
+        ----------
+        file : str, optional
+            Path to the file to read header from.
+        byteOrder : {None, '<', '>'}, optional
+            Byte order for reading the file. '<' means little endian and '>' means
+            big endian.
+
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # set byte order
         if byteOrder is not None:
@@ -869,20 +899,18 @@ class ImageIO(object):
 
     def parseMRCHeader(self, header=None):
         """
-        Parse mrc header. If arg header is None, self.mrcHeader is used.
-        Also sets self.labels in case self.headerString is present. In this
-        case self.headerString has to be consistent with header (arg or
-        attribute).
-        Sets attributes:
-          - mrcHeader (if given as arg)
-          - byteOrder
-          - shape
-          - dataType
-          - axisOrder
-          - pixel: pixel size in nm
-          - length: lenght in all dimensions in nm
-        """
+        Parse the MRC header.
 
+        If `header` is not provided, the function uses `self.mrcHeader`. It also
+        sets `self.labels` if `self.headerString` is present. For this to work
+        properly, `self.headerString` has to be consistent with the header
+        (either argument or attribute).
+
+        Parameters
+        ----------
+        header : array_like or None, optional
+            The MRC header to parse. If None, `self.mrcHeader` is used.
+        """
         if header is not None:
             self.mrcHeader = header
 
@@ -939,43 +967,39 @@ class ImageIO(object):
         casting="unsafe",
     ):
         """
-        Writes MRC file (header and data).
-        Values of all non-None arguments are saved as properties with same
-        names.
-        Data (image) has to be specified by arg data or previously set
-        self.data attribute.
-        Data type and shape are determined by args dataType and shape,
-        previously set attributes self.dataType and self.shape, or by the data
-        type and shape of the argument data, in this order.
-        If data type (determined as described above) is not one of the mrc
-        data types (ubyte, int16, float32, complex64), then the value of arg
-        dataType has to be one of the mrc data types. Otherwise an exception
-        is raised.
-        If data type (determined as described above) is different from the
-        type of actual data, the data is converted to the data type. Note that
-        if these two types are incompatible according to arg casting an
-        exception is raised.
-        Values for byteOrder and arrayOrder are set to the first value found
-        from the following: arguments, properties with same names, or
-        mrcHeader of default values.
+        Write data to an MRC file.
 
-        The data is converted to the (prevously determined) shape and array
-        order and then written. That means that the shape and the array order
-        may be changed in the original array (argument data or self.data).
-        However, array order is not written the header.
-        Header parameters nxstart, nystart and nzstart are set to 0, while mx,
-        my and mz to the corresponding data size (grid size).
-        MRC parameters xlen, ylen and zlen are taken from arg length if given,
-        or obtained by multiplying data size with pixel size (in nm).
-        MRC parameters min, max and mean are recalculated.
-        All other header values are defined in the mrcDefaultHeader.
-        The default value of axisOrder can be changed by setting
-        self.axisOrder.
-        If data is not given, only a header is writen.
+        This function writes both the header and data to an MRC file. If certain
+        parameters are not provided, they are inferred from either other arguments,
+        existing attributes, or default values.
+
+        Parameters
+        ----------
+        file : str or file object, optional
+            Path to the file or file object.
+        header : array_like or None, optional
+            MRC header to be written.
+        byteOrder : str or None, optional
+            Byte order of the MRC file.
+        shape : tuple or None, optional
+            Shape of the data.
+        dataType : str or None, optional
+            Type of data in the MRC file.
+        arrayOrder : str or None, optional
+            Order of the axes in the MRC file.
+        length : list or None, optional
+            Length in all dimensions in nm.
+        pixel : float or None, optional
+            Pixel size in nm.
+        data : ndarray or None, optional
+            Data to be written to the MRC file.
+        extended : str or None, optional
+            Extended header for the MRC file.
+        casting : str, optional, default 'unsafe'
+            Casting rule. Specifies how data should be casted if needed.
         """
-
         # open the file if needed
-        self.checkFile(file_=file, mode="wb")
+        self.checkFile(file=file, mode="wb")
 
         # set attributes from header
         if header is not None:
@@ -1143,16 +1167,18 @@ class ImageIO(object):
 
     def adjustLength(self, shape=None, pixel=None):
         """
-        Calculate length based on shape and pixel. If args shape and
-        pixel are None, self.shape and self.pixel are used.
-        The length is calculated in A, as this is what is used in mrc
-        header. To be used for mrc files only.
-        Sets attribute length.
-        Arguments:
-          - shape: data shape
-          - pixel: pixel size in nm
-        """
+        Calculate the length based on shape and pixel size.
 
+        This function computes the length of the data in Angstroms, which is used
+        in the MRC header. It's specifically designed for MRC files.
+
+        Parameters
+        ----------
+        shape : tuple or None, optional
+            Shape of the data.
+        pixel : float or None, optional
+            Pixel size in nm.
+        """
         # set variables
         if shape is None:
             shape = self.shape
@@ -1198,11 +1224,29 @@ class ImageIO(object):
         memmap=False,
     ):
         """
-        Reads raw data file.
+        Read data from a raw file.
+
+        Parameters
+        ----------
+        file : str or file object, optional
+            Path to the file or file object.
+        dataType : str or None, optional
+            Type of data in the raw file.
+        shape : tuple or None, optional
+            Shape of the data.
+        byteOrder : str or None, optional
+            Byte order of the raw file.
+        arrayOrder : str or None, optional
+            Order of the axes in the raw file.
+        headerSize : int or None, optional
+            Size of the header in the raw file.
+        memmap : bool, optional, default False
+            Whether to memory-map the file.
+
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # set defaults
         self.byteOrder = ImageIO.raw["defaultByteOrder"]
@@ -1232,16 +1276,17 @@ class ImageIO(object):
 
     def readRawHeader(self, file=None, size=None):
         """
-        Reads a header of a raw file.
-        Sets:
-          - headerString: header as a string
-        Arguments:
-          - file: file name or a file instance
-          - size: header size in bytes
-        """
+        Read the header from a raw file.
 
+        Parameters
+        ----------
+        file : str or file object, optional
+            Path to the file or file object.
+        size : int or None, optional
+            Size of the header in the raw file.
+        """
         # open the file if needed
-        self.checkFile(file_=file, mode="rb")
+        self.checkFile(file=file, mode="rb")
 
         # determine header size
         if size is not None:
@@ -1268,22 +1313,34 @@ class ImageIO(object):
     ):
         """
         Writes raw data.
-        Values of all non-None arguments are saved as properties with same
-        names.
-        Data (image) has to be specified by arg data or previously set
-        self.data attribute.
-        Data type and shape are determined by args dataType and shape,
-        previously set attributes self.dataType and self.shape, or by the data
-        type and shape of the data, in this order.
-        If data type (determined as described above) is different from the
-        type of actual data, the data is converted to the data type. Note that
-        if these two types are incompatible an exception is raised.
-        Values for byteOrder and arrayOrder, are set to the first value found
-        from the arguments, or properties with same names.
+
+        Parameters
+        ----------
+        file : str or file-like, optional
+            File path or file handle.
+        header : str or bytes, optional
+            File header.
+        data : array-like, optional
+            Data to be written.
+        shape : tuple, optional
+            Shape of the data.
+        dataType : dtype, optional
+            Data type.
+        byteOrder : str, optional
+            Byte order.
+        arrayOrder : str, optional
+            Array order.
+        casting : str, optional
+            Casting method. Default is "unsafe".
+
+        Raises
+        ------
+        TypeError
+            If data type is incompatible.
         """
 
         # open the file if needed
-        self.checkFile(file_=file, mode="wb")
+        self.checkFile(file=file, mode="wb")
 
         # set defaults
         self.arrayOrder = ImageIO.raw["defaultArrayOrder"]
@@ -1335,21 +1392,16 @@ class ImageIO(object):
 
     def setData(self, data, shape=None, pixel=None):
         """
-        Reshapes data according to the arg shape (if specified) and saves it
-        as attribute self.data. Also sets attributes self.shape and
-        self.dataType accordingly.
-        For mrc files, length is also set (see self.adjustLength()). In
-        this case, arg pixel has to be specified, or self.pixel has
-        to be defined previously.
-        Sets attributes:
-          - data
-          - shape
-          - dataType
-          - length
-        Arguments:
-          - data: image data
-          - shape: image shape
-          - pixel: pixel size in nm
+        Reshapes and saves data as an attribute.
+
+        Parameters
+        ----------
+        data : array-like
+            Image data.
+        shape : tuple, optional
+            Image shape.
+        pixel : float, optional
+            Pixel size in nm.
         """
 
         # make shape of length 3
@@ -1373,13 +1425,20 @@ class ImageIO(object):
 
     def readData(self, shape=None, memmap=False):
         """
-        Reads data from an image file. The data are read to numpy.ndarray
-        if memmap is False, or a ndarray-like memory mapis created if
-        memmap is True.
-        Should not be used directly. Instance attributes: file, dataType,
-        byteOrder, arrayOrder and shape have to be set before calling this
-        method.
-        Sets self.memmap to the value of the memmap argument.
+        Reads data from an image file.
+
+        Parameters
+        ----------
+        shape : tuple, optional
+            Shape of the image.
+        memmap : bool, optional
+            If True, creates a memory map. Default is False.
+
+        Raises
+        ------
+        ValueError
+            If byte order is incompatible with memory map.
+
         """
 
         # check if there's an extended header
@@ -1427,11 +1486,12 @@ class ImageIO(object):
     def writeData(self):
         """
         Writes data in numpy.ndarray format to an image file.
-        Transforms self.data according to self.dataType, self.byteOrder and
-        self.shape before writing.
-        Should not be used directly. Instance attributes: file, data, dataType,
-        byteOrder, arrayOrder and shape have to be set before calling this
-        method.
+
+        Raises
+        ------
+        AttributeError, LookupError
+            If required attributes are not set.
+
         """
 
         # change dataType, byteOrder and arrayOrder if needed
@@ -1453,15 +1513,15 @@ class ImageIO(object):
 
     def setFileFormat(self, fileFormat=None, file_=None):
         """
-        Sets self.fileFormat.
-        It is determined in the following order: first
-        from the argument fileFormat, then from the file extension and
-        finally from the already existing value of self.fileFormat
-        Arguments:
-          - file_: file name
-          - fileFormat: file Format
-        """
+        Sets the file format.
 
+        Parameters
+        ----------
+        fileFormat : str, optional
+            File format.
+        file_ : str, optional
+            File name.
+        """
         if fileFormat is not None:
             # fileFormat argiment given
             self.fileFormat = fileFormat
@@ -1482,23 +1542,27 @@ class ImageIO(object):
 
         return
 
-    def checkFile(self, file_, mode):
+    def checkFile(self, file, mode):
         """
-        If file_ is a string open the file with that name. If file_ is None,
-        use self.fileName and open the file.
-        If file_ is a file instance don't do anything.
-        Sets:
-          - self.fileName: file_ if a string
-          - self.file_: file instance
-        Arguments:
-          - file_: file name or instance of file
-          - mode: mode as in open()
+        Checks and possibly opens the file.
+
+        Parameters
+        ----------
+        file : str or file-like
+            File path or file handle.
+        mode : str
+            File mode, as in the open() function.
+
+        Raises
+        ------
+        IOError
+            If file is neither a string nor a file object.
         """
 
         # use self.fileName if file_ is None
-        if file_ is None:
+        if file is None:
             # print("file is None")
-            file_ = self.fileName
+            file = self.fileName
 
         # needed because file type not defined in Python3
         try:
@@ -1507,17 +1571,17 @@ class ImageIO(object):
             filetypes = io.IOBase
 
         # open the file if not opened already
-        if isinstance(file_, basestring):  # file_ is a string
-            self.fileName = file_
-            self.file_ = open(file_, mode)
+        if isinstance(file, basestring):  # file_ is a string
+            self.fileName = file
+            self.file_ = open(file, mode)
 
-        elif isinstance(file_, filetypes):  # file already open
-            self.file_ = file_
+        elif isinstance(file, filetypes):  # file already open
+            self.file_ = file
 
         else:
             raise IOError(
                 "Argument file_: "
-                + str(file_)
+                + str(file)
                 + "is neither a string nor a file object"
             )
 
@@ -1531,7 +1595,17 @@ class ImageIO(object):
 
     def getTiltAngle(self):
         """
-        Returns titl angle in degrees.
+        Returns tilt angle in degrees.
+
+        Raises
+        ------
+        ValueError
+            If tilt angle cannot be retrieved for the file format.
+
+        Returns
+        -------
+        float
+            Tilt angle.
         """
 
         # ToDo: get from header directly?
@@ -1545,8 +1619,20 @@ class ImageIO(object):
 
     def setTiltAngle(self, angle):
         """
-        Sets self._tiltAngle to angle*1000 and puts that value in emHeader.
-        Works only for em format.
+        Set tilt angle for EM format files.
+
+        Sets the internal `_tiltAngle` attribute and updates the corresponding value
+        in `emHeader`.
+
+        Parameters
+        ----------
+        angle : float
+            Tilt angle to set (in degrees).
+
+        Raises
+        ------
+        ValueError
+            If the file format is not 'em'.
         """
         if self.fileFormat == "em":
             # set the attribute
@@ -1566,11 +1652,28 @@ class ImageIO(object):
 
     def getPixelsize(self, diff=1e-6):
         """
-        Returns pixel size (at specimen level) in nm.
-        For mrc files a single pixelsize is returned if it's the same for all
-        dimensions, otherwise a list of pixelsizes (for each dimension) is
-        returned. Pixelsizes are considered the same if they do not differ
-        more than arg diff.
+        Return pixel size at the specimen level in nanometers.
+
+        For mrc files, it returns a single pixelsize if it's the same for all
+        dimensions, otherwise a list of pixelsizes for each dimension is returned.
+        Pixelsizes are considered the same if they do not differ more than the
+        specified difference.
+
+        Parameters
+        ----------
+        diff : float, optional
+            The threshold for pixel size difference to be considered the same, by
+            default 1e-6.
+
+        Returns
+        -------
+        float or list of float
+            Pixel size(s) in nm.
+
+        Raises
+        ------
+        ValueError
+            If the file format is neither 'em' nor 'mrc'.
         """
         if self.fileFormat == "em":
             return self._pixelsize / 1000.0
@@ -1592,19 +1695,20 @@ class ImageIO(object):
 
     def fix(self, mode=None, microscope=None):
         """
-        Fixes wrong values in header and in the data.
+        Fix wrong values in both header and data.
 
-        Mode determines which values are fixed. Currently defined modes are:
-          - 'polara_fei-tomo': images obtained on Polara (at MPI of
-          Biochemistry) using FEI tomography package and saved in EM
-          format.
-          - 'krios_fei-tomo': images obtained on Krios (at MPI of
-          Biochemistry) using FEI tomography package and saved in EM
-          format.
-          - 'cm300': images from cm300 in EM format
-        If mode is polara_fei-tomo, then arg microscope has to be specified.
-        The allowed values are specified in microscope_db.py. Currently (r564)
-        these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.
+        Parameters
+        ----------
+        mode : str, optional
+            Determines which values are fixed. Possible values include
+            'polara_fei-tomo', 'krios_fei-tomo', 'cm300', by default None.
+        microscope : str, optional
+            Specified when mode is 'polara_fei-tomo'. Currently accepted values are:
+            'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09', by default None.
+
+        See Also
+        --------
+        fixHeader : Fix values only in the header.
         """
 
         self.fixHeader(mode=mode, microscope=microscope)
@@ -1613,31 +1717,21 @@ class ImageIO(object):
 
     def fixHeader(self, mode=None, microscope=None):
         """
-        Fixes wrong values in microscope image header.
-        Mode determines which values are fixed. Currently defined modes are:
-          - 'polara_fei-tomo': images obtained on Polara (at MPI of
-          Biochemistry) using FEI tomography package and saved in EM
-          format. Values fixed:
-            - voltage: set to 300000
-            - cs: set to 2000
-            - ccdPixelsize: physical pixel size, read from microscope_db
-            - ccdLength: physical size of the CCD, pixelsize x n_pixels
-            - _pixelsize: pixel size at the specimen level [fm]. Nominal mag
-            is read from the header and converted to pixelsize using
-            microscope_db
-          - 'krios_fei-tomo': images obtained on Krios (at MPI of
-          Biochemistry) using FEI tomography package and saved in EM
-          format. Pixel size at the specimen level is correct, and the physical
-          detector length might be correct. Values fixed:
-            - voltage: set to 300000
-            - cs: set to 2000
-          - 'cm300': images from cm300 in EM format
-          - None: doesn't do anything
-        If mode is 'polara_fei-tomo', then arg microscope has to be specified.
-        The allowed values are specified in microscope_db.py. Currently (r564)
-        these are: 'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09'.
-        Updates the appropriate header: self.emHeader if file format is 'em',
-        or self.mrcHeader for mrc files.
+        Fix wrong values in the microscope image header.
+
+        Parameters
+        ----------
+        mode : str, optional
+            Determines which values are fixed. Possible values include
+            'polara_fei-tomo', 'krios_fei-tomo', 'cm300', by default None.
+        microscope : str, optional
+            Specified when mode is 'polara_fei-tomo'. Currently accepted values are:
+            'polara-1_01-07', 'polara-1_01-09' and 'polara-2_01-09', by default None.
+
+        Raises
+        ------
+        ValueError
+            If the given mode is not recognized for the current file format.
         """
 
         if self.fileFormat == "em":
@@ -1759,9 +1853,22 @@ class ImageIO(object):
 
     def getFromEMHeader(self, name):
         """
-        Reads the value of variable name from self.emHeader and returns it.
-        Comment: alternatively, self.name can be used. Not sure which
-        approach is better (VL 04.01.01).
+        Get the value of a variable from the EM header.
+
+        Parameters
+        ----------
+        name : str
+            The name of the variable to retrieve from the header.
+
+        Returns
+        -------
+        variable_type
+            The value of the specified variable from the header.
+
+        Notes
+        -----
+        Alternatively, self.name can be used, but the best approach is yet to
+        be determined.
         """
 
         # find position of name in self.emHeaderFields
@@ -1777,8 +1884,18 @@ class ImageIO(object):
 
     def putInEMHeader(self, name, value):
         """
-        Puts value in self.EmHeaderFields at the position corresponding to
-        name.
+        Update a value in the EM header.
+
+        Parameters
+        ----------
+        name : str
+            The name of the variable to update in the header.
+        value : variable_type
+            The value to set for the specified variable in the header.
+
+        Notes
+        -----
+        This function updates the specified value in the header in-place.
         """
 
         # find position of name in self.emHeaderFields

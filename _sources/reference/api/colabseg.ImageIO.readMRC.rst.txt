@@ -1,0 +1,6 @@
+ImageIO.readMRC
+========================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.readMRC

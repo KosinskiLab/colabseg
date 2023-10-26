@@ -1,0 +1,6 @@
+ColabSegData.flip\_normals
+==================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.flip_normals

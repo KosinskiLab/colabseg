@@ -1,0 +1,6 @@
+ColabSegData.save\_hdf
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.save_hdf

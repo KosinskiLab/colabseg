@@ -1,0 +1,6 @@
+ColabSegData.load\_stl\_file
+===================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.load_stl_file

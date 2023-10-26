@@ -1,0 +1,6 @@
+ImageIO.byte\_order
+===========================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.byte_order

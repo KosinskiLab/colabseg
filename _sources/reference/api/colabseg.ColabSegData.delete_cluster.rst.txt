@@ -1,0 +1,6 @@
+ColabSegData.delete\_cluster
+====================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.delete_cluster

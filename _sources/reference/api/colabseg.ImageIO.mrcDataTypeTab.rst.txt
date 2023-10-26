@@ -1,0 +1,6 @@
+ImageIO.mrcDataTypeTab
+===============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.mrcDataTypeTab

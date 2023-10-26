@@ -1,0 +1,6 @@
+ImageIO.em
+===================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.em

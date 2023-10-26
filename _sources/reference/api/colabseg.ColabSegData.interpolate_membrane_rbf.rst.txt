@@ -1,0 +1,6 @@
+ColabSegData.interpolate\_membrane\_rbf
+==============================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.interpolate_membrane_rbf

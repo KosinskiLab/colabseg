@@ -1,0 +1,6 @@
+ColabSegData.merge\_clusters
+====================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.merge_clusters

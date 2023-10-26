@@ -1,0 +1,6 @@
+ColabSegData.load\_tomogram
+===================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.load_tomogram

@@ -1,0 +1,6 @@
+ColabSegData.convert\_tomo
+==================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.convert_tomo

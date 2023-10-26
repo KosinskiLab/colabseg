@@ -1,0 +1,6 @@
+ImageIO.readMRCHeader
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.readMRCHeader

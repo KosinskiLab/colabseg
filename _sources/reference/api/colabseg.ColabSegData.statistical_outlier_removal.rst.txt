@@ -1,0 +1,6 @@
+ColabSegData.statistical\_outlier\_removal
+=================================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.statistical_outlier_removal

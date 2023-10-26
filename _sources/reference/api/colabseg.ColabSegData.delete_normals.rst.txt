@@ -1,0 +1,6 @@
+ColabSegData.delete\_normals
+====================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.delete_normals

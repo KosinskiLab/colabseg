@@ -1,0 +1,6 @@
+ImageIO.setData
+========================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.setData

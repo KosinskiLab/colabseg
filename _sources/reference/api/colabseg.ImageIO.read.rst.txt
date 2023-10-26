@@ -1,0 +1,6 @@
+ImageIO.read
+=====================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.read

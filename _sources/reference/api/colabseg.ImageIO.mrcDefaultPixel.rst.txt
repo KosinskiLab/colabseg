@@ -1,0 +1,6 @@
+ImageIO.mrcDefaultPixel
+================================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.mrcDefaultPixel

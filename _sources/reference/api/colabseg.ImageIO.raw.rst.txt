@@ -1,0 +1,6 @@
+ImageIO.raw
+====================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.raw

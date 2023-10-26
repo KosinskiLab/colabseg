@@ -1,0 +1,6 @@
+ColabSegData.load\_protein\_position
+===========================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.load_protein_position

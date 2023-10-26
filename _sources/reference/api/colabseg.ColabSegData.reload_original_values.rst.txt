@@ -1,0 +1,6 @@
+ColabSegData.reload\_original\_values
+============================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.reload_original_values

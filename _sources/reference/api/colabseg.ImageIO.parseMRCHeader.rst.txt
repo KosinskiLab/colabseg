@@ -1,0 +1,6 @@
+ImageIO.parseMRCHeader
+===============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.parseMRCHeader

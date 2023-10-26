@@ -1,0 +1,6 @@
+ColabSegData.calculate\_normals
+=======================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.calculate_normals

@@ -1,0 +1,6 @@
+ColabSegData.load\_point\_cloud
+======================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.load_point_cloud

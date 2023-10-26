@@ -1,0 +1,6 @@
+ImageIO.writeEM
+========================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.writeEM

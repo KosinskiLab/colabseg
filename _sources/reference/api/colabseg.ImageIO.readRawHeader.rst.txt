@@ -1,0 +1,6 @@
+ImageIO.readRawHeader
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.readRawHeader

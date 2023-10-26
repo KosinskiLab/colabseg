@@ -1,0 +1,6 @@
+ImageIO.setFileFormat
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.setFileFormat

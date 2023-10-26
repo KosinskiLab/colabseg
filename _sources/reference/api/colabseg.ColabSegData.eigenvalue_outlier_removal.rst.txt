@@ -1,0 +1,6 @@
+ColabSegData.eigenvalue\_outlier\_removal
+================================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.eigenvalue_outlier_removal

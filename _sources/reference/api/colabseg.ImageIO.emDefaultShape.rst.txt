@@ -1,0 +1,6 @@
+ImageIO.emDefaultShape
+===============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.emDefaultShape

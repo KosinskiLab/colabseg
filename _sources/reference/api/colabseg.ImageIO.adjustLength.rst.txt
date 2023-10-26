@@ -1,0 +1,6 @@
+ImageIO.adjustLength
+=============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.adjustLength

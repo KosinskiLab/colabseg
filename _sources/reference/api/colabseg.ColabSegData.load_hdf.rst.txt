@@ -1,0 +1,6 @@
+ColabSegData.load\_hdf
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.load_hdf

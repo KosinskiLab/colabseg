@@ -1,0 +1,6 @@
+ImageIO.mrcDefaultShape
+================================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.mrcDefaultShape

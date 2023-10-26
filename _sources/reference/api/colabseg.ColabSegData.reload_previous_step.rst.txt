@@ -1,0 +1,6 @@
+ColabSegData.reload\_previous\_step
+==========================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.reload_previous_step

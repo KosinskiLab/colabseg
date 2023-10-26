@@ -1,0 +1,6 @@
+ImageIO.readEMHeader
+=============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.readEMHeader

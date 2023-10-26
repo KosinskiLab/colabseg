@@ -1,0 +1,6 @@
+ImageIO.putInEMHeader
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.putInEMHeader

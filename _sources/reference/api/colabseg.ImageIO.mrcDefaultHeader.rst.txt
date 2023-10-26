@@ -1,0 +1,6 @@
+ImageIO.mrcDefaultHeader
+=================================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.mrcDefaultHeader

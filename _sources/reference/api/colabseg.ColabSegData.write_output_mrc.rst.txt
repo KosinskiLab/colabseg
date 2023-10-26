@@ -1,0 +1,6 @@
+ColabSegData.write\_output\_mrc
+======================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.write_output_mrc

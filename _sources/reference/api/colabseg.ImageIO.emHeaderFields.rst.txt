@@ -1,0 +1,6 @@
+ImageIO.emHeaderFields
+===============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.emHeaderFields

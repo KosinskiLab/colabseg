@@ -1,0 +1,6 @@
+ImageIO.write
+======================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.write

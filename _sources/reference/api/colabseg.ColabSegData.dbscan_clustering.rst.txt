@@ -1,0 +1,6 @@
+ColabSegData.dbscan\_clustering
+=======================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.dbscan_clustering

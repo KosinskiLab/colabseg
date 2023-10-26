@@ -1,0 +1,6 @@
+ImageIO.tiltAngle
+==========================
+
+.. currentmodule:: colabseg
+
+.. autoproperty:: ImageIO.tiltAngle

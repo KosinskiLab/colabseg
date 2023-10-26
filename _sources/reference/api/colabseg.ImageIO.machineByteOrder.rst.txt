@@ -1,0 +1,6 @@
+ImageIO.machineByteOrder
+=================================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.machineByteOrder

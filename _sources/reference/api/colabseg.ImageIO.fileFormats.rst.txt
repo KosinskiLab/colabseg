@@ -1,0 +1,6 @@
+ImageIO.fileFormats
+============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.fileFormats

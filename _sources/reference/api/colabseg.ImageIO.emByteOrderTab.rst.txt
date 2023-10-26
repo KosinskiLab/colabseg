@@ -1,0 +1,6 @@
+ImageIO.emByteOrderTab
+===============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.emByteOrderTab

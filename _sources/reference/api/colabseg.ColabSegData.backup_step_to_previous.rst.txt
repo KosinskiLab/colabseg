@@ -1,0 +1,6 @@
+ColabSegData.backup\_step\_to\_previous
+=============================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.backup_step_to_previous

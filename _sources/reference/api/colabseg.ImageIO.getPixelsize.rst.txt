@@ -1,0 +1,6 @@
+ImageIO.getPixelsize
+=============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.getPixelsize

@@ -1,0 +1,6 @@
+ImageIO.mrc
+====================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.mrc

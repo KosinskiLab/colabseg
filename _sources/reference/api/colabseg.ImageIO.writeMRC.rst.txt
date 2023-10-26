@@ -1,0 +1,6 @@
+ImageIO.writeMRC
+=========================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.writeMRC

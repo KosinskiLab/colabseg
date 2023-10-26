@@ -1,0 +1,6 @@
+ColabSegData.crop\_fit\_around\_membrane
+==============================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.crop_fit_around_membrane

@@ -1,0 +1,6 @@
+ImageIO.checkFile
+==========================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ImageIO.checkFile

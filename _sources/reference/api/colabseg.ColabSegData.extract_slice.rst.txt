@@ -1,0 +1,6 @@
+ColabSegData.extract\_slice
+===================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.extract_slice

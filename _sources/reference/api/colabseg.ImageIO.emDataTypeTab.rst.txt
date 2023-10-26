@@ -1,0 +1,6 @@
+ImageIO.emDataTypeTab
+==============================
+
+.. currentmodule:: colabseg
+
+.. autoattribute:: ImageIO.emDataTypeTab

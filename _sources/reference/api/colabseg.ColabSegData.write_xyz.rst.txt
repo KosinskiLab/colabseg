@@ -1,0 +1,6 @@
+ColabSegData.write\_xyz
+===============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.write_xyz

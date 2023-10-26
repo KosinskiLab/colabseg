@@ -1,0 +1,6 @@
+ColabSegData.delete\_fit
+================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.delete_fit

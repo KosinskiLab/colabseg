@@ -1,0 +1,6 @@
+ColabSegData.get\_lamina\_rotation\_matrix
+================================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.get_lamina_rotation_matrix

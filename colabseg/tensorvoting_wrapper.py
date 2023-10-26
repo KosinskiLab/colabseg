@@ -13,7 +13,7 @@ from ipywidgets import widgets
 class generate_tensor_voting_gui:
 
     def __init__(self):
-        self.self.all_values = {}
+        self.all_values = {}
         self.all_values["tensor_voting_path"] = widgets.Text(
             placeholder="PATH/TO/TOMOSEG",
             description="TV Path:",
@@ -231,11 +231,11 @@ class generate_tensor_voting_gui:
         display(vbox_all)
 
         start_run = widgets.Button(description="Run TV Pipeline")
-        start_run.on_click(run_tv_code)
+        start_run.on_click(self.run_tv_code)
         display(start_run)
 
         set_defaults = widgets.Button(description="Set optmized default")
-        set_defaults.on_click(reset_optimal_default_values)
+        set_defaults.on_click(self.reset_optimal_default_values)
         display(set_defaults)
 
     def run_tv_code(self, obj):

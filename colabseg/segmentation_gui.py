@@ -157,6 +157,12 @@ class JupyterFramework(object):
         self.all_widgets["fit_sphere"] = widgets.Button(description="Fit Sphere")
         self.all_widgets["fit_sphere"].on_click(self.fit_sphere)
 
+        self.all_widgets["fit_ellipsoid"] = widgets.Button(description="Fit Ellipsoid")
+        self.all_widgets["fit_ellipsoid"].on_click(self.fit_ellipsoid)
+
+        self.all_widgets["fit_cylinder"] = widgets.Button(description="Fit Cylinder")
+        self.all_widgets["fit_cylinder"].on_click(self.fit_cylinder)
+
         self.all_widgets["crop_fit"] = widgets.Button(description="Crop fit around")
         self.all_widgets["crop_fit"].on_click(self.crop_fit)
 
@@ -493,10 +499,17 @@ class JupyterFramework(object):
         self.all_widgets["cropping"] = widgets.HBox(
             [self.all_widgets["crop_fit"], self.all_widgets["distance_tolerance"]]
         )
+        self.all_widgets["fit_closed_surface"] = widgets.HBox(
+            [
+                self.all_widgets["fit_sphere"],
+                self.all_widgets["fit_ellipsoid"],
+                self.all_widgets["fit_cylinder"]
+            ]
+        )
         self.all_widgets["fitting"] = widgets.VBox(
             [
                 self.all_widgets["fitting_rbf"],
-                self.all_widgets["fit_sphere"],
+                self.all_widgets["fit_closed_surface"],
                 self.all_widgets["cropping"],
                 self.all_widgets["delete_fit"],
             ]
@@ -808,7 +821,36 @@ class JupyterFramework(object):
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the fitting procedure!")
             return
-        self.data_structure.interpolate_membrane_sphere(
+        self.data_structure.interpolate_membrane_closed_surface(
+            "sphere",
+            self.all_widgets["cluster_sel"].value
+        )
+        self.reload_gui()
+        return
+    
+    def fit_ellipsoid(self, obj):
+            """Fit lstsq ellipsoid to selected cluster"""
+            self.data_structure.backup_step_to_previous()
+            if len(self.all_widgets["cluster_sel"].value) != 1:
+                print("Nothing or too many clusters selected!")
+                print("Please select a single cluster for the fitting procedure!")
+                return
+            self.data_structure.interpolate_membrane_closed_surface(
+                "ellipsoid",
+                self.all_widgets["cluster_sel"].value
+            )
+            self.reload_gui()
+            return
+
+    def fit_cylinder(self, obj):
+        """Fit lstsq ellipsoid to selected cluster"""
+        self.data_structure.backup_step_to_previous()
+        if len(self.all_widgets["cluster_sel"].value) != 1:
+            print("Nothing or too many clusters selected!")
+            print("Please select a single cluster for the fitting procedure!")
+            return
+        self.data_structure.interpolate_membrane_closed_surface(
+            "cylinder",
             self.all_widgets["cluster_sel"].value
         )
         self.reload_gui()

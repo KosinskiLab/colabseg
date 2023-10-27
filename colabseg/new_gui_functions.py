@@ -16,12 +16,11 @@ from pyntcloud import PyntCloud
 from tqdm.notebook import tqdm
 
 from .image_io import ImageIO
+from .parametrization import PARAMETRIZATION_TYPE
 from .utilities import (
     plane_fit,
     make_plot_array,
     R_2vect,
-    create_sphere_points,
-    lstsq_sphere_fitting,
 )
 
 class ColabSegData(object):
@@ -536,19 +535,11 @@ class ColabSegData(object):
             "surface_normals"
         ] * (-1)
 
-    def interpolate_membrane_sphere(self, cluster_index=0):
+    def interpolate_membrane_closed_surface(self, shape_type, cluster_index=0):
         """Least square fit for a perfect sphere and adding of points.
         For vesicles and spherical viruses.
         """
-        radius, x0, y0, z0 = lstsq_sphere_fitting(
-            np.asarray(self.cluster_list_tv)[cluster_index]
-        )
-        # pixel_based_point_count is some approximate heursitic to have every pixel filled
-        # might need to adapt this later to exact solution
-        pixel_based_point_count = int(
-            np.round((radius * np.pi) / (self.pixel_size[0] * 0.25))
-        )
-        interpxyz = create_sphere_points(radius, x0, y0, z0, n=pixel_based_point_count)
+        interpxyz = PARAMETRIZATION_TYPE[shape_type].fit(np.asarray(self.cluster_list_tv)[cluster_index]).sample(1000)
         self.cluster_list_fits.append(interpxyz)
         return
 

@@ -192,51 +192,41 @@ class Ellipsoid(Parametrization):
         NotImplementedError
             If the points are not 3D.
         """
-        positions = np.asarray(positions)
+        positions = np.asarray(positions, dtype=np.float64)
         if positions.shape[1] != 3 or len(positions.shape) != 2:
             raise NotImplementedError(
                 "Only three-dimensional point clouds are supported."
             )
 
-        positions_mean = positions.mean(axis=0)
-        positions -= positions_mean
+        def ellipsoid_loss(radii, data_points, center, orientations):
+            transformed_points = np.dot(data_points - center, orientations)
 
-        D = np.array(
-            [
-                np.square(positions[:, 0]),
-                np.square(positions[:, 1]),
-                np.square(positions[:, 2]),
-                2 * positions[:, 0] * positions[:, 1],
-                2 * positions[:, 0] * positions[:, 2],
-                2 * positions[:, 1] * positions[:, 2],
-                2 * positions[:, 0],
-                2 * positions[:, 1],
-                2 * positions[:, 2],
-                np.ones_like(positions[:, 0]),
-            ]
-        ).T
-        v, *_ = np.linalg.lstsq(D, np.ones_like(positions[:, 0]), rcond=None)
+            normalized_points = transformed_points / radii
 
-        A = np.array(
-            [
-                [v[0], v[3], v[4], v[6]],
-                [v[3], v[1], v[5], v[7]],
-                [v[4], v[5], v[2], v[8]],
-                [v[6], v[7], v[8], -1],
-            ]
+            distances = np.sum(normalized_points**2, axis=1) - 1
+
+            loss = np.sum(distances**2)
+            return loss
+
+        center = positions.mean(axis=0)
+        positions_centered = positions - center
+
+        cov_mat = np.cov(positions_centered, rowvar=False)
+        evals, evecs = np.linalg.eigh(cov_mat)
+
+        sort_indices = np.argsort(evals)[::-1]
+        evals = evals[sort_indices]
+        evecs = evecs[:, sort_indices]
+
+        initial_radii = 2 * np.sqrt(evals)
+
+        result = optimize.minimize(
+            ellipsoid_loss,
+            initial_radii,
+            args=(positions, center, evecs),
+            method="Nelder-Mead",
         )
-
-        center = np.linalg.solve(-A[:3, :3], v[6:9])
-
-        T = np.eye(4)
-        T[3, :3] = center
-        R = T.dot(A).dot(T.T)
-
-        evals, evecs = np.linalg.eig(R[:3, :3] / -R[3, 3])
-        radii = np.sqrt(1.0 / np.abs(evals))
-        evecs = np.dot(evecs, np.diag(np.sign(evals)))
-
-        center = np.add(positions_mean, center)
+        radii = result.x
 
         return cls(radii=radii, center=center, orientations=evecs)
 
@@ -271,18 +261,18 @@ class Ellipsoid(Parametrization):
         orientations = self.orientations if orientations is None else orientations
 
         phi = np.random.uniform(0, 2 * np.pi, n_samples)
-        costheta = np.random.uniform(-1, 1, n_samples)
-        theta = np.arccos(costheta)
+        theta = np.random.uniform(0, np.pi, n_samples)
+
         x = np.sin(theta) * np.cos(phi)
         y = np.sin(theta) * np.sin(phi)
         z = np.cos(theta)
 
-        points = np.array([x, y, z]).T * radii
+        samples = np.vstack((x, y, z)).T
+        samples = samples * radii
+        samples = samples.dot(orientations.T)
+        samples += center
 
-        points = np.dot(points, orientations.T)
-        np.add(points, center, out=points)
-
-        return points
+        return samples
 
 
 class Cylinder(Parametrization):
@@ -336,11 +326,25 @@ class Cylinder(Parametrization):
         ------
         ValueError
             If th number of initial parameters is not equal to five.
+        NotImplementedError
+            If the points are not 3D.
 
         References
         ----------
         .. [1]  Ting On Chan https://stackoverflow.com/posts/44164662/revisions
         """
+
+        positions = np.asarray(positions, dtype=np.float64)
+        if positions.shape[1] != 3 or len(positions.shape) != 2:
+            raise NotImplementedError(
+                "Only three-dimensional point clouds are supported."
+            )
+
+        if initial_parameters is None:
+            initial_parameters = np.zeros(5)
+
+        if len(initial_parameters) != 5:
+            raise ValueError(f"Expected 5 parameters, got {len(initial_parameters)}")
 
         def fit_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
             term1 = -np.cos(p[3]) * (p[0] - positions[:, 0])
@@ -352,12 +356,6 @@ class Cylinder(Parametrization):
 
         def error_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
             return fit_function(p, positions) - p[4] ** 2
-
-        if initial_parameters is None:
-            initial_parameters = np.zeros(5)
-
-        if len(initial_parameters) != 5:
-            raise ValueError(f"Expected 5 parameters, got {len(initial_parameters)}")
 
         parameters, _ = optimize.leastsq(
             error_function, initial_parameters, args=(positions,), maxfev=10000

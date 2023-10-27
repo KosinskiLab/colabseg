@@ -183,9 +183,9 @@ class seg_visualization(object):
         Use to initialize gui. Use to reload models after editing point cloud
         """
         for i, cluster_positions in enumerate(cluster_list):
-            downsample_fit = int(np.round(len(cluster_positions) / 100000))
+            downsample_fit = int(np.round(len(cluster_positions) / 50000))
             i = i + start_index
-            xyz = self.make_xyz_string(cluster_positions[::])
+            xyz = self.make_xyz_string(cluster_positions[::downsample_fit])
             self.view.addModel(xyz, "xyz")
             self.view.setStyle(
                 {"model": i},

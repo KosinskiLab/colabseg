@@ -48,7 +48,4 @@ Make sure to pick the correct environment as kernel to have access to the instal
 When loading a new file it is advised to either restart the kernel and start from the top of the notebook. Or at least re-run the file loading cell. This will purge any existing data and avoid potential issues in the experimental stage.
 
 ## Detailed User Guide:
-Detailed tutorial and user guide can be found in the ```colabseg_use_guide.pdf```.
-
-
-
+Detailed tutorial and user guide can be found [here](https://kosinskilab.github.io/colabseg/).

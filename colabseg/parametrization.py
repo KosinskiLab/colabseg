@@ -260,12 +260,16 @@ class Ellipsoid(Parametrization):
         center = self.center if center is None else center
         orientations = self.orientations if orientations is None else orientations
 
-        phi = np.random.uniform(0, 2 * np.pi, n_samples)
-        theta = np.random.uniform(0, np.pi, n_samples)
+        # phi = np.random.uniform(0, 2 * np.pi, n_samples)
+        # theta = np.random.uniform(0, np.pi, n_samples)
+        sp = np.linspace(0, 2.0 * np.pi, num=n_samples)
+        nx = sp.shape[0]
+        u = np.repeat(sp, nx)
+        v = np.tile(sp, nx)
 
-        x = np.sin(theta) * np.cos(phi)
-        y = np.sin(theta) * np.sin(phi)
-        z = np.cos(theta)
+        x = np.sin(u) * np.cos(v)
+        y = np.sin(u) * np.sin(v)
+        z = np.cos(u)
 
         samples = np.vstack((x, y, z)).T
         samples = samples * radii
@@ -335,6 +339,9 @@ class Cylinder(Parametrization):
         """
 
         positions = np.asarray(positions, dtype=np.float64)
+        max_value = positions.max(axis=0)
+        # positions = positions / max_value
+
         if positions.shape[1] != 3 or len(positions.shape) != 2:
             raise NotImplementedError(
                 "Only three-dimensional point clouds are supported."
@@ -361,10 +368,10 @@ class Cylinder(Parametrization):
             error_function, initial_parameters, args=(positions,), maxfev=10000
         )
 
-        centers = np.array([parameters[0], parameters[1]])
+        height = (positions[:, 2].max() - positions[:, 2].min())*max_value[_]
+        centers = np.array([parameters[0], parameters[1], positions[:, 2].min()])
         angles = np.array([parameters[2], parameters[3]])
         radius = parameters[4]
-        height = positions[:, 2].max() - positions[:, 2].min()
 
         return cls(centers=centers, angles=angles, radius=radius, height=height)
 
@@ -402,17 +409,18 @@ class Cylinder(Parametrization):
         radius = self.radius if radius is None else radius
         height = self.height if height is None else height
 
-        Xc, Yc = centers
+        Xc, Yc, hmin = centers
 
         # Randomly choose an angle theta and height h
-        theta = np.random.uniform(0, 2 * np.pi, n_samples)
-        h = np.random.uniform(0, height, n_samples)
+        theta = np.linspace(0, 2 * np.pi, n_samples)
+        h = np.linspace(0, height, n_samples)
+        
+        mesh = np.asarray(np.meshgrid(theta, h)).reshape(2, -1).T
 
-        # Convert cylindrical to Cartesian coordinates
-        x = Xc + radius * np.cos(theta)
-        y = Yc + radius * np.sin(theta)
-        z = h
-
+        x = Xc + radius * np.cos(mesh[:,0])
+        y = Yc + radius * np.sin(mesh[:,0])
+        z = hmin + mesh[:,1]
+        print(radius)
         return np.column_stack((x, y, z))
 
 

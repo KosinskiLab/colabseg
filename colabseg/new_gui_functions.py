@@ -539,7 +539,7 @@ class ColabSegData(object):
         """Least square fit for a perfect sphere and adding of points.
         For vesicles and spherical viruses.
         """
-        interpxyz = PARAMETRIZATION_TYPE[shape_type].fit(np.asarray(self.cluster_list_tv)[cluster_index]).sample(1000)
+        interpxyz = PARAMETRIZATION_TYPE[shape_type].fit(np.asarray(self.cluster_list_tv)[cluster_index]).sample(100)
         self.cluster_list_fits.append(interpxyz)
         return
 

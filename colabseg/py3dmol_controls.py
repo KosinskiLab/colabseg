@@ -184,6 +184,9 @@ class seg_visualization(object):
         """
         for i, cluster_positions in enumerate(cluster_list):
             downsample_fit = int(np.round(len(cluster_positions) / 50000))
+            if downsample_fit == 0:
+                downsample_fit = 1
+            print(downsample_fit)
             i = i + start_index
             xyz = self.make_xyz_string(cluster_positions[::downsample_fit])
             self.view.addModel(xyz, "xyz")
@@ -325,9 +328,9 @@ class seg_visualization(object):
     def make_xyz_string(point_cloud):
         """In memory XYZ string to load point cloud"""
         # TODO add variable step size
-        xyz_string = "{}\n".format(len(np.asarray(point_cloud)[::10]))
+        xyz_string = "{}\n".format(len(np.asarray(point_cloud)))
         xyz_string += "pointcloud as xyz positions\n"
-        for position in np.asarray(point_cloud)[::10]:
+        for position in np.asarray(point_cloud):
             xyz_string += "C {} {} {}\n".format(position[0], position[1], position[2])
         return xyz_string
 
@@ -335,8 +338,8 @@ class seg_visualization(object):
     def make_xyz_string_protein(point_cloud):
         """In memory XYZ string to load point cloud"""
         # TODO add variable step size
-        xyz_string = "{}\n".format(len(np.asarray(point_cloud)[::1]))
+        xyz_string = "{}\n".format(len(np.asarray(point_cloud)))
         xyz_string += "pointcloud as xyz positions\n"
-        for position in np.asarray(point_cloud)[::1]:
+        for position in np.asarray(point_cloud):
             xyz_string += "C {} {} {}\n".format(position[0], position[1], position[2])
         return xyz_string

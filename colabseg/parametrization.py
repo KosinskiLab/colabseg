@@ -74,7 +74,7 @@ class Sphere(Parametrization):
         self.center = center
 
     @classmethod
-    def fit(cls, positions: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def fit(cls, positions: np.ndarray) -> "Sphere":
         """
         Fit an sphere to a set of 3D points.
 
@@ -173,7 +173,7 @@ class Ellipsoid(Parametrization):
         self.orientations = orientations
 
     @classmethod
-    def fit(cls, positions) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def fit(cls, positions) -> "Ellipsoid":
         """
         Fit an ellipsoid to a set of 3D points.
 
@@ -260,8 +260,6 @@ class Ellipsoid(Parametrization):
         center = self.center if center is None else center
         orientations = self.orientations if orientations is None else orientations
 
-        # phi = np.random.uniform(0, 2 * np.pi, n_samples)
-        # theta = np.random.uniform(0, np.pi, n_samples)
         sp = np.linspace(0, 2.0 * np.pi, num=n_samples)
         nx = sp.shape[0]
         u = np.repeat(sp, nx)
@@ -284,9 +282,8 @@ class Cylinder(Parametrization):
     Parametrize a point cloud as cylinder.
     """
 
-    def __init__(
-        self, centers: np.ndarray, angles: np.ndarray, radius: float, height: float
-    ):
+    def __init__(self, centers: np.ndarray, orientations: np.ndarray,
+        radius: float, height : float):
         """
         Initialize the Cylinder parametrization.
 
@@ -294,22 +291,21 @@ class Cylinder(Parametrization):
         ----------
         centers : np.ndarray
             Center coordinates of the cylinder in X and Y.
-        angles: np.ndarray
-            Orientation angles alpha and beta.
+        orientations : np.ndarray
+            Square orientation matrix
         radius: float
             Radius of the cylinder.
         height : float
             Height of the cylinder.
         """
         self.centers = centers
-        self.angles = angles
+        self.orientations = orientations
         self.radius = radius
         self.height = height
 
+
     @classmethod
-    def fit(
-        cls, positions: np.ndarray, initial_parameters: np.ndarray = None
-    ) -> Tuple[np.ndarray, np.ndarray, float]:
+    def fit(cls, positions: np.ndarray) -> "Cylinder":
         """
         Fit a 3D point cloud to a cylinder.
 
@@ -317,13 +313,10 @@ class Cylinder(Parametrization):
         ----------
         positions : np.ndarray
             Point coordinates with shape (n x 3)
-        initial_parameters : np.ndarray, optional
-            Initial values of the parameters [Xc, Yc, alpha, beta, r].
-            If not provided, the fitting might be less accurate.
 
         Returns
         -------
-        Sphere
+        Cylinder
             Class instance with fitted parameters.
 
         Raises
@@ -332,72 +325,70 @@ class Cylinder(Parametrization):
             If th number of initial parameters is not equal to five.
         NotImplementedError
             If the points are not 3D.
-
-        References
-        ----------
-        .. [1]  Ting On Chan https://stackoverflow.com/posts/44164662/revisions
         """
 
         positions = np.asarray(positions, dtype=np.float64)
-        max_value = positions.max(axis=0)
-        # positions = positions / max_value
-
         if positions.shape[1] != 3 or len(positions.shape) != 2:
             raise NotImplementedError(
                 "Only three-dimensional point clouds are supported."
             )
 
-        if initial_parameters is None:
-            initial_parameters = np.zeros(5)
+        center = positions.mean(axis=0)
+        positions_centered = positions - center
 
-        if len(initial_parameters) != 5:
-            raise ValueError(f"Expected 5 parameters, got {len(initial_parameters)}")
+        cov_mat = np.cov(positions_centered, rowvar=False)
+        evals, evecs = np.linalg.eigh(cov_mat)
 
-        def fit_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
-            term1 = -np.cos(p[3]) * (p[0] - positions[:, 0])
-            term2 = positions[:, 2] * np.cos(p[2]) * np.sin(p[3])
-            term3 = np.sin(p[2]) * np.sin(p[3]) * (p[1] - positions[:, 1])
-            term4 = positions[:, 2] * np.sin(p[2])
-            term5 = np.cos(p[2]) * (p[1] - positions[:, 1])
-            return (term1 - term2 - term3) ** 2 + (term4 - term5) ** 2
+        sort_indices = np.argsort(evals)[::-1]
+        evals = evals[sort_indices]
+        evecs = evecs[:, sort_indices]
 
-        def error_function(p: np.ndarray, positions: np.ndarray) -> np.ndarray:
-            return fit_function(p, positions) - p[4] ** 2
+        initial_radii = 2 * np.sqrt(evals)
 
-        parameters, _ = optimize.leastsq(
-            error_function, initial_parameters, args=(positions,), maxfev=10000
+        def cylinder_loss(radii, data_points, center, orientations):
+            transformed_points = np.dot(data_points - center, orientations)
+
+            normalized_points = transformed_points / radii
+
+            distances = np.sum(normalized_points**2, axis=1) - 1
+
+            loss = np.sum(distances**2)
+            return loss
+
+        result = optimize.minimize(
+            cylinder_loss,
+            np.max(initial_radii),
+            args=(positions, center, evecs),
+            method="Nelder-Mead",
         )
 
-        height = (positions[:, 2].max() - positions[:, 2].min())*max_value[_]
-        centers = np.array([parameters[0], parameters[1], positions[:, 2].min()])
-        angles = np.array([parameters[2], parameters[3]])
-        radius = parameters[4]
+        rotated_points = positions_centered.dot(evecs)
+        heights = rotated_points.max(axis = 0) - rotated_points.min(axis = 0)
+        height = heights[np.argmax(np.abs(np.diff(heights))) + 1]
 
-        return cls(centers=centers, angles=angles, radius=radius, height=height)
+        return cls(radius=result.x, centers=center, orientations=evecs, height = height)
 
     def sample(
         self,
         n_samples: int,
         centers: np.ndarray = None,
-        angles: np.ndarray = None,
+        orientations: np.ndarray = None,
         radius: float = None,
-        height: float = None,
+        height : float = None,
     ) -> np.ndarray:
         """
         Sample points from the surface of a cylinder.
 
         Parameters
         ----------
-        n_samples : int
-            Number of points to sample.
         centers : np.ndarray
-            Center coordinates [Xc, Yc].
-        angles : np.ndarray
-            Orientation angles [alpha, beta].
-        radius : float
+            Center coordinates of the cylinder in X and Y.
+        orientations : np.ndarray
+            Square orientation matrix
+        radius: float
             Radius of the cylinder.
         height : float
-            Maximum height of the cylinder.
+            Height of the cylinder.
 
         Returns
         -------
@@ -405,23 +396,24 @@ class Cylinder(Parametrization):
             Array of sampled points from the cylinder surface.
         """
         centers = self.centers if centers is None else centers
-        angles = self.angles if angles is None else angles
+        orientations = self.orientations if orientations is None else orientations
         radius = self.radius if radius is None else radius
         height = self.height if height is None else height
 
-        Xc, Yc, hmin = centers
-
-        # Randomly choose an angle theta and height h
         theta = np.linspace(0, 2 * np.pi, n_samples)
-        h = np.linspace(0, height, n_samples)
+        h = np.linspace(-height/2, height/2, n_samples)
         
         mesh = np.asarray(np.meshgrid(theta, h)).reshape(2, -1).T
 
-        x = Xc + radius * np.cos(mesh[:,0])
-        y = Yc + radius * np.sin(mesh[:,0])
-        z = hmin + mesh[:,1]
-        print(radius)
-        return np.column_stack((x, y, z))
+        x = radius * np.cos(mesh[:,0])
+        y = radius * np.sin(mesh[:,0])
+        z = mesh[:,1]
+        samples =  np.column_stack((x, y, z))
+
+        samples = samples.dot(orientations.T)
+        samples += centers
+
+        return samples
 
 
 PARAMETRIZATION_TYPE = {"sphere": Sphere, "ellipsoid": Ellipsoid, "cylinder": Cylinder}

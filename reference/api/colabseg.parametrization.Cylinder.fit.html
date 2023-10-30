@@ -691,21 +691,18 @@ document.write(`
 <h1>Cylinder.fit<a class="headerlink" href="#cylinder-fit" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="colabseg.parametrization.Cylinder.fit">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Cylinder.</span></span><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_parameters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.parametrization.Cylinder.fit" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Cylinder.</span></span><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.parametrization.Cylinder.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Fit a 3D point cloud to a cylinder.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>positions</strong><span class="classifier">np.ndarray</span></dt><dd><p>Point coordinates with shape (n x 3)</p>
 </dd>
-<dt><strong>initial_parameters</strong><span class="classifier">np.ndarray, optional</span></dt><dd><p>Initial values of the parameters [Xc, Yc, alpha, beta, r].
-If not provided, the fitting might be less accurate.</p>
-</dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>Sphere</dt><dd><p>Class instance with fitted parameters.</p>
+<dt>Cylinder</dt><dd><p>Class instance with fitted parameters.</p>
 </dd>
 </dl>
 </dd>
@@ -718,13 +715,6 @@ If not provided, the fitting might be less accurate.</p>
 </dl>
 </dd>
 </dl>
-<p class="rubric">References</p>
-<div role="list" class="citation-list">
-<div class="citation" id="rd44d0e675bfc-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<p>Ting On Chan <a class="reference external" href="https://stackoverflow.com/posts/44164662/revisions">https://stackoverflow.com/posts/44164662/revisions</a></p>
-</div>
-</div>
 </dd></dl>
 
 </section>

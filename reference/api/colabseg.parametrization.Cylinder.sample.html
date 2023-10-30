@@ -691,20 +691,18 @@ document.write(`
 <h1>Cylinder.sample<a class="headerlink" href="#cylinder-sample" title="Permalink to this heading">#</a></h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="colabseg.parametrization.Cylinder.sample">
-<span class="sig-prename descclassname"><span class="pre">Cylinder.</span></span><span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.parametrization.Cylinder.sample" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Cylinder.</span></span><span class="sig-name descname"><span class="pre">sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orientations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#colabseg.parametrization.Cylinder.sample" title="Permalink to this definition">#</a></dt>
 <dd><p>Sample points from the surface of a cylinder.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>n_samples</strong><span class="classifier">int</span></dt><dd><p>Number of points to sample.</p>
+<dt><strong>centers</strong><span class="classifier">np.ndarray</span></dt><dd><p>Center coordinates of the cylinder in X and Y.</p>
 </dd>
-<dt><strong>centers</strong><span class="classifier">np.ndarray</span></dt><dd><p>Center coordinates [Xc, Yc].</p>
+<dt><strong>orientations</strong><span class="classifier">np.ndarray</span></dt><dd><p>Square orientation matrix</p>
 </dd>
-<dt><strong>angles</strong><span class="classifier">np.ndarray</span></dt><dd><p>Orientation angles [alpha, beta].</p>
+<dt><strong>radius: float</strong></dt><dd><p>Radius of the cylinder.</p>
 </dd>
-<dt><strong>radius</strong><span class="classifier">float</span></dt><dd><p>Radius of the cylinder.</p>
-</dd>
-<dt><strong>height</strong><span class="classifier">float</span></dt><dd><p>Maximum height of the cylinder.</p>
+<dt><strong>height</strong><span class="classifier">float</span></dt><dd><p>Height of the cylinder.</p>
 </dd>
 </dl>
 </dd>

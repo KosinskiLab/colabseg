@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Tuple
 
 import numpy as np
 from scipy import optimize
@@ -14,7 +13,7 @@ class Parametrization(ABC):
         pass
 
     @abstractmethod
-    def fit(self, positions: np.ndarray, *args, **kwargs):
+    def fit(self, positions: np.ndarray, *args, **kwargs) -> "Parametrization":
         """
         Fit a parametrization to a point cloud.
 
@@ -29,8 +28,8 @@ class Parametrization(ABC):
 
         Returns
         -------
-        Tuple
-            Parametrization parameters
+        Parametrization
+            Parametrization instance.
         """
 
     @abstractmethod
@@ -198,7 +197,8 @@ class Ellipsoid(Parametrization):
                 "Only three-dimensional point clouds are supported."
             )
 
-        def ellipsoid_loss(radii, data_points, center, orientations):
+        def ellipsoid_loss(params, data_points, orientations):
+            radii, center = params[0:3], params[3:]
             transformed_points = np.dot(data_points - center, orientations)
 
             normalized_points = transformed_points / radii
@@ -220,13 +220,15 @@ class Ellipsoid(Parametrization):
 
         initial_radii = 2 * np.sqrt(evals)
 
+        print(initial_radii, center)
         result = optimize.minimize(
             ellipsoid_loss,
-            initial_radii,
-            args=(positions, center, evecs),
+            (initial_radii, center),
+            args=(positions, evecs),
             method="Nelder-Mead",
         )
-        radii = result.x
+        radii, center = result.x[0:3], result.x[3:]
+        print(radii, center)
 
         return cls(radii=radii, center=center, orientations=evecs)
 
@@ -345,7 +347,8 @@ class Cylinder(Parametrization):
 
         initial_radii = 2 * np.sqrt(evals)
 
-        def cylinder_loss(radii, data_points, center, orientations):
+        def cylinder_loss(params, data_points, orientations):
+            radii, center = params[0], params[1:]
             transformed_points = np.dot(data_points - center, orientations)
 
             normalized_points = transformed_points / radii
@@ -357,16 +360,15 @@ class Cylinder(Parametrization):
 
         result = optimize.minimize(
             cylinder_loss,
-            np.max(initial_radii),
-            args=(positions, center, evecs),
+            np.array([np.max(initial_radii), *center]),
+            args=(positions, evecs),
             method="Nelder-Mead",
         )
-
+        radius, center = result.x[0], result.x[1:]
         rotated_points = positions_centered.dot(evecs)
         heights = rotated_points.max(axis = 0) - rotated_points.min(axis = 0)
         height = heights[np.argmax(np.abs(np.diff(heights))) + 1]
-
-        return cls(radius=result.x, centers=center, orientations=evecs, height = height)
+        return cls(radius=radius, centers=center, orientations=evecs, height = height)
 
     def sample(
         self,

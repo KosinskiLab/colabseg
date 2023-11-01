@@ -11,7 +11,6 @@ from ipywidgets import widgets
 
 
 class generate_tensor_voting_gui:
-
     def __init__(self):
         self.all_values = {}
         self.all_values["tensor_voting_path"] = widgets.Text(
@@ -316,7 +315,9 @@ class generate_tensor_voting_gui:
         print("7/7 running global_analysis clustering")
         subprocess.run(
             [
-                "{}/global_analysis".format(self.all_values["tensor_voting_path"].value),
+                "{}/global_analysis".format(
+                    self.all_values["tensor_voting_path"].value
+                ),
                 "-v 2",
                 "-3 {}".format(self.all_values["cluster_cutoff"].value),
                 "{}_thresh.mrc".format(base_name),

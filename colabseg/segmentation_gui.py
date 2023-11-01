@@ -12,6 +12,7 @@ import matplotlib.cm as cm
 from .new_gui_functions import ColabSegData
 from .py3dmol_controls import seg_visualization
 
+
 class JupyterFramework(object):
     """Docstring JupyterFramework for GUI"""
 
@@ -456,7 +457,6 @@ class JupyterFramework(object):
         self.all_widgets["analysis_plot_figure"] = self.all_widgets[
             "analysis_plot_output"
         ]
-  
 
         self.all_widgets["control_stat_outlier_removal"] = widgets.HBox(
             [
@@ -503,7 +503,7 @@ class JupyterFramework(object):
             [
                 self.all_widgets["fit_sphere"],
                 self.all_widgets["fit_ellipsoid"],
-                self.all_widgets["fit_cylinder"]
+                self.all_widgets["fit_cylinder"],
             ]
         )
         self.all_widgets["fitting"] = widgets.VBox(
@@ -822,25 +822,23 @@ class JupyterFramework(object):
             print("Please select a single cluster for the fitting procedure!")
             return
         self.data_structure.interpolate_membrane_closed_surface(
-            "sphere",
-            self.all_widgets["cluster_sel"].value
+            "sphere", self.all_widgets["cluster_sel"].value
         )
         self.reload_gui()
         return
-    
+
     def fit_ellipsoid(self, obj):
-            """Fit lstsq ellipsoid to selected cluster"""
-            self.data_structure.backup_step_to_previous()
-            if len(self.all_widgets["cluster_sel"].value) != 1:
-                print("Nothing or too many clusters selected!")
-                print("Please select a single cluster for the fitting procedure!")
-                return
-            self.data_structure.interpolate_membrane_closed_surface(
-                "ellipsoid",
-                self.all_widgets["cluster_sel"].value
-            )
-            self.reload_gui()
+        """Fit lstsq ellipsoid to selected cluster"""
+        self.data_structure.backup_step_to_previous()
+        if len(self.all_widgets["cluster_sel"].value) != 1:
+            print("Nothing or too many clusters selected!")
+            print("Please select a single cluster for the fitting procedure!")
             return
+        self.data_structure.interpolate_membrane_closed_surface(
+            "ellipsoid", self.all_widgets["cluster_sel"].value
+        )
+        self.reload_gui()
+        return
 
     def fit_cylinder(self, obj):
         """Fit lstsq ellipsoid to selected cluster"""
@@ -850,8 +848,7 @@ class JupyterFramework(object):
             print("Please select a single cluster for the fitting procedure!")
             return
         self.data_structure.interpolate_membrane_closed_surface(
-            "cylinder",
-            self.all_widgets["cluster_sel"].value
+            "cylinder", self.all_widgets["cluster_sel"].value
         )
         self.reload_gui()
         return

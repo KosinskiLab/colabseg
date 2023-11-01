@@ -23,6 +23,7 @@ from .utilities import (
     R_2vect,
 )
 
+
 class ColabSegData(object):
     """Docstring for ColabSegData data structure framework."""
 
@@ -539,7 +540,11 @@ class ColabSegData(object):
         """Least square fit for a perfect sphere and adding of points.
         For vesicles and spherical viruses.
         """
-        interpxyz = PARAMETRIZATION_TYPE[shape_type].fit(np.asarray(self.cluster_list_tv)[cluster_index]).sample(100)
+        interpxyz = (
+            PARAMETRIZATION_TYPE[shape_type]
+            .fit(np.asarray(self.cluster_list_tv)[cluster_index])
+            .sample(100)
+        )
         self.cluster_list_fits.append(interpxyz)
         return
 

@@ -86,33 +86,40 @@ class Sphere(Parametrization):
         -------
         Sphere
             Class instance with fitted parameters.
-
-        References
-        ----------
-        .. [1]  https://gist.github.com/WuyangLI/4bf4b067fed46789352d5019af1c11b2
-
         """
-        # add column of ones to pos_xyz to construct matrix A
-        pos_xyz = positions
-        row_num = pos_xyz.shape[0]
-        A = np.ones((row_num, 4))
-        A[:, 0:3] = pos_xyz
 
-        # construct vector f
-        f = np.sum(np.multiply(pos_xyz, pos_xyz), axis=1)
+        center = positions.mean(axis=0)
+        positions_centered = positions - center
 
-        sol, residules, rank, singval = np.linalg.lstsq(A, f, rcond=None)
+        cov_mat = np.cov(positions_centered, rowvar=False)
+        evals, evecs = np.linalg.eigh(cov_mat)
 
-        # solve the radius
-        radius = np.sqrt(
-            (sol[0] * sol[0] / 4.0)
-            + (sol[1] * sol[1] / 4.0)
-            + (sol[2] * sol[2] / 4.0)
-            + sol[3]
+        sort_indices = np.argsort(evals)[::-1]
+        evals = evals[sort_indices]
+        evecs = evecs[:, sort_indices]
+
+        initial_radii = 2 * np.sqrt(evals)
+
+        def sphere_loss(params, data_points, orientations):
+            radius, center = params[0], params[1:]
+            transformed_points = np.dot(data_points - center, orientations)
+
+            normalized_points = transformed_points / radius
+
+            distances = np.sum(normalized_points**2, axis=1) - 1
+
+            loss = np.sum(distances**2)
+            return loss
+
+        result = optimize.minimize(
+            sphere_loss,
+            np.array([np.max(initial_radii), *center]),
+            args=(positions, evecs),
+            method="Nelder-Mead",
         )
-        return cls(
-            radius=radius, center=np.array([sol[0] / 2.0, sol[1] / 2.0, sol[2] / 2.0])
-        )
+        radius, center = result.x[0], result.x[1:]
+
+        return cls(radius=radius, center=center)
 
     def sample(
         self, n_samples: int, radius: np.ndarray = None, center: np.ndarray = None
@@ -220,7 +227,6 @@ class Ellipsoid(Parametrization):
 
         initial_radii = 2 * np.sqrt(evals)
 
-        print(initial_radii, center)
         result = optimize.minimize(
             ellipsoid_loss,
             (initial_radii, center),
@@ -228,7 +234,6 @@ class Ellipsoid(Parametrization):
             method="Nelder-Mead",
         )
         radii, center = result.x[0:3], result.x[3:]
-        print(radii, center)
 
         return cls(radii=radii, center=center, orientations=evecs)
 
@@ -284,8 +289,13 @@ class Cylinder(Parametrization):
     Parametrize a point cloud as cylinder.
     """
 
-    def __init__(self, centers: np.ndarray, orientations: np.ndarray,
-        radius: float, height : float):
+    def __init__(
+        self,
+        centers: np.ndarray,
+        orientations: np.ndarray,
+        radius: float,
+        height: float,
+    ):
         """
         Initialize the Cylinder parametrization.
 
@@ -304,7 +314,6 @@ class Cylinder(Parametrization):
         self.orientations = orientations
         self.radius = radius
         self.height = height
-
 
     @classmethod
     def fit(cls, positions: np.ndarray) -> "Cylinder":
@@ -366,9 +375,9 @@ class Cylinder(Parametrization):
         )
         radius, center = result.x[0], result.x[1:]
         rotated_points = positions_centered.dot(evecs)
-        heights = rotated_points.max(axis = 0) - rotated_points.min(axis = 0)
+        heights = rotated_points.max(axis=0) - rotated_points.min(axis=0)
         height = heights[np.argmax(np.abs(np.diff(heights))) + 1]
-        return cls(radius=radius, centers=center, orientations=evecs, height = height)
+        return cls(radius=radius, centers=center, orientations=evecs, height=height)
 
     def sample(
         self,
@@ -376,7 +385,7 @@ class Cylinder(Parametrization):
         centers: np.ndarray = None,
         orientations: np.ndarray = None,
         radius: float = None,
-        height : float = None,
+        height: float = None,
     ) -> np.ndarray:
         """
         Sample points from the surface of a cylinder.
@@ -403,14 +412,14 @@ class Cylinder(Parametrization):
         height = self.height if height is None else height
 
         theta = np.linspace(0, 2 * np.pi, n_samples)
-        h = np.linspace(-height/2, height/2, n_samples)
-        
+        h = np.linspace(-height / 2, height / 2, n_samples)
+
         mesh = np.asarray(np.meshgrid(theta, h)).reshape(2, -1).T
 
-        x = radius * np.cos(mesh[:,0])
-        y = radius * np.sin(mesh[:,0])
-        z = mesh[:,1]
-        samples =  np.column_stack((x, y, z))
+        x = radius * np.cos(mesh[:, 0])
+        y = radius * np.sin(mesh[:, 0])
+        z = mesh[:, 1]
+        samples = np.column_stack((x, y, z))
 
         samples = samples.dot(orientations.T)
         samples += centers

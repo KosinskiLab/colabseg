@@ -8,6 +8,7 @@ import scipy
 
 import numpy as np
 
+
 def plane_fit(atom_coordinates, order=1):
     """
     Fit a plane to given atom coordinates.

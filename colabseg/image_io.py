@@ -48,6 +48,7 @@ class FileTypeError(IOError):
         Dictionary of defined file formats with their extensions.
 
     """
+
     def __init__(self, requested, defined):
         """
         Initialize FileTypeError.
@@ -107,6 +108,7 @@ class ImageIO(object):
     >>> myImage = ImageIO()
     >>> myImage.write(file='my_file.em', data=my_array, header=my_header)
     """
+
     # determine machine byte order
     byte_order = sys.byteorder
     if byte_order == "big":
@@ -1578,9 +1580,7 @@ class ImageIO(object):
 
         else:
             raise IOError(
-                "Argument file_: "
-                + str(file)
-                + "is neither a string nor a file object"
+                "Argument file_: " + str(file) + "is neither a string nor a file object"
             )
 
         return

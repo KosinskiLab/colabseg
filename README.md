@@ -11,7 +11,7 @@
 Make an environment with anaconda and open it:
 
 ```
-conda create --name YOUR_ENV_NAME python==3.8 pip
+conda create --name YOUR_ENV_NAME python=3.8 pip
 source activate YOUR_ENV_NAME
 ```
 Run pip in the folder where `setup.py` is located:

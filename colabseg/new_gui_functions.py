@@ -62,6 +62,11 @@ class ColabSegData(object):
         self.analysis_properties["normal_selection"] = []
         self.analysis_properties["surface_normals"] = []
 
+    def read_mrc(self, filename):
+        image = ImageIO()
+        image.readMRC(filename, memmap=False)
+        return image
+
     def load_tomogram(self, filename):
         """load_tomogram with pyto library"""
         self.mrc_filename = filename
@@ -70,14 +75,12 @@ class ColabSegData(object):
             split_name = os.path.splitext(self.mrc_filename)[0]
             # os.subprocess(["gunzip", self.mrc_filename])
             subprocess.run(["gunzip", self.mrc_filename])
-            image = ImageIO()
-            image.readMRC(split_name, memmap=False)
+            image = self.read_mrc(split_name)
             # os.subprocess(["gzip", split_name])
             subprocess.run(["gzip", split_name])
 
         else:
-            image = ImageIO()
-            image.readMRC(self.mrc_filename, memmap=False)
+            image = self.read_mrc(self.mrc_filename)
 
         self.shape = image.shape
         # print(self.shape)

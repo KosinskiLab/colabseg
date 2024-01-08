@@ -11,6 +11,7 @@ import matplotlib.cm as cm
 
 from .new_gui_functions import ColabSegData
 from .py3dmol_controls import seg_visualization
+from .napari_integration import NapariManager
 
 
 class JupyterFramework(object):
@@ -269,14 +270,51 @@ class JupyterFramework(object):
             description="Raw mrc file:",
             disabled=False,
         )
+
+        self.napari_manager = None
         self.all_widgets["load_raw_image_button"] = widgets.Button(
-            description="Load Slice", style={"description_width": "initial"}
+            description="Open Napari", style={"description_width": "initial"}
         )
-        self.all_widgets["load_raw_image_button"].on_click(self.load_raw_image)
+
+        def open_napari_wrapper(change):
+            open_tomo = self.data_structure.read_mrc(
+                self.all_widgets["load_raw_image_text"].value
+            ).data
+            self.napari_manager = NapariManager(
+                colabsegdata_instance=self.data_structure, display_data=open_tomo)
+            self.napari_manager.run()
+
+        self.all_widgets["load_raw_image_button"].on_click(open_napari_wrapper)
+
+        def sync_napari_wrapper(change):
+            data = self.napari_manager.export_data()
+
+            mapping = {
+                "cluster_list_tv" : "Cluster",
+                "cluster_list_fits" : "Fit",
+                "protein_positions_list" : "Protein",
+            }
+            for key, value in mapping.items():
+                setattr(
+                    self.data_structure,
+                    key,
+                    [x for x in data.get(value, [[]]) if len(x) > 0]
+                )
+
+            if self.napari_manager is not None:
+                self.napari_manager.close()
+            self.reload_gui()
+
+        self.all_widgets["save_raw_image_button"] = widgets.Button(
+            description="Sync Napari", style={"description_width": "initial"}
+        )
+        self.all_widgets["save_raw_image_button"].on_click(sync_napari_wrapper)
+
         self.all_widgets["load_raw_image"] = widgets.HBox(
             [
                 self.all_widgets["load_raw_image_text"],
                 self.all_widgets["load_raw_image_button"],
+                self.all_widgets["save_raw_image_button"],
             ]
         )
 

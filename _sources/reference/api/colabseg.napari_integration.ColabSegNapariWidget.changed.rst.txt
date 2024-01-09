@@ -1,0 +1,6 @@
+ColabSegNapariWidget.changed
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoattribute:: ColabSegNapariWidget.changed

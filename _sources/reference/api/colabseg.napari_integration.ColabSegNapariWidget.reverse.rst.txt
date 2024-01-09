@@ -1,0 +1,6 @@
+ColabSegNapariWidget.reverse
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.reverse

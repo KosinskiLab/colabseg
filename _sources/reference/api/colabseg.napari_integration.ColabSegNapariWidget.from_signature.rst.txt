@@ -1,0 +1,6 @@
+ColabSegNapariWidget.from\_signature
+===============================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.from_signature

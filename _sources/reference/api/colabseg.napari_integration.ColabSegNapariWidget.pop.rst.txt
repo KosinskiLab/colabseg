@@ -1,0 +1,6 @@
+ColabSegNapariWidget.pop
+====================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.pop

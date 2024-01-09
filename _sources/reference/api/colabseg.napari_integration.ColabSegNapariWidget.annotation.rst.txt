@@ -1,0 +1,6 @@
+ColabSegNapariWidget.annotation
+===========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.annotation

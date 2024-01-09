@@ -1,5 +1,5 @@
-﻿colabseg.py3dmol\_controls.seg\_visualization
-=============================================
+﻿seg\_visualization
+==================
 
 .. currentmodule:: colabseg.py3dmol_controls
 
@@ -7,30 +7,67 @@
 
    
 
+   
+   
+   
+
+   
+   .. rubric:: Methods
 
    .. autosummary::
       :toctree:
       
-      seg_visualization.add_bounding_box
-      seg_visualization.cluster_checkbox
-      seg_visualization.highlight_cluster
-      seg_visualization.highlight_clusters
-      seg_visualization.highlight_fits
-      seg_visualization.load_all_models
-      seg_visualization.load_all_models_fit
-      seg_visualization.load_all_models_from_file
-      seg_visualization.load_model_from_file
-      seg_visualization.load_normal_positions
-      seg_visualization.load_protein_positions
-      seg_visualization.make_xyz_string
-      seg_visualization.make_xyz_string_protein
-      seg_visualization.update_highlight_clusters
-      seg_visualization.update_highlight_fits
-      seg_visualization.view_update
-      seg_visualization.view_zoomto
-
-
-
-
+         
+         
+           seg_visualization.add_bounding_box
+         
+         
+           seg_visualization.cluster_checkbox
+         
+         
+           seg_visualization.highlight_cluster
+         
+         
+           seg_visualization.highlight_clusters
+         
+         
+           seg_visualization.highlight_fits
+         
+         
+           seg_visualization.load_all_models
+         
+         
+           seg_visualization.load_all_models_fit
+         
+         
+           seg_visualization.load_all_models_from_file
+         
+         
+           seg_visualization.load_model_from_file
+         
+         
+           seg_visualization.load_normal_positions
+         
+         
+           seg_visualization.load_protein_positions
+         
+         
+           seg_visualization.make_xyz_string
+         
+         
+           seg_visualization.make_xyz_string_protein
+         
+         
+           seg_visualization.update_highlight_clusters
+         
+         
+           seg_visualization.update_highlight_fits
+         
+         
+           seg_visualization.view_update
+         
+         
+           seg_visualization.view_zoomto
+         
    
-
+   

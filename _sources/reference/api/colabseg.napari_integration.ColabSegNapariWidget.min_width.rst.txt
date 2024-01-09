@@ -1,0 +1,6 @@
+ColabSegNapariWidget.min\_width
+==========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.min_width

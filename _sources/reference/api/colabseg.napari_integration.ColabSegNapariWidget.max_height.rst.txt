@@ -1,0 +1,6 @@
+ColabSegNapariWidget.max\_height
+===========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.max_height

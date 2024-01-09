@@ -1,0 +1,6 @@
+ColabSegNapariWidget.height
+=======================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.height

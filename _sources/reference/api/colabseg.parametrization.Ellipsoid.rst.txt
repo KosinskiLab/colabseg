@@ -1,5 +1,5 @@
-﻿colabseg.parametrization.Ellipsoid
-==================================
+﻿Ellipsoid
+=========
 
 .. currentmodule:: colabseg.parametrization
 
@@ -7,15 +7,22 @@
 
    
 
+   
+   
+   
+
+   
+   .. rubric:: Methods
 
    .. autosummary::
       :toctree:
       
-      Ellipsoid.fit
-      Ellipsoid.sample
-
-
-
-
+         
+         
+           Ellipsoid.fit
+         
+         
+           Ellipsoid.sample
+         
    
-
+   

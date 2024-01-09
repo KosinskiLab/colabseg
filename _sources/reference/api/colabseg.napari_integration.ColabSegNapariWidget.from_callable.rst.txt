@@ -1,0 +1,6 @@
+ColabSegNapariWidget.from\_callable
+==============================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.from_callable

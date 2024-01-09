@@ -1,0 +1,6 @@
+ColabSegNapariWidget.margins
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.margins

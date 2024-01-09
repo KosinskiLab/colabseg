@@ -1,0 +1,6 @@
+ColabSegNapariWidget.reset\_choices
+==============================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.reset_choices

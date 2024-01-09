@@ -1,0 +1,6 @@
+ColabSegNapariWidget.tooltip
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.tooltip

@@ -1,0 +1,6 @@
+ColabSegNapariWidget.param\_kind
+===========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.param_kind

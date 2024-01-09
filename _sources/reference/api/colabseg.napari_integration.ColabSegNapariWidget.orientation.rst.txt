@@ -1,0 +1,6 @@
+ColabSegNapariWidget.orientation
+============================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.orientation

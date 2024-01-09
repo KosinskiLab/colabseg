@@ -1,0 +1,6 @@
+ColabSegNapariWidget.NO\_VALUE
+=========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoattribute:: ColabSegNapariWidget.NO_VALUE

@@ -1,5 +1,5 @@
-﻿colabseg.parametrization.Parametrization
-========================================
+﻿Parametrization
+===============
 
 .. currentmodule:: colabseg.parametrization
 
@@ -7,15 +7,22 @@
 
    
 
+   
+   
+   
+
+   
+   .. rubric:: Methods
 
    .. autosummary::
       :toctree:
       
-      Parametrization.fit
-      Parametrization.sample
-
-
-
-
+         
+         
+           Parametrization.fit
+         
+         
+           Parametrization.sample
+         
    
-
+   

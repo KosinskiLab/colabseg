@@ -1,0 +1,6 @@
+NapariManager.close
+===============================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: NapariManager.close

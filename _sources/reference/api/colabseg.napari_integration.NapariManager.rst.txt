@@ -1,0 +1,31 @@
+﻿NapariManager
+=============
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoclass:: NapariManager
+
+   
+
+   
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      
+         
+         
+           NapariManager.close
+         
+         
+           NapariManager.export_data
+         
+         
+           NapariManager.run
+         
+   
+   

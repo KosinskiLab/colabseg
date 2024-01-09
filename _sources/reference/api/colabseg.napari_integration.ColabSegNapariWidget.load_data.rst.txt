@@ -1,0 +1,6 @@
+ColabSegNapariWidget.load\_data
+==========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.load_data

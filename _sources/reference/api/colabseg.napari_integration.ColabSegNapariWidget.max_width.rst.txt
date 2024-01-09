@@ -1,0 +1,6 @@
+ColabSegNapariWidget.max\_width
+==========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.max_width

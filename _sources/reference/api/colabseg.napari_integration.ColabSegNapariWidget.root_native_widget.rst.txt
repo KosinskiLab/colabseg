@@ -1,0 +1,6 @@
+ColabSegNapariWidget.root\_native\_widget
+===================================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.root_native_widget

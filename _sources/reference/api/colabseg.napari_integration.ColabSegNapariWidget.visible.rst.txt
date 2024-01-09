@@ -1,0 +1,6 @@
+ColabSegNapariWidget.visible
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.visible

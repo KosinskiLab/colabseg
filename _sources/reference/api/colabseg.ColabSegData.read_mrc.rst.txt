@@ -1,0 +1,6 @@
+ColabSegData.read\_mrc
+==============================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.read_mrc

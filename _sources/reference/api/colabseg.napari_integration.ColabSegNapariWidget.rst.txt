@@ -1,0 +1,166 @@
+﻿ColabSegNapariWidget
+====================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoclass:: ColabSegNapariWidget
+
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+      :toctree:
+      
+         
+           ColabSegNapariWidget.NO_VALUE
+         
+         
+           ColabSegNapariWidget.annotation
+         
+         
+           ColabSegNapariWidget.changed
+         
+         
+           ColabSegNapariWidget.enabled
+         
+         
+           ColabSegNapariWidget.height
+         
+         
+           ColabSegNapariWidget.label
+         
+         
+           ColabSegNapariWidget.label_changed
+         
+         
+           ColabSegNapariWidget.labels
+         
+         
+           ColabSegNapariWidget.layout
+         
+         
+           ColabSegNapariWidget.margins
+         
+         
+           ColabSegNapariWidget.max_height
+         
+         
+           ColabSegNapariWidget.max_width
+         
+         
+           ColabSegNapariWidget.min_height
+         
+         
+           ColabSegNapariWidget.min_width
+         
+         
+           ColabSegNapariWidget.native
+         
+         
+           ColabSegNapariWidget.options
+         
+         
+           ColabSegNapariWidget.orientation
+         
+         
+           ColabSegNapariWidget.param_kind
+         
+         
+           ColabSegNapariWidget.parent
+         
+         
+           ColabSegNapariWidget.parent_changed
+         
+         
+           ColabSegNapariWidget.root_native_widget
+         
+         
+           ColabSegNapariWidget.tooltip
+         
+         
+           ColabSegNapariWidget.visible
+         
+         
+           ColabSegNapariWidget.widget_type
+         
+         
+           ColabSegNapariWidget.width
+         
+   
+   
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+      :toctree:
+      
+         
+         
+           ColabSegNapariWidget.append
+         
+         
+           ColabSegNapariWidget.asdict
+         
+         
+           ColabSegNapariWidget.clear
+         
+         
+           ColabSegNapariWidget.close
+         
+         
+           ColabSegNapariWidget.count
+         
+         
+           ColabSegNapariWidget.export_data
+         
+         
+           ColabSegNapariWidget.extend
+         
+         
+           ColabSegNapariWidget.from_callable
+         
+         
+           ColabSegNapariWidget.from_signature
+         
+         
+           ColabSegNapariWidget.hide
+         
+         
+           ColabSegNapariWidget.index
+         
+         
+           ColabSegNapariWidget.insert
+         
+         
+           ColabSegNapariWidget.load_data
+         
+         
+           ColabSegNapariWidget.pop
+         
+         
+           ColabSegNapariWidget.remove
+         
+         
+           ColabSegNapariWidget.render
+         
+         
+           ColabSegNapariWidget.reset_choices
+         
+         
+           ColabSegNapariWidget.reverse
+         
+         
+           ColabSegNapariWidget.show
+         
+         
+           ColabSegNapariWidget.shown
+         
+         
+           ColabSegNapariWidget.update
+         
+   
+   

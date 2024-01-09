@@ -1,0 +1,6 @@
+ColabSegNapariWidget.append
+=======================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.append

@@ -1,0 +1,6 @@
+NapariManager.export\_data
+=====================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: NapariManager.export_data

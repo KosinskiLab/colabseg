@@ -1,0 +1,6 @@
+ColabSegNapariWidget.enabled
+========================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.enabled

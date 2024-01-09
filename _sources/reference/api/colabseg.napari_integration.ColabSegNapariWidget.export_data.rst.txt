@@ -1,0 +1,6 @@
+ColabSegNapariWidget.export\_data
+============================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.export_data

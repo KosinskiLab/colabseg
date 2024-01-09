@@ -1,5 +1,5 @@
-﻿colabseg.parametrization.Cylinder
-=================================
+﻿Cylinder
+========
 
 .. currentmodule:: colabseg.parametrization
 
@@ -7,15 +7,22 @@
 
    
 
+   
+   
+   
+
+   
+   .. rubric:: Methods
 
    .. autosummary::
       :toctree:
       
-      Cylinder.fit
-      Cylinder.sample
-
-
-
-
+         
+         
+           Cylinder.fit
+         
+         
+           Cylinder.sample
+         
    
-
+   

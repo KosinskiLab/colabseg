@@ -1,0 +1,6 @@
+ColabSegNapariWidget.labels
+=======================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.labels

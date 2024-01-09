@@ -1,0 +1,6 @@
+ColabSegNapariWidget.parent
+=======================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoproperty:: ColabSegNapariWidget.parent

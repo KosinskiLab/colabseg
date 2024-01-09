@@ -1,0 +1,6 @@
+ColabSegNapariWidget.count
+======================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. automethod:: ColabSegNapariWidget.count

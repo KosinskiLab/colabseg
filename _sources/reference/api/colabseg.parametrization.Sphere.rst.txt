@@ -1,5 +1,5 @@
-﻿colabseg.parametrization.Sphere
-===============================
+﻿Sphere
+======
 
 .. currentmodule:: colabseg.parametrization
 
@@ -7,15 +7,22 @@
 
    
 
+   
+   
+   
+
+   
+   .. rubric:: Methods
 
    .. autosummary::
       :toctree:
       
-      Sphere.fit
-      Sphere.sample
-
-
-
-
+         
+         
+           Sphere.fit
+         
+         
+           Sphere.sample
+         
    
-
+   

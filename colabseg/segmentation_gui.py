@@ -287,6 +287,9 @@ class JupyterFramework(object):
         self.all_widgets["load_raw_image_button"].on_click(open_napari_wrapper)
 
         def sync_napari_wrapper(change):
+            if self.napari_manager is None:
+                return None
+
             data = self.napari_manager.export_data()
 
             mapping = {
@@ -303,6 +306,7 @@ class JupyterFramework(object):
 
             if self.napari_manager is not None:
                 self.napari_manager.close()
+                self.napari_manager = None
             self.reload_gui()
 
         self.all_widgets["save_raw_image_button"] = widgets.Button(

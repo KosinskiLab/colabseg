@@ -1,3 +1,5 @@
+from typing import List, Dict
+
 import threading
 import numpy as np
 import napari
@@ -11,7 +13,28 @@ BACKGROUND_COLOR = "blue"
 
 
 class ColabSegNapariWidget(widgets.Container):
-    def __init__(self, viewer, colabsegdata_instance: type) -> "ColabSegNapariWidget":
+    """
+    A widget for napari viewer to manage and visualize data from ColabSegData instances.
+
+    Parameters
+    ----------
+    viewer : napari.Viewer
+        The napari viewer instance to which this widget will be added.
+    colabsegdata_instance : :py:class:`colabseg.new_gui_functions.ColabSegData`, optional
+        An instance of ColabSegData containing the data to be visualized.
+
+    Attributes
+    ----------
+    viewer : napari.Viewer
+        The napari viewer instance.
+    pixel_size : float
+        Pixel size of the data, obtained from colabsegdata_instance.
+    dropdown : magicgui.widgets.ComboBox
+        Dropdown menu for selecting clusters to highlight.
+    _previous_selection : str or None
+        The previously selected cluster name.
+    """
+    def __init__(self, viewer, colabsegdata_instance: "ColabSegData") -> "ColabSegNapariWidget":
         super().__init__(layout="vertical")
 
         self.viewer = viewer
@@ -31,12 +54,32 @@ class ColabSegNapariWidget(widgets.Container):
 
         self.append(self.dropdown)
 
-    def _get_point_layers(self) -> None:
+    def _get_point_layers(self) -> List[str]:
+        """
+        Returns a sorted list of point layer names from the napari viewer.
+
+        Returns
+        -------
+        list
+            A sorted list of strings of point layers present in the viewer.
+        """
         return sorted(
             [layer.name for layer in self.viewer.layers if isinstance(layer, Points)]
         )
 
-    def load_data(self, data: type) -> None:
+    def load_data(self, data: "ColabSegData") -> None:
+        """
+        Loads and visualizes data from a given ColabSegData instance. Points are
+        divided by the pixel_size attribute of the ColabSegData instance. Currently,
+        the attributes cluster_list_tv, cluster_list_fits, protein_positions_list
+        from the ColabSegData instance are visualized as point clouds.
+
+        Parameters
+        ----------
+        data : type
+            An instance of ColabSegData containing the data to be visualized.
+        """
+
         for index, cluster in enumerate(data.cluster_list_tv):
             scaled_points = np.divide(cluster, self.pixel_size)
             self.viewer.add_points(
@@ -71,6 +114,14 @@ class ColabSegNapariWidget(widgets.Container):
             )
 
     def _on_cluster_selected(self, event) -> None:
+        """
+        Callback function for dropdown selection changes. Highlights the selected cluster.
+
+        Parameters
+        ----------
+        event
+            The event triggered on changing the dropdown selection.
+        """
         if self.dropdown.value is None:
             for point_cloud in self._get_point_layers():
                 selected_layer = self.viewer.layers[point_cloud]
@@ -86,7 +137,18 @@ class ColabSegNapariWidget(widgets.Container):
 
         self._previous_selection = self.dropdown.value
 
-    def export_data(self) -> {str : [np.ndarray]}:
+    def export_data(self) -> Dict[str, List[np.ndarray]]:
+        """
+        Exports the point cloud data currently visualized in the napari viewer.
+        The order of the output lists correspond to the input order. Deleted
+        point clouds will be represented as empty lists.
+
+        Returns
+        -------
+        dict of {str : list of numpy.ndarray}
+            A dictionary where keys are point cloud class names and values
+            are lists of numpy arrays representing point cloud coordinates.
+        """
         ret = {}
 
         point_clouds = self._get_point_layers()
@@ -105,7 +167,24 @@ class ColabSegNapariWidget(widgets.Container):
 
 
 class NapariManager:
-    def __init__(self, display_data=None, colabsegdata_instance=None, **kwargs):
+    """
+    Manages the napari viewer and associated widgets for data visualization and interaction.
+
+    Parameters
+    ----------
+    display_data : array-like, optional
+        Data to be displayed in the napari viewer, typically image data.
+    colabsegdata_instance : :py:class:`colabseg.new_gui_functions.ColabSegData`, optional
+        An instance of ColabSegData for data visualization.
+
+    Attributes
+    ----------
+    viewer : napari.Viewer
+        The napari viewer instance.
+    colabseg_widget : :py:class:`ColabSegNapariWidget`
+        The widget for managing and visualizing ColabSegData instances.
+    """
+    def __init__(self, display_data : np.ndarray=None, colabsegdata_instance : "ColabSegData" = None, **kwargs):
         self.viewer = napari.Viewer()
 
         if display_data is not None:
@@ -122,10 +201,28 @@ class NapariManager:
         )
 
     def run(self):
+        """
+        Launches the napari viewer.
+        """
         napari.run()
 
     def close(self):
+        """
+        Closes the napari viewer.
+        """
         self.viewer.close()
 
     def export_data(self):
+        """
+        Exports the point cloud data from the colabseg_widget.
+
+        Returns
+        -------
+        dict
+            The point cloud data exported from the colabseg_widget.
+
+        See Also
+        --------
+        :py:meth:`ColabSegNapariWidget.export_data`
+        """
         return self.colabseg_widget.export_data()

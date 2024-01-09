@@ -301,7 +301,7 @@ class JupyterFramework(object):
                 setattr(
                     self.data_structure,
                     key,
-                    [x for x in data.get(value, [[]]) if len(x) > 0]
+                    [x for x in data.get(value, [[]])]
                 )
 
             if self.napari_manager is not None:

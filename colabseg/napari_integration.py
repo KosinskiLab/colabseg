@@ -1,10 +1,8 @@
 from typing import List, Dict
 
-import threading
 import numpy as np
 import napari
-from napari.layers import Image, Points
-from napari.utils.events import EventedList
+from napari.layers import Points
 from magicgui import widgets
 
 
@@ -149,12 +147,15 @@ class ColabSegNapariWidget(widgets.Container):
             A dictionary where keys are point cloud class names and values
             are lists of numpy arrays representing point cloud coordinates.
         """
-        ret = {}
-
         point_clouds = self._get_point_layers()
-        point_classes = list(set([x.split("_")[0] for x in point_clouds]))
+        point_classes = {}
+        for point_cloud in point_clouds:
+            point_class, index = point_cloud.split("_")
+            if point_class not in point_classes:
+                point_classes[point_class] = 0
+            point_classes[point_class] = max(point_classes[point_class], int(index))
 
-        ret = {point_class : [ [ ] ] * len(point_clouds) for point_class in point_classes}
+        ret = {point_class : [ [ ] ] * (n + 1) for point_class, n in point_classes.items()}
         for point_cloud in point_clouds:
             point_class, index = point_cloud.split("_")
 
@@ -162,7 +163,7 @@ class ColabSegNapariWidget(widgets.Container):
             original_points = np.multiply(selected_layer.data, self.pixel_size)
 
             ret[point_class][int(index)] = original_points
-
+        print(ret)
         return ret
 
 

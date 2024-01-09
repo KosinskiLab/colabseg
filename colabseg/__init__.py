@@ -8,3 +8,4 @@
 
 from .new_gui_functions import ColabSegData
 from .image_io import ImageIO
+from .napari_integration import NapariManager

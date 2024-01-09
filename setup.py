@@ -27,7 +27,7 @@ setup(
     python_requires=">=3.6, <=3.9",
     install_requires=[
         "py3Dmol>2.0",
-        "numpy==1.22.3",
+        "numpy",
         "h5py",
         "scipy",
         "tqdm",
@@ -39,6 +39,7 @@ setup(
         "jupyter",
         "future",
         "pyntcloud",
+        "napari",
     ],
     keywords=["python", "first package"],
     classifiers=[

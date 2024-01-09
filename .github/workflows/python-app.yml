@@ -26,24 +26,21 @@ jobs:
       run: |
         pytest
 
-
   docs:
     runs-on: ubuntu-latest
+    container:
+      image: python:3.11.5
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.8"
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
       - name: Build Docs
         run: |
           python -mpip install .
-          python -mpip install Sphinx pydata-sphinx-theme sphinx_design numpydoc sphinx_copybutton
+          python -mpip install Sphinx pydata-sphinx-theme sphinx_design numpydoc sphinx_copybutton sphinx-tabs
           cd doc
           make clean
-          python -mpip list
           make html
           mkdir -p ../public
           mv _build/html/* ../public/
@@ -53,7 +50,6 @@ jobs:
         with:
           name: public
           path: public
-
 
   pages:
     runs-on: ubuntu-latest

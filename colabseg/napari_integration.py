@@ -32,7 +32,10 @@ class ColabSegNapariWidget(widgets.Container):
     _previous_selection : str or None
         The previously selected cluster name.
     """
-    def __init__(self, viewer, colabsegdata_instance: "ColabSegData") -> "ColabSegNapariWidget":
+
+    def __init__(
+        self, viewer, colabsegdata_instance: "ColabSegData"
+    ) -> "ColabSegNapariWidget":
         super().__init__(layout="vertical")
 
         self.viewer = viewer
@@ -155,7 +158,7 @@ class ColabSegNapariWidget(widgets.Container):
                 point_classes[point_class] = 0
             point_classes[point_class] = max(point_classes[point_class], int(index))
 
-        ret = {point_class : [ [ ] ] * (n + 1) for point_class, n in point_classes.items()}
+        ret = {point_class: [[]] * (n + 1) for point_class, n in point_classes.items()}
         for point_cloud in point_clouds:
             point_class, index = point_cloud.split("_")
 
@@ -185,7 +188,13 @@ class NapariManager:
     colabseg_widget : :py:class:`ColabSegNapariWidget`
         The widget for managing and visualizing ColabSegData instances.
     """
-    def __init__(self, display_data : np.ndarray=None, colabsegdata_instance : "ColabSegData" = None, **kwargs):
+
+    def __init__(
+        self,
+        display_data: np.ndarray = None,
+        colabsegdata_instance: "ColabSegData" = None,
+        **kwargs,
+    ):
         self.viewer = napari.Viewer()
 
         if display_data is not None:

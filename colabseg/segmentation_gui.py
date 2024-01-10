@@ -281,7 +281,8 @@ class JupyterFramework(object):
                 self.all_widgets["load_raw_image_text"].value
             ).data
             self.napari_manager = NapariManager(
-                colabsegdata_instance=self.data_structure, display_data=open_tomo)
+                colabsegdata_instance=self.data_structure, display_data=open_tomo
+            )
             self.napari_manager.run()
 
         self.all_widgets["load_raw_image_button"].on_click(open_napari_wrapper)
@@ -293,16 +294,12 @@ class JupyterFramework(object):
             data = self.napari_manager.export_data()
 
             mapping = {
-                "cluster_list_tv" : "Cluster",
-                "cluster_list_fits" : "Fit",
-                "protein_positions_list" : "Protein",
+                "cluster_list_tv": "Cluster",
+                "cluster_list_fits": "Fit",
+                "protein_positions_list": "Protein",
             }
             for key, value in mapping.items():
-                setattr(
-                    self.data_structure,
-                    key,
-                    [x for x in data.get(value, [[]])]
-                )
+                setattr(self.data_structure, key, [x for x in data.get(value, [[]])])
 
             if self.napari_manager is not None:
                 self.napari_manager.close()

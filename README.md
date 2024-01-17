@@ -11,23 +11,7 @@
 Make an environment with anaconda and open it:
 
 ```
-conda create --name YOUR_ENV_NAME python=3.8 pip
-source activate YOUR_ENV_NAME
-```
-Run pip in the folder where `setup.py` is located:
-```
-pip install .
-```
-
-This also installs all necessary dependencies.
-
-
-## Installation MacOS:
-
-Make an environment with anaconda and open it:
-
-```
-conda create --name YOUR_ENV_NAME python=3.8 pip
+conda env create -f environment.yml --name YOUR_ENV_NAME
 source activate YOUR_ENV_NAME
 ```
 Run pip in the folder where `setup.py` is located:

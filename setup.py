@@ -9,7 +9,7 @@ except:
 # if sys.version_info < (3.9, 0):
 #    sys.exit('Python 3.9 is required! please install in your environment.')
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 DESCRIPTION = "Colab Seg "
 LONG_DESCRIPTION = (
     "Segmentation toolbox GUI for membranes from cryo-electron tomography images"

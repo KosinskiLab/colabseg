@@ -18,7 +18,7 @@ LONG_DESCRIPTION = (
 # Setting up
 setup(
     name="colabseg",
-    version="0.0.1",
+    version=VERSION,
     author="Marc Siggel",
     author_email="marc.siggel@embl-hamburg.de",
     description=DESCRIPTION,

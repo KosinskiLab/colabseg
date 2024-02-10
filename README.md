@@ -31,5 +31,17 @@ Make sure to pick the correct environment as kernel to have access to the instal
 
 When loading a new file it is advised to either restart the kernel and start from the top of the notebook. Or at least re-run the file loading cell. This will purge any existing data and avoid potential issues in the experimental stage.
 
+
+## MemBrain-seg installation
+If you would like to use [MemBrain-seg](https://github.com/teamtomo/membrain-seg/) to create initial membrane segmentations, you can install it to your environment via
+
+```
+git clone https://github.com/teamtomo/membrain-seg.git
+cd membrain-seg
+pip install .
+```
+
+or refer to MemBrain-seg's [installation instructions](https://github.com/teamtomo/membrain-seg/blob/main/docs/installation.md).
+
 ## Detailed User Guide:
 Detailed tutorial and user guide can be found [here](https://kosinskilab.github.io/colabseg/).

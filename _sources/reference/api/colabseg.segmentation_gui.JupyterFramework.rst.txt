@@ -19,6 +19,9 @@
       
          
          
+           JupyterFramework.backup_step_to_previous
+         
+         
            JupyterFramework.boot_gui
          
          
@@ -58,6 +61,9 @@
            JupyterFramework.fit_idx_conv
          
          
+           JupyterFramework.fit_parametrization
+         
+         
            JupyterFramework.fit_rbf
          
          
@@ -70,10 +76,22 @@
            JupyterFramework.get_and_plot_normals
          
          
+           JupyterFramework.get_fit_normals
+         
+         
            JupyterFramework.gui_elements_cluster_analysis
          
          
            JupyterFramework.gui_elements_loading
+         
+         
+           JupyterFramework.highlight_clusters
+         
+         
+           JupyterFramework.highlight_clusters_size
+         
+         
+           JupyterFramework.highlight_fits
          
          
            JupyterFramework.load_from_point_cloud
@@ -98,6 +116,9 @@
          
          
            JupyterFramework.outlier_removal
+         
+         
+           JupyterFramework.plot_cluster_size
          
          
            JupyterFramework.reload_gui
@@ -137,6 +158,9 @@
          
          
            JupyterFramework.save_state_hdf
+         
+         
+           JupyterFramework.split_clusters
          
          
            JupyterFramework.trim_top_bottom

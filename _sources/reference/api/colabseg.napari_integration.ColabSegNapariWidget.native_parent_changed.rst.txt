@@ -1,0 +1,6 @@
+ColabSegNapariWidget.native\_parent\_changed
+======================================================================
+
+.. currentmodule:: colabseg.napari_integration
+
+.. autoattribute:: ColabSegNapariWidget.native_parent_changed

@@ -1,0 +1,6 @@
+JupyterFramework.split\_clusters
+=========================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.split_clusters

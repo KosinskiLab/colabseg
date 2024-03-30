@@ -1,0 +1,6 @@
+JupyterFramework.get\_fit\_normals
+==========================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.get_fit_normals

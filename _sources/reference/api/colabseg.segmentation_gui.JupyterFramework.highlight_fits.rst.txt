@@ -1,0 +1,6 @@
+JupyterFramework.highlight\_fits
+=========================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.highlight_fits

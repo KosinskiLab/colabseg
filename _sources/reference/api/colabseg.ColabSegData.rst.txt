@@ -49,6 +49,9 @@
            ColabSegData.delete_multiple_clusters
          
          
+           ColabSegData.delete_multiple_fits
+         
+         
            ColabSegData.delete_normals
          
          
@@ -110,6 +113,9 @@
          
          
            ColabSegData.save_values_txt
+         
+         
+           ColabSegData.split_clusters
          
          
            ColabSegData.statistical_outlier_removal

@@ -3,4 +3,4 @@ ColabSegNapariWidget.parent\_changed
 
 .. currentmodule:: colabseg.napari_integration
 
-.. autoattribute:: ColabSegNapariWidget.parent_changed
+.. autoproperty:: ColabSegNapariWidget.parent_changed

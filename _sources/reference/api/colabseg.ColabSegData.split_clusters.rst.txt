@@ -1,0 +1,6 @@
+ColabSegData.split\_clusters
+====================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.split_clusters

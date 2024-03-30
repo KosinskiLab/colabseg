@@ -1,0 +1,6 @@
+Ellipsoid.points\_per\_sampling
+======================================================
+
+.. currentmodule:: colabseg.parametrization
+
+.. automethod:: Ellipsoid.points_per_sampling

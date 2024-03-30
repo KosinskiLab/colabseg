@@ -1,0 +1,6 @@
+JupyterFramework.highlight\_clusters\_size
+==================================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.highlight_clusters_size

@@ -22,6 +22,9 @@
            Cylinder.fit
          
          
+           Cylinder.points_per_sampling
+         
+         
            Cylinder.sample
          
    

@@ -1,0 +1,6 @@
+ColabSegData.delete\_multiple\_fits
+==========================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.delete_multiple_fits

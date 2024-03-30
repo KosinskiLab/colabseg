@@ -22,7 +22,16 @@
            seg_visualization.add_bounding_box
          
          
+           seg_visualization.add_fit
+         
+         
+           seg_visualization.add_model
+         
+         
            seg_visualization.cluster_checkbox
+         
+         
+           seg_visualization.delete_model
          
          
            seg_visualization.highlight_cluster
@@ -56,6 +65,9 @@
          
          
            seg_visualization.make_xyz_string_protein
+         
+         
+           seg_visualization.removeAll
          
          
            seg_visualization.update_highlight_clusters

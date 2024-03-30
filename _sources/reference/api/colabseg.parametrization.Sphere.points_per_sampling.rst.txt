@@ -1,0 +1,6 @@
+Sphere.points\_per\_sampling
+===================================================
+
+.. currentmodule:: colabseg.parametrization
+
+.. automethod:: Sphere.points_per_sampling

@@ -60,6 +60,9 @@
            ColabSegNapariWidget.native
          
          
+           ColabSegNapariWidget.native_parent_changed
+         
+         
            ColabSegNapariWidget.options
          
          

@@ -1,0 +1,6 @@
+JupyterFramework.fit\_parametrization
+==============================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.fit_parametrization

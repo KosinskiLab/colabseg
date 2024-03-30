@@ -1,0 +1,6 @@
+Cylinder.points\_per\_sampling
+=====================================================
+
+.. currentmodule:: colabseg.parametrization
+
+.. automethod:: Cylinder.points_per_sampling

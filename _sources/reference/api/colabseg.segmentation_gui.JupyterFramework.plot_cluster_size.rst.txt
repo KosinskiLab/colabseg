@@ -1,0 +1,6 @@
+JupyterFramework.plot\_cluster\_size
+============================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.plot_cluster_size

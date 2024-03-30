@@ -1,0 +1,6 @@
+seg\_visualization.add\_fit
+===================================================
+
+.. currentmodule:: colabseg.py3dmol_controls
+
+.. automethod:: seg_visualization.add_fit

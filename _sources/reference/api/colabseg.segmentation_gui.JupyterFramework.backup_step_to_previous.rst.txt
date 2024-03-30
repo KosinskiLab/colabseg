@@ -1,0 +1,6 @@
+JupyterFramework.backup\_step\_to\_previous
+==================================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.backup_step_to_previous

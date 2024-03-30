@@ -19,7 +19,13 @@
       
          
          
+           Ellipsoid.compute_normal
+         
+         
            Ellipsoid.fit
+         
+         
+           Ellipsoid.points_per_sampling
          
          
            Ellipsoid.sample

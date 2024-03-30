@@ -1,0 +1,6 @@
+Sphere.compute\_normal
+==============================================
+
+.. currentmodule:: colabseg.parametrization
+
+.. automethod:: Sphere.compute_normal

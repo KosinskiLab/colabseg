@@ -1,0 +1,6 @@
+Ellipsoid.compute\_normal
+=================================================
+
+.. currentmodule:: colabseg.parametrization
+
+.. automethod:: Ellipsoid.compute_normal

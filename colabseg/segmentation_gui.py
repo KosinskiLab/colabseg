@@ -17,16 +17,16 @@ from .napari_integration import NapariManager
 class JupyterFramework(object):
     """Docstring JupyterFramework for GUI"""
 
-    def __init__(self):
+    def __init__(self, width=2000, height=1000):
         self.all_widgets = {}
-        self.seg_visualization = seg_visualization()
+        self.seg_visualization = seg_visualization(width=width, height=height)
         self.data_structure = ColabSegData()
 
     def gui_elements_loading(self):
         """Load Loading interface"""
 
         self.all_widgets["input_mrc"] = widgets.Text(
-            value="test_file.mrc",
+            value="/Users/vmaurer/Downloads/TS_01oa_rec_bin4_raw_MemBrain_seg_v9b.ckpt_segmented.mrc.gz",
             placeholder="mrc or h5 file",
             description="Input Filename:",
             style={"description_width": "initial"},
@@ -84,10 +84,7 @@ class JupyterFramework(object):
             description="Clusters:",
             disabled=False,
         )
-        self.all_widgets["cluster_sel"].observe(
-            self.seg_visualization.highlight_clusters, names="value"
-        )
-
+        self.all_widgets["cluster_sel"].observe(self.highlight_clusters, names="value")
         self.all_widgets["fit_sel"] = widgets.SelectMultiple(
             options=[
                 x
@@ -102,9 +99,7 @@ class JupyterFramework(object):
             description="Fits:",
             disabled=False,
         )
-        self.all_widgets["fit_sel"].observe(
-            self.seg_visualization.highlight_fits, names="value"
-        )
+        self.all_widgets["fit_sel"].observe(self.highlight_fits, names="value")
 
         self.all_widgets["rotate_flat"] = widgets.Button(description="Rotate Flat")
         self.all_widgets["rotate_flat"].on_click(self.rotate_flat)
@@ -168,16 +163,35 @@ class JupyterFramework(object):
         self.all_widgets["crop_fit"] = widgets.Button(description="Crop fit around")
         self.all_widgets["crop_fit"].on_click(self.crop_fit)
 
+        self.all_widgets["get_fit_normal_sampling"] = widgets.IntText(
+            value=20,
+            min=1,
+            description="Average Distance",
+            disabled=False,
+            style={"description_width": "initial"},
+            layout=widgets.Layout(width="200px"),
+        )
+
+        self.all_widgets["get_fit_normals"] = widgets.Button(description="Get Normals")
+        self.all_widgets["get_fit_normals"].on_click(self.get_fit_normals)
+
+        self.all_widgets["fit_normals"] = widgets.HBox(
+            [
+                self.all_widgets["get_fit_normals"],
+                self.all_widgets["get_fit_normal_sampling"],
+            ]
+        )
+
         self.all_widgets["distance_tolerance"] = widgets.IntText(
             value=50,
             min=1,
-            description="Dist Toleracne:",
+            description="Dist Tolerance:",
             disabled=False,
             style={"description_width": "initial"},
             layout=widgets.Layout(width="150px"),
         )
 
-        self.all_widgets["delete_fit"] = widgets.Button(description="Delete fit")
+        self.all_widgets["delete_fit"] = widgets.Button(description="Delete fits")
         self.all_widgets["delete_fit"].on_click(self.delete_fit)
 
         self.all_widgets["trim_min"] = widgets.IntText(
@@ -203,6 +217,23 @@ class JupyterFramework(object):
 
         self.all_widgets["undo_step"] = widgets.Button(description="Undo last step")
         self.all_widgets["undo_step"].on_click(self.undo_step)
+
+        self.all_widgets["min_cluster_size"] = widgets.IntText(
+            value=100,
+            min=0,
+            description="Minimum Cluster Size",
+            style={"description_width": "initial"},
+            disabled=False,
+        )
+        self.all_widgets["highlight_clusters"] = widgets.Button(
+            description="Highlight Clusters"
+        )
+        self.all_widgets["highlight_clusters"].on_click(self.highlight_clusters_size)
+
+        self.all_widgets["plot_cluster_size"] = widgets.Button(
+            description="Plot Cluster Size"
+        )
+        self.all_widgets["plot_cluster_size"].on_click(self.plot_cluster_size)
 
         self.all_widgets["reset_input"] = widgets.Button(description="Rest to initial")
         self.all_widgets["reset_input"].on_click(self.reset_input)
@@ -264,8 +295,13 @@ class JupyterFramework(object):
         )
         self.all_widgets["merge_clusters"].on_click(self.merge_clusters)
 
+        self.all_widgets["split_clusters"] = widgets.Button(
+            description="Split Cluster", style={"description_width": "initial"}
+        )
+        self.all_widgets["split_clusters"].on_click(self.split_clusters)
+
         self.all_widgets["load_raw_image_text"] = widgets.Text(
-            value="raw_image.mrc",
+            value="",
             placeholder="Type something",
             description="Raw mrc file:",
             disabled=False,
@@ -277,9 +313,11 @@ class JupyterFramework(object):
         )
 
         def open_napari_wrapper(change):
-            open_tomo = self.data_structure.read_mrc(
-                self.all_widgets["load_raw_image_text"].value
-            ).data
+            open_tomo = None
+            if self.all_widgets["load_raw_image_text"].value != "":
+                open_tomo = self.data_structure.read_mrc(
+                    self.all_widgets["load_raw_image_text"].value
+                ).data
             self.napari_manager = NapariManager(
                 colabsegdata_instance=self.data_structure, display_data=open_tomo
             )
@@ -545,12 +583,14 @@ class JupyterFramework(object):
                 self.all_widgets["fit_cylinder"],
             ]
         )
+
         self.all_widgets["fitting"] = widgets.VBox(
             [
                 self.all_widgets["fitting_rbf"],
                 self.all_widgets["fit_closed_surface"],
                 self.all_widgets["cropping"],
                 self.all_widgets["delete_fit"],
+                self.all_widgets["fit_normals"],
             ]
         )
         self.all_widgets["trimming"] = widgets.HBox(
@@ -571,6 +611,15 @@ class JupyterFramework(object):
                 self.all_widgets["merge_clusters"],
             ]
         )
+        self.all_widgets["cluster_highlight"] = widgets.VBox(
+            [
+                self.all_widgets["min_cluster_size"],
+                self.all_widgets["highlight_clusters"],
+                self.all_widgets["plot_cluster_size"],
+                self.all_widgets["split_clusters"],
+            ]
+        )
+
         self.all_widgets["outliers"] = widgets.VBox(
             [
                 self.all_widgets["edge_outlier_removal"],
@@ -599,7 +648,11 @@ class JupyterFramework(object):
 
         self.all_widgets["tab_nest"] = widgets.Tab()
         cluster_tab = widgets.HBox(
-            [self.all_widgets["cluster_sel"], self.all_widgets["undoing"]]
+            [
+                self.all_widgets["cluster_sel"],
+                self.all_widgets["undoing"],
+                self.all_widgets["cluster_highlight"],
+            ]
         )
         edit_tab = widgets.VBox(
             [self.all_widgets["trimming"], self.all_widgets["rotating"]]
@@ -640,11 +693,19 @@ class JupyterFramework(object):
         self.seg_visualization.load_all_models(
             self.data_structure.cluster_list_tv, start_index=0
         )
+        self.model_mapping_table = {
+            i: i for i in self.all_widgets["cluster_sel"].options
+        }
+        self.model_mapping_table_previous = self.model_mapping_table.copy()
         if len(self.data_structure.cluster_list_fits) > 0:
             self.seg_visualization.load_all_models_fit(
                 self.data_structure.cluster_list_fits,
                 start_index=len(self.data_structure.cluster_list_tv),
             )
+            self.cluster_fit_mapping_table = {
+                i: i for i in self.all_widgets["fit_sel"].options
+            }
+
         self.seg_visualization.add_bounding_box(self.data_structure.boxlength)
         if len(self.data_structure.protein_positions_list) > 0:
             self.seg_visualization.load_protein_positions(
@@ -661,8 +722,7 @@ class JupyterFramework(object):
         clear_output()
         # sets the downsampling value for the py3dmol module for large point clouds.
         self.update_downsampling()
-        self.seg_visualization.view.removeAllModels()
-        self.seg_visualization.view.removeAllShapes()
+        self.seg_visualization.removeAll()
         self.gui_elements_cluster_analysis()
         self.seg_visualization.view.update()
         return
@@ -672,8 +732,7 @@ class JupyterFramework(object):
         clear_output()
         # sets the downsampling value for the py3dmol module for large point clouds.
         self.update_downsampling()
-        self.seg_visualization.view.removeAllModels()
-        self.seg_visualization.view.removeAllShapes()
+        self.seg_visualization.removeAll()
         self.gui_elements_cluster_analysis()
         self.seg_visualization.view.update()
         self.seg_visualization.view.show()
@@ -710,7 +769,7 @@ class JupyterFramework(object):
 
     def rotate_flat(self, obj):
         """Rotate Lamina Flat onto xy plane"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         self.data_structure.plain_fit_and_rotate_lamina(backward=False)
         self.reload_gui()
         # self.seg_visualization.load_all_models(self.data_structure.cluster_list_tv)
@@ -720,7 +779,7 @@ class JupyterFramework(object):
 
     def rotate_back(self, obj):
         """rotate Lamina back to original position"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         self.data_structure.plain_fit_and_rotate_lamina(backward=True)
         # self.seg_visualization.load_all_models(self.data_structure.cluster_list_tv)
         # self.seg_visualization.add_bounding_box(self.data_structure.boxlength)
@@ -735,7 +794,7 @@ class JupyterFramework(object):
             and len(self.all_widgets["fit_sel"].value) == 0
         ):
             return
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         trim_min = self.all_widgets["trim_min"].value
         trim_max = self.all_widgets["trim_max"].value
 
@@ -816,31 +875,122 @@ class JupyterFramework(object):
         )
         return
 
+    def highlight_clusters(self, obj):
+        new_obj = {}
+
+        new_obj["old"] = [self.model_mapping_table[i] for i in obj["old"]]
+        new_obj["new"] = [self.model_mapping_table[i] for i in obj["new"]]
+        self.seg_visualization.highlight_clusters(new_obj)
+        return None
+
+    def highlight_fits(self, obj):
+        new_obj = {}
+
+        new_obj["old"] = [self.model_mapping_table[i] for i in obj["old"]]
+        new_obj["new"] = [self.model_mapping_table[i] for i in obj["new"]]
+        self.seg_visualization.highlight_fits(new_obj)
+        return None
+
     def merge_clusters(self, obj):
         """Merge selected clusters"""
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) < 2:
             print("Not enough selected!")
             print("Please select at least 2 cluster for merging")
-        self.data_structure.merge_clusters(self.all_widgets["cluster_sel"].value)
-        self.reload_gui()
+            return None
+        removed, added = self.data_structure.merge_clusters(
+            self.all_widgets["cluster_sel"].value
+        )
+        self._delete_cluster(removed)
+        self._add_model(added)
+
+        self.seg_visualization.view_update()
         return
+
+    def split_clusters(self, obj):
+        """Split selected clusters"""
+        self.backup_step_to_previous()
+        if len(self.all_widgets["cluster_sel"].value) != 1:
+            print("Please only select a single cluster for splitting")
+            return None
+
+        removed, added = self.data_structure.split_clusters(
+            self.all_widgets["cluster_sel"].value
+        )
+        self._delete_model(removed)
+        self._add_model(added)
+
+        self.seg_visualization.view_update()
+        return None
+
+    def delete_cluster(self, obj):
+        self.backup_step_to_previous()
+        if len(self.all_widgets["cluster_sel"].value) == 0:
+            print("Nothing selected!")
+            print("Please select at least one cluster for deleting")
+            return None
+
+        self.data_structure.delete_multiple_clusters(
+            self.all_widgets["cluster_sel"].value
+        )
+        self._delete_model(self.all_widgets["cluster_sel"].value)
+        self.seg_visualization.view_update()
+        return None
+
+    def backup_step_to_previous(self):
+        self.model_mapping_table_previous = self.model_mapping_table.copy()
+        self.data_structure.backup_step_to_previous()
+        return None
+
+    def _delete_model(self, cluster_indices):
+        available_models = list(self.model_mapping_table.values())
+        for value in cluster_indices:
+            model_value = self.model_mapping_table[value]
+            available_models.remove(model_value)
+            self.seg_visualization.delete_model(model_value)
+
+        n_clusters = len(self.data_structure.cluster_list_tv)
+        clusters = [x for x in range(0, n_clusters)]
+        self.all_widgets["cluster_sel"].options = clusters
+
+        fits = [
+            n_clusters + x for x in range(0, len(self.data_structure.cluster_list_fits))
+        ]
+        self.all_widgets["fit_sel"].options = fits
+
+        models = [x for x in range(0, len(self.model_mapping_table), 1)]
+        self.model_mapping_table = dict(zip(models, available_models))
+        return None
+
+    def _add_model(self, cluster_indices):
+        downsample = self.seg_visualization.downsample
+        for value in cluster_indices:
+            xyz = self.seg_visualization.make_xyz_string(
+                self.data_structure.cluster_list_tv[value][::downsample]
+            )
+            model_index = self.seg_visualization.add_model(xyz)
+            self.model_mapping_table[value] = model_index
+        clusters = [x for x in range(0, len(self.data_structure.cluster_list_tv), 1)]
+        self.all_widgets["cluster_sel"].options = clusters
+        return None
 
     def reset_input(self, obj):
         """Reset input"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         self.data_structure.reload_original_values()
         self.reload_gui()
         return
 
     def undo_step(self, obj):
         """undo last step"""
+        self.model_mapping_table = self.model_mapping_table_previous
         self.data_structure.reload_previous_step()
         self.reload_gui()
         return
 
     def fit_rbf(self, obj):
         """fit RBF to selected clusters"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the fitting procedure!")
@@ -855,57 +1005,87 @@ class JupyterFramework(object):
 
     def fit_sphere(self, obj):
         """Fit lstsq sphere to selected cluster"""
-        self.data_structure.backup_step_to_previous()
-        if len(self.all_widgets["cluster_sel"].value) != 1:
-            print("Nothing or too many clusters selected!")
-            print("Please select a single cluster for the fitting procedure!")
-            return
-        self.data_structure.interpolate_membrane_closed_surface(
-            "sphere", self.all_widgets["cluster_sel"].value
-        )
-        self.reload_gui()
-        return
+        return self.fit_parametrization(parametrization_type="sphere", obj=obj)
 
     def fit_ellipsoid(self, obj):
         """Fit lstsq ellipsoid to selected cluster"""
-        self.data_structure.backup_step_to_previous()
-        if len(self.all_widgets["cluster_sel"].value) != 1:
-            print("Nothing or too many clusters selected!")
-            print("Please select a single cluster for the fitting procedure!")
-            return
-        self.data_structure.interpolate_membrane_closed_surface(
-            "ellipsoid", self.all_widgets["cluster_sel"].value
-        )
-        self.reload_gui()
-        return
+        return self.fit_parametrization(parametrization_type="ellipsoid", obj=obj)
 
     def fit_cylinder(self, obj):
         """Fit lstsq ellipsoid to selected cluster"""
-        self.data_structure.backup_step_to_previous()
+        return self.fit_parametrization(parametrization_type="cylinder", obj=obj)
+
+    def fit_parametrization(self, parametrization_type, obj):
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the fitting procedure!")
             return
         self.data_structure.interpolate_membrane_closed_surface(
-            "cylinder", self.all_widgets["cluster_sel"].value
+            parametrization_type,
+            self.all_widgets["cluster_sel"].value[0],
+            sampling_rate=self.all_widgets["get_fit_normal_sampling"].value,
         )
-        self.reload_gui()
-        return
+        added_data = self.data_structure.cluster_list_fits[-1]
 
-    def delete_fit(self, obj):
-        """deletes a selected fit"""
-        self.data_structure.backup_step_to_previous()
+        downsample = self.seg_visualization.downsample
+        xyz = self.seg_visualization.make_xyz_string(added_data[::downsample])
+        model_index = self.seg_visualization.add_fit(xyz)
+
+        value = len(self.model_mapping_table)
+        self.model_mapping_table[value] = model_index
+
+        options = [
+            x
+            for x in range(
+                len(self.data_structure.cluster_list_tv),
+                len(self.data_structure.cluster_list_tv)
+                + len(self.data_structure.cluster_list_fits),
+                1,
+            )
+        ]
+        self.all_widgets["fit_sel"].options = options
+        self.seg_visualization.view_update()
+        return None
+
+    def get_fit_normals(self, obj):
+        self.backup_step_to_previous()
         if len(self.all_widgets["fit_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the deleting procedure!")
-            return
-        self.data_structure.delete_fit(self.fit_idx_conv()[0])
+            return None
+
+        fit_index = self.all_widgets["fit_sel"].value[0]
+        fit_index = fit_index - len(self.data_structure.cluster_list_tv)
+        sampling = self.all_widgets["get_fit_normal_sampling"].value
+        model = self.data_structure.cluster_list_fits_objects[fit_index]
+        n_points = model.points_per_sampling(sampling)
+
+        # sample samples n_points ** 2
+        n_points = int(np.ceil(np.sqrt(n_points)))
+        base_vectors = model.sample(n_points)
+        normal_vectors = model.compute_normal(base_vectors)
+        self.data_structure.analysis_properties["normal_selection"] = base_vectors
+        self.data_structure.analysis_properties["surface_normals"] = normal_vectors
         self.reload_gui()
-        return
+        return None
+
+    def delete_fit(self, obj):
+        """deletes a selected fit"""
+        self.backup_step_to_previous()
+        if len(self.all_widgets["fit_sel"].value) == 0:
+            print("Nothing selected!")
+            print("Please select at least one fit for deleting")
+            return None
+
+        self.data_structure.delete_multiple_fits(self.fit_idx_conv())
+        self._delete_model(self.all_widgets["fit_sel"].value)
+        self.seg_visualization.view_update()
+        return None
 
     def dbscan_recluster(self, obj):
         """run DBSCAN clustering and re-assign clusters"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the DBSCAN clustering!")
@@ -921,7 +1101,7 @@ class JupyterFramework(object):
     def outlier_removal(self, obj):
         """remove statistical outliers"""
         # TODO: add selection parameters to interface
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the outlier removal!")
@@ -937,7 +1117,7 @@ class JupyterFramework(object):
     def remove_eigenvalue_outliers(self, obj):
         """remove edge outliers"""
         # TODO: add lambda variable to the selection
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the eigenvalue removal!")
@@ -950,7 +1130,7 @@ class JupyterFramework(object):
 
     def crop_fit(self, obj):
         """Crop fit around fit"""
-        self.data_structure.backup_step_to_previous()
+        self.backup_step_to_previous()
         if len(self.all_widgets["cluster_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the cropping!")
@@ -963,18 +1143,6 @@ class JupyterFramework(object):
             cluster_index_tv=self.all_widgets["cluster_sel"].value[0],
             cluster_index_fit=self.fit_idx_conv()[0],
             distance_tolerance=self.all_widgets["distance_tolerance"].value,
-        )
-        self.reload_gui()
-        return
-
-    def delete_cluster(self, obj):
-        self.data_structure.backup_step_to_previous()
-        if len(self.all_widgets["cluster_sel"].value) == 0:
-            print("Nothing selected!")
-            print("Please select at least one cluster for deleting")
-            return
-        self.data_structure.delete_multiple_clusters(
-            self.all_widgets["cluster_sel"].value
         )
         self.reload_gui()
         return
@@ -1191,3 +1359,29 @@ class JupyterFramework(object):
             return
         self.data_structure.flip_normals()
         self.reload_gui()
+
+    def highlight_clusters_size(self, obj):
+        cutoff = self.all_widgets["min_cluster_size"].value
+
+        indices = [
+            i
+            for i in range(len(self.data_structure.cluster_list_tv))
+            if self.data_structure.cluster_list_tv[i].shape[0] < cutoff
+        ]
+
+        self.all_widgets["cluster_sel"].value = indices
+        return None
+
+    def plot_cluster_size(self, obj):
+        sizes = [x.shape[0] for x in self.data_structure.cluster_list_tv]
+        plt.figure(dpi=100)
+        plt.hist(
+            sizes,
+            bins=20,
+            density=False,
+        )
+        plt.ylabel("Count")
+        plt.xlabel("Size")
+        plt.title("Distribution of cluster sizes")
+        plt.show()
+        return

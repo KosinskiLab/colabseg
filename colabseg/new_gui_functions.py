@@ -14,6 +14,7 @@ from scipy import interpolate
 from scipy.spatial.distance import cdist
 from pyntcloud import PyntCloud
 from tqdm.notebook import tqdm
+from sklearn.cluster import KMeans
 
 from .image_io import ImageIO
 from .parametrization import PARAMETRIZATION_TYPE
@@ -47,6 +48,7 @@ class ColabSegData(object):
         # TODO write reset function for this
         self.cluster_list_tv = []
         self.cluster_list_fits = []
+        self.cluster_list_fits_objects = []
 
         # do not need this rotated list really?
         # self.cluster_rotated_positions = []
@@ -91,28 +93,20 @@ class ColabSegData(object):
 
     def convert_tomo(self, step_size=1):
         """optimized version of conversion code"""
-        unique = np.unique(self.image_array)
-        for u in tqdm(unique[unique != 0]):
-            where = np.where(self.image_array == u)
-            for i in range(0, len(where[0])):
-                self.position_list.append(
-                    np.array(
-                        [
-                            int(where[0][i]) * self.pixel_size[0],
-                            int(where[1][i]) * self.pixel_size[1],
-                            int(where[2][i]) * self.pixel_size[2],
-                        ]
-                    )
-                )
-                self.intensity_list.append(u)
 
-        for index in np.unique(self.intensity_list):
-            subset = np.take(
-                self.position_list, np.where(self.intensity_list == index)[0], axis=0
-            )
-            self.cluster_list_tv.append(subset)
+        non_zero = np.where(self.image_array > 0)
+        values = self.image_array[non_zero]
+        non_zero = np.array(non_zero).T
+        non_zero = np.multiply(non_zero, self.pixel_size)
+        self.position_list.extend([np.array(x) for x in non_zero.tolist()])
+        for u in tqdm(np.unique(values)):
+            indices = np.where(values == u)
+            points = non_zero[indices]
+            self.intensity_list.extend([u] * points.shape[0])
 
-        return
+            self.cluster_list_tv.append(points)
+
+        return None
 
     def load_point_cloud(self, filename):
         """Load a plain point cloud from a txt file.
@@ -397,11 +391,36 @@ class ColabSegData(object):
             to_merge.append(self.cluster_list_tv[i])
         stacked_coordinates = np.vstack(np.asarray(to_merge))
 
-        cluster_indices = np.sort(np.asarray(cluster_indices))[::-1]
-        for i in cluster_indices:
+        new_clusters = np.sort(np.asarray(cluster_indices))[::-1]
+        for i in new_clusters:
             del self.cluster_list_tv[i]
         self.cluster_list_tv.append(stacked_coordinates)
-        return
+        return new_clusters, (len(self.cluster_list_tv) - 1,)
+
+    def split_clusters(self, cluster_indices=[]):
+        """Split one cluster by kmeans"""
+        to_merge = []
+        for i in cluster_indices:
+            to_merge.append(self.cluster_list_tv[i])
+        stacked_coordinates = np.vstack(np.asarray(to_merge))
+
+        for i in cluster_indices:
+            del self.cluster_list_tv[i]
+
+        clustering = KMeans(n_clusters=2).fit(stacked_coordinates)
+
+        new_indices = np.asarray(clustering.labels_)
+
+        for new_clusters in np.unique(new_indices):
+            self.cluster_list_tv.append(
+                stacked_coordinates[np.where(new_indices == new_clusters)]
+            )
+
+        new_clusters = np.unique(new_indices).size
+        total_clusters = len(self.cluster_list_tv)
+        added_clusters = list(range(total_clusters - new_clusters, total_clusters))
+
+        return cluster_indices, added_clusters
 
     def reload_original_values(self):
         """Reload the origial values"""
@@ -417,6 +436,13 @@ class ColabSegData(object):
         """delete a fit from data"""
         # self.cluster_list_fits = self.cluster_list_fits.pop(fit_index)
         del self.cluster_list_fits[fit_index]
+
+    def delete_multiple_fits(self, fit_index):
+        """delete a fit from data"""
+        # self.cluster_list_fits = self.cluster_list_fits.pop(fit_index)
+        fit_index = np.sort(np.asarray(fit_index))[::-1]
+        for index in fit_index:
+            self.delete_fit(index)
 
     def delete_multiple_clusters(self, cluster_indices):
         """delete Multiple clusters"""
@@ -518,15 +544,26 @@ class ColabSegData(object):
         for i in cluster_indices:
             all_positions.append(self.cluster_list_tv[i])
         for j in fit_indices:
-            all_positions.append(self.cluster_list_fits[j])
+            converted_index = j - len(self.cluster_list_tv)
+            all_positions.append(self.cluster_list_fits[converted_index])
+
         all_positions = np.vstack(all_positions)
-        pcd = o3d.geometry.PointCloud()
-        pcd.points = o3d.utility.Vector3dVector(all_positions)
-        pcd.estimate_normals()
-        pcd.normalize_normals()
-        pcd.orient_normals_consistent_tangent_plane(k=50)
+        from .parametrization import Sphere
+
+        fit = Sphere.fit(all_positions)
+        all_positions = fit.sample(100)
+        normals = fit.compute_normal(all_positions)
+
         self.analysis_properties["normal_selection"] = np.asarray(all_positions)
-        self.analysis_properties["surface_normals"] = np.asarray(pcd.normals)
+        self.analysis_properties["surface_normals"] = np.asarray(normals)
+
+        # pcd = o3d.geometry.PointCloud()
+        # pcd.points = o3d.utility.Vector3dVector(all_positions)
+        # pcd.estimate_normals()
+        # pcd.normalize_normals()
+        # pcd.orient_normals_consistent_tangent_plane(k=50)
+        # self.analysis_properties["normal_selection"] = np.asarray(all_positions)
+        # self.analysis_properties["surface_normals"] = np.asarray(pcd.normals)
         return
 
     def delete_normals(self):
@@ -539,16 +576,23 @@ class ColabSegData(object):
             "surface_normals"
         ] * (-1)
 
-    def interpolate_membrane_closed_surface(self, shape_type, cluster_index=0):
+    def interpolate_membrane_closed_surface(
+        self, shape_type, cluster_index=0, sampling_rate: float = None
+    ):
         """Least square fit for a perfect sphere and adding of points.
         For vesicles and spherical viruses.
         """
-        interpxyz = (
-            PARAMETRIZATION_TYPE[shape_type]
-            .fit(np.asarray(self.cluster_list_tv)[cluster_index])
-            .sample(100)
-        )
+        model = PARAMETRIZATION_TYPE[shape_type]
+        model = model.fit(np.asarray(self.cluster_list_tv[cluster_index]))
+
+        # sample draws n_samples ** 2
+        n_samples = 100
+        if sampling_rate is not None:
+            n_samples = int(np.ceil(np.sqrt(model.points_per_sampling(sampling_rate))))
+
+        interpxyz = model.sample(n_samples)
         self.cluster_list_fits.append(interpxyz)
+        self.cluster_list_fits_objects.append(model)
         return
 
     def save_hdf(self, filename):

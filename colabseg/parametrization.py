@@ -155,6 +155,40 @@ class Sphere(Parametrization):
         positions_xyz = np.column_stack([x, y, z])
         return positions_xyz
 
+    def compute_normal(self, points: np.ndarray) -> np.ndarray:
+        """
+        Compute the normal vector at a given point on the sphere surface.
+
+        Parameters
+        ----------
+        points : np.ndarray
+            Points on the sphere surface with shape n x d
+
+        Returns
+        -------
+        np.ndarray
+            Normal vectors at the given points
+        """
+        return (points - self.center) / self.radius
+
+    def points_per_sampling(self, sampling_density: float) -> int:
+        """
+        Computes the apporximate number of random samples
+        required to achieve a given sampling_density.
+
+        Parameters
+        ----------
+        sampling_density : float
+            Average distance between points.
+
+        Returns
+        -------
+        int
+            Number of required random samples.
+        """
+        n_points = np.ceil(np.power(np.divide(self.radius, sampling_density), 3))
+        return int(n_points)
+
 
 class Ellipsoid(Parametrization):
     """
@@ -282,6 +316,52 @@ class Ellipsoid(Parametrization):
         samples += center
 
         return samples
+
+    def compute_normal(self, points: np.ndarray) -> np.ndarray:
+        """
+        Compute the normal vector at a given point on the ellipsoid surface.
+
+        Parameters
+        ----------
+        points : np.ndarray
+            Points on the sphere surface with shape n x d
+
+        Returns
+        -------
+        np.ndarray
+            Normal vectors at the given points
+        """
+        normal = np.divide(np.multiply(points, 2), np.square(self.radii))
+        normal = np.dot(normal, self.orientations)
+        normal /= np.linalg.norm(normal, axis=1)[:, None]
+
+        return normal
+
+    def points_per_sampling(self, sampling_density: float) -> int:
+        """
+        Computes the apporximate number of random samples
+        required to achieve a given sampling_density.
+
+        Parameters
+        ----------
+        sampling_density : float
+            Average distance between points.
+
+        Returns
+        -------
+        int
+            Number of required random samples.
+        """
+        area_points = np.pi * np.square(sampling_density)
+        area_ellipsoid = np.power(self.radii[0] * self.radii[1], 1.6075)
+        area_ellipsoid += np.power(self.radii[0] * self.radii[2], 1.6075)
+        area_ellipsoid += np.power(self.radii[1] * self.radii[2], 1.6075)
+
+        area_ellipsoid = np.power(np.divide(area_ellipsoid, 3), 1 / 1.6075)
+        area_ellipsoid *= 4 * np.pi
+
+        n_points = np.ceil(np.divide(area_ellipsoid, area_points))
+        return int(n_points)
 
 
 class Cylinder(Parametrization):
@@ -425,6 +505,27 @@ class Cylinder(Parametrization):
         samples += centers
 
         return samples
+
+    def points_per_sampling(self, sampling_density: float) -> int:
+        """
+        Computes the apporximate number of random samples
+        required to achieve a given sampling_density.
+
+        Parameters
+        ----------
+        sampling_density : float
+            Average distance between points.
+
+        Returns
+        -------
+        int
+            Number of required random samples.
+        """
+        area_points = np.square(sampling_density)
+        area = 2 * self.radius * (self.radius + self.height)
+
+        n_points = np.ceil(np.divide(area, area_points))
+        return int(n_points)
 
 
 PARAMETRIZATION_TYPE = {"sphere": Sphere, "ellipsoid": Ellipsoid, "cylinder": Cylinder}

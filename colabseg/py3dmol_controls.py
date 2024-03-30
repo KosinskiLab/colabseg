@@ -15,6 +15,8 @@ class seg_visualization(object):
         # self.view = py3Dmol.view(js="https://3dmol.org/build/3Dmol.js", width=width, height=height)
         self.view = py3Dmol.view(width=width, height=height)
         self.downsample = 1
+        self.total_model = 0
+        self.hidden_models = set()
 
     def view_update(self):
         """Update view of molecules"""
@@ -25,6 +27,36 @@ class seg_visualization(object):
         """zoomTo shortcut"""
         self.view.zoomTo()
         return
+
+    def delete_model(self, model_index):
+        # Actually using view.removeModel appears to cause issues
+        # Perhaps this is a bug in how py3Dmol internally tracks models
+        self.view.setStyle(
+            {"model": model_index},
+            {"sphere": {"color": "white", "radius": "0", "opacity": "0"}},
+        )
+        self.hidden_models.add(model_index)
+        return None
+
+    def add_model(self, model, model_type="xyz", style=None) -> int:
+        if style is None:
+            style = {"sphere": {"color": "grey", "radius": "20", "opacity": "0.6"}}
+        self.view.addModel(model, model_type)
+        self.view.setStyle({"model": self.total_model}, style)
+        self.total_model += 1
+        return self.total_model - 1
+
+    def add_fit(self, model, model_type="xyz", style=None) -> int:
+        if style is None:
+            style = {"sphere": {"color": "blue", "radius": "20", "opacity": "0.4"}}
+        return self.add_model(model=model, model_type=model_type, style=style)
+
+    def removeAll(self):
+        self.view.removeAllModels()
+        self.view.removeAllShapes()
+        self.total_model = 0
+        self.hidden_models = set()
+        return None
 
     def add_bounding_box(self, boxlength):
         """draws a bounding box according to the tomogram size"""
@@ -170,11 +202,7 @@ class seg_visualization(object):
         for i, cluster_positions in enumerate(cluster_list):
             i = i + start_index
             xyz = self.make_xyz_string(cluster_positions[:: self.downsample])
-            self.view.addModel(xyz, "xyz")
-            self.view.setStyle(
-                {"model": i},
-                {"sphere": {"color": "grey", "radius": "20", "opacity": "0.6"}},
-            )
+            self.add_model(model=xyz, model_type="xyz")
         self.view.zoomTo()
         return
 
@@ -186,14 +214,10 @@ class seg_visualization(object):
             downsample_fit = int(np.round(len(cluster_positions) / 50000))
             if downsample_fit == 0:
                 downsample_fit = 1
-            print(downsample_fit)
+
             i = i + start_index
             xyz = self.make_xyz_string(cluster_positions[::downsample_fit])
-            self.view.addModel(xyz, "xyz")
-            self.view.setStyle(
-                {"model": i},
-                {"sphere": {"color": "blue", "radius": "20", "opacity": "0.4"}},
-            )
+            self.add_fit(model=xyz, model_type="xyz")
         self.view.zoomTo()
         return
 
@@ -209,7 +233,13 @@ class seg_visualization(object):
         return
 
     def load_normal_positions(self, normal_positions, normal_vectors):
-        for position, normal in zip(normal_positions[::10], normal_vectors[::10] * 150):
+        # for position, normal in zip(normal_positions[::10], normal_vectors[::10] * 150):
+        random_normals = np.random.choice(
+            normal_positions.shape[0], size=100, replace=True
+        )
+        for index in random_normals:
+            position = normal_positions[index]
+            normal = normal_vectors[index] * 150
             self.view.addArrow(
                 {
                     "start": {"x": position[0], "y": position[1], "z": position[2]},
@@ -266,12 +296,16 @@ class seg_visualization(object):
         """highlight cluster chosen with multi_select"""
         # NOTE old new are assigned by the slider widget
         for i in obj["old"]:
+            if i in self.hidden_models:
+                continue
             self.view.setStyle(
                 {"model": i},
                 {"sphere": {"color": "grey", "radius": "20", "opacity": "0.6"}},
             )
         #    self.view.update()
         for j in obj["new"]:
+            if j in self.hidden_models:
+                continue
             self.view.setStyle(
                 {"model": j}, {"sphere": {"color": "red", "radius": "20"}}
             )
@@ -282,12 +316,16 @@ class seg_visualization(object):
     def highlight_fits(self, obj):
         """highlight RBF fit chosen with selector"""
         for i in obj["old"]:
+            if i in self.hidden_models:
+                continue
             self.view.setStyle(
                 {"model": i},
                 {"sphere": {"color": "blue", "radius": "20", "opacity": "0.4"}},
             )
         #    self.view.update()
         for j in obj["new"]:
+            if j in self.hidden_models:
+                continue
             self.view.setStyle(
                 {"model": j}, {"sphere": {"color": "blue", "radius": "20"}}
             )

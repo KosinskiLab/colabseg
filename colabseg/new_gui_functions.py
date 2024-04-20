@@ -4,6 +4,7 @@
 # Marc Siggel, December 2021
 
 import os
+import pickle
 import subprocess
 
 import h5py
@@ -55,6 +56,7 @@ class ColabSegData(object):
         # this list is used for lated stuff
         self.cluster_list_tv_previous = []
         self.cluster_list_fits_previous = []
+        self.cluster_list_fits_objects_previous = []
 
         self.raw_tomogram_slice = []
         self.protein_positions_list = []
@@ -436,6 +438,8 @@ class ColabSegData(object):
         """delete a fit from data"""
         # self.cluster_list_fits = self.cluster_list_fits.pop(fit_index)
         del self.cluster_list_fits[fit_index]
+        if fit_index < len(self.cluster_list_fits_objects):
+            del self.cluster_list_fits_objects[fit_index]
 
     def delete_multiple_fits(self, fit_index):
         """delete a fit from data"""
@@ -459,10 +463,12 @@ class ColabSegData(object):
         """takes the current value and overwrites the previous step"""
         self.cluster_list_tv_previous = self.cluster_list_tv.copy()
         self.cluster_list_fits_previous = self.cluster_list_fits.copy()
+        self.cluster_list_fits_objects_previous = self.cluster_list_fits_objects.copy()
 
     def reload_previous_step(self):
         self.cluster_list_tv = self.cluster_list_tv_previous.copy()
         self.cluster_list_fits = self.cluster_list_fits_previous.copy()
+        self.cluster_list_fits_objects = self.cluster_list_fits_objects_previous
 
     @staticmethod
     def write_xyz(point_cloud, output_filename):
@@ -548,22 +554,14 @@ class ColabSegData(object):
             all_positions.append(self.cluster_list_fits[converted_index])
 
         all_positions = np.vstack(all_positions)
-        from .parametrization import Sphere
 
-        fit = Sphere.fit(all_positions)
-        all_positions = fit.sample(100)
-        normals = fit.compute_normal(all_positions)
-
+        pcd = o3d.geometry.PointCloud()
+        pcd.points = o3d.utility.Vector3dVector(all_positions)
+        pcd.estimate_normals()
+        pcd.normalize_normals()
+        pcd.orient_normals_consistent_tangent_plane(k=50)
         self.analysis_properties["normal_selection"] = np.asarray(all_positions)
-        self.analysis_properties["surface_normals"] = np.asarray(normals)
-
-        # pcd = o3d.geometry.PointCloud()
-        # pcd.points = o3d.utility.Vector3dVector(all_positions)
-        # pcd.estimate_normals()
-        # pcd.normalize_normals()
-        # pcd.orient_normals_consistent_tangent_plane(k=50)
-        # self.analysis_properties["normal_selection"] = np.asarray(all_positions)
-        # self.analysis_properties["surface_normals"] = np.asarray(pcd.normals)
+        self.analysis_properties["surface_normals"] = np.asarray(pcd.normals)
         return
 
     def delete_normals(self):
@@ -577,7 +575,11 @@ class ColabSegData(object):
         ] * (-1)
 
     def interpolate_membrane_closed_surface(
-        self, shape_type, cluster_index=0, sampling_rate: float = None
+        self,
+        shape_type,
+        cluster_index=0,
+        sampling_rate: float = 100,
+        compute_npoints: bool = False,
     ):
         """Least square fit for a perfect sphere and adding of points.
         For vesicles and spherical viruses.
@@ -585,15 +587,13 @@ class ColabSegData(object):
         model = PARAMETRIZATION_TYPE[shape_type]
         model = model.fit(np.asarray(self.cluster_list_tv[cluster_index]))
 
-        # sample draws n_samples ** 2
-        n_samples = 100
-        if sampling_rate is not None:
-            n_samples = int(np.ceil(np.sqrt(model.points_per_sampling(sampling_rate))))
+        if compute_npoints:
+            sampling_rate = model.points_per_sampling(sampling_rate)
 
-        interpxyz = model.sample(n_samples)
+        interpxyz = model.sample(sampling_rate)
         self.cluster_list_fits.append(interpxyz)
         self.cluster_list_fits_objects.append(model)
-        return
+        return None
 
     def save_hdf(self, filename):
         """write all class variables into hdf5 file format"""
@@ -683,6 +683,17 @@ class ColabSegData(object):
                 )
 
         return
+
+    @classmethod
+    def load_pickle(cls, filename: str):
+        with open(filename, "rb") as infile:
+            class_object = pickle.load(infile)
+        return class_object
+
+    def save_pickle(self, filename: str):
+        with open(filename, "wb") as ofile:
+            pickle.dump(self, ofile)
+        return None
 
     def extract_slice(self, filename, slice="center"):
         """Extract a slice from the original tomogram and visualize"""

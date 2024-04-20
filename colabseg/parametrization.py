@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 
 import numpy as np
+import open3d as o3d
 from scipy import optimize
+from scipy.spatial import ConvexHull
 
 
 class Parametrization(ABC):
@@ -144,15 +146,16 @@ class Sphere(Parametrization):
         center = self.center if center is None else center
         radius = self.radius if radius is None else radius
 
-        sp = np.linspace(0, 2.0 * np.pi, num=n_samples)
-        x0, y0, z0 = center
-        nx = sp.shape[0]
-        u = np.repeat(sp, nx)
-        v = np.tile(sp, nx)
-        x = x0 + np.cos(u) * np.sin(v) * radius
-        y = y0 + np.sin(u) * np.sin(v) * radius
-        z = z0 + np.cos(v) * radius
-        positions_xyz = np.column_stack([x, y, z])
+        indices = np.arange(0, n_samples, dtype=float) + 0.5
+        phi = np.arccos(1 - 2 * indices / n_samples)
+        theta = np.pi * (1 + 5**0.5) * indices
+
+        positions_xyz = np.column_stack(
+            [np.cos(theta) * np.sin(phi), np.sin(theta) * np.sin(phi), np.cos(phi)]
+        )
+        positions_xyz = np.multiply(positions_xyz, radius)
+        positions_xyz = np.add(positions_xyz, center)
+
         return positions_xyz
 
     def compute_normal(self, points: np.ndarray) -> np.ndarray:
@@ -186,7 +189,10 @@ class Sphere(Parametrization):
         int
             Number of required random samples.
         """
-        n_points = np.ceil(np.power(np.divide(self.radius, sampling_density), 3))
+        n_points = np.multiply(
+            np.square(np.pi),
+            np.ceil(np.power(np.divide(self.radius, sampling_density), 2)),
+        )
         return int(n_points)
 
 
@@ -231,6 +237,10 @@ class Ellipsoid(Parametrization):
         ------
         NotImplementedError
             If the points are not 3D.
+
+        References
+        ----------
+        .. [1]  https://de.mathworks.com/matlabcentral/fileexchange/24693-ellipsoid-fit
         """
         positions = np.asarray(positions, dtype=np.float64)
         if positions.shape[1] != 3 or len(positions.shape) != 2:
@@ -238,36 +248,47 @@ class Ellipsoid(Parametrization):
                 "Only three-dimensional point clouds are supported."
             )
 
-        def ellipsoid_loss(params, data_points, orientations):
-            radii, center = params[0:3], params[3:]
-            transformed_points = np.dot(data_points - center, orientations)
-
-            normalized_points = transformed_points / radii
-
-            distances = np.sum(normalized_points**2, axis=1) - 1
-
-            loss = np.sum(distances**2)
-            return loss
-
-        center = positions.mean(axis=0)
-        positions_centered = positions - center
-
-        cov_mat = np.cov(positions_centered, rowvar=False)
-        evals, evecs = np.linalg.eigh(cov_mat)
-
-        sort_indices = np.argsort(evals)[::-1]
-        evals = evals[sort_indices]
-        evecs = evecs[:, sort_indices]
-
-        initial_radii = 2 * np.sqrt(evals)
-
-        result = optimize.minimize(
-            ellipsoid_loss,
-            (initial_radii, center),
-            args=(positions, evecs),
-            method="Nelder-Mead",
+        x, y, z = positions[:, 0], positions[:, 1], positions[:, 2]
+        D = np.array(
+            [
+                x * x + y * y - 2 * z * z,
+                x * x + z * z - 2 * y * y,
+                2 * x * y,
+                2 * x * z,
+                2 * y * z,
+                2 * x,
+                2 * y,
+                2 * z,
+                1 - 0 * x,
+            ]
         )
-        radii, center = result.x[0:3], result.x[3:]
+        d2 = np.array(x * x + y * y + z * z).T
+        u = np.linalg.solve(D.dot(D.T), D.dot(d2))
+        v = np.concatenate(
+            [
+                np.array([u[0] + 1 * u[1] - 1]),
+                np.array([u[0] - 2 * u[1] - 1]),
+                np.array([u[1] - 2 * u[0] - 1]),
+                u[2:],
+            ],
+            axis=0,
+        ).flatten()
+        A = np.array(
+            [
+                [v[0], v[3], v[4], v[6]],
+                [v[3], v[1], v[5], v[7]],
+                [v[4], v[5], v[2], v[8]],
+                [v[6], v[7], v[8], v[9]],
+            ]
+        )
+
+        center = np.linalg.solve(-A[:3, :3], v[6:9])
+        T = np.eye(4)
+        T[3, :3] = center.T
+
+        R = T.dot(A).dot(T.T)
+        evals, evecs = np.linalg.eig(R[:3, :3] / -R[3, 3])
+        radii = np.sign(evals) * np.sqrt(1.0 / np.abs(evals))
 
         return cls(radii=radii, center=center, orientations=evecs)
 
@@ -277,6 +298,8 @@ class Ellipsoid(Parametrization):
         radii: np.ndarray = None,
         center: np.ndarray = None,
         orientations: np.ndarray = None,
+        sample_mesh: bool = False,
+        mesh_init_factor: int = None,
     ) -> np.ndarray:
         """
         Samples points from the surface of an ellisoid.
@@ -301,21 +324,62 @@ class Ellipsoid(Parametrization):
         center = self.center if center is None else center
         orientations = self.orientations if orientations is None else orientations
 
-        sp = np.linspace(0, 2.0 * np.pi, num=n_samples)
-        nx = sp.shape[0]
-        u = np.repeat(sp, nx)
-        v = np.tile(sp, nx)
+        positions_xyz = np.zeros((n_samples, self.center.size))
+        samples_drawn = 0
+        np.random.seed(42)
+        radii_fourth, r_min = np.power(radii, 4), np.min(radii)
+        while samples_drawn < n_samples:
+            point = np.random.normal(size=3)
+            point /= np.linalg.norm(point)
 
-        x = np.sin(u) * np.cos(v)
-        y = np.sin(u) * np.sin(v)
-        z = np.cos(u)
+            np.multiply(point, radii, out=point)
 
-        samples = np.vstack((x, y, z)).T
-        samples = samples * radii
-        samples = samples.dot(orientations.T)
-        samples += center
+            p = r_min * np.sqrt(np.divide(np.square(point), radii_fourth).sum())
+            u = np.random.uniform(0, 1)
+            if u <= p:
+                positions_xyz[samples_drawn] = point
+                samples_drawn += 1
 
-        return samples
+        positions_xyz = positions_xyz.dot(orientations.T)
+        positions_xyz = np.add(positions_xyz, center)
+
+        if sample_mesh:
+            hull = ConvexHull(positions_xyz)
+            mesh = o3d.geometry.TriangleMesh()
+            mesh.vertices = o3d.utility.Vector3dVector(positions_xyz[hull.vertices])
+            mesh.triangles = o3d.utility.Vector3iVector(hull.simplices)
+
+            if mesh_init_factor is None:
+                point_cloud = mesh.sample_points_uniformly(
+                    number_of_points=n_samples,
+                )
+            else:
+                point_cloud = mesh.sample_points_poisson_disk(
+                    number_of_points=n_samples,
+                    init_factor=mesh_init_factor,
+                )
+
+            positions_xyz = np.asarray(point_cloud.points)
+
+        return positions_xyz
+
+        # n_points = int(np.ceil(int(np.sqrt(n_samples * 2))))
+
+        # phi, theta = np.meshgrid(
+        #     np.linspace(0, np.pi, n_points), np.linspace(0, 2*np.pi, n_points)
+        # )
+        # phi = phi.flatten()
+        # theta = theta.flatten()
+
+        # positions_xyz = np.column_stack([
+        #     np.sin(phi) * np.cos(theta),
+        #     np.sin(phi) * np.sin(theta),
+        #     np.cos(phi)
+        # ])
+        # positions_xyz = np.multiply(positions_xyz, radii)
+        # positions_xyz = positions_xyz.dot(orientations.T)
+        # positions_xyz = np.add(positions_xyz, center)
+        # return positions_xyz
 
     def compute_normal(self, points: np.ndarray) -> np.ndarray:
         """
@@ -331,11 +395,14 @@ class Ellipsoid(Parametrization):
         np.ndarray
             Normal vectors at the given points
         """
-        normal = np.divide(np.multiply(points, 2), np.square(self.radii))
-        normal = np.dot(normal, self.orientations)
-        normal /= np.linalg.norm(normal, axis=1)[:, None]
+        # points_norm = (points - self.center) / self.radii
 
-        return normal
+        norm_points = (points - self.center).dot(np.linalg.inv(self.orientations.T))
+        normals = np.divide(np.multiply(norm_points, 2), np.square(self.radii))
+        normals = np.dot(normals, self.orientations.T)
+        normals /= np.linalg.norm(normals, axis=1)[:, None]
+
+        return normals
 
     def points_per_sampling(self, sampling_density: float) -> int:
         """
@@ -491,6 +558,7 @@ class Cylinder(Parametrization):
         radius = self.radius if radius is None else radius
         height = self.height if height is None else height
 
+        n_samples = int(np.ceil(np.sqrt(n_samples)))
         theta = np.linspace(0, 2 * np.pi, n_samples)
         h = np.linspace(-height / 2, height / 2, n_samples)
 

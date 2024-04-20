@@ -26,7 +26,7 @@ class JupyterFramework(object):
         """Load Loading interface"""
 
         self.all_widgets["input_mrc"] = widgets.Text(
-            value="/Users/vmaurer/Downloads/TS_01oa_rec_bin4_raw_MemBrain_seg_v9b.ckpt_segmented.mrc.gz",
+            value="",
             placeholder="mrc or h5 file",
             description="Input Filename:",
             style={"description_width": "initial"},
@@ -48,6 +48,14 @@ class JupyterFramework(object):
             layout=widgets.Layout(width="200px"),
         )
         self.all_widgets["load_state_hdf"].on_click(self.load_state_hdf)
+
+        self.all_widgets["load_state_pickle"] = widgets.Button(
+            description="Load state pickle",
+            disabled=False,
+            style={"description_width": "initial"},
+            layout=widgets.Layout(width="200px"),
+        )
+        self.all_widgets["load_state_pickle"].on_click(self.load_pickle)
 
         self.all_widgets["load_point_cloud"] = widgets.Button(
             description="Load point cloud txt",
@@ -72,6 +80,7 @@ class JupyterFramework(object):
                 self.all_widgets["load_point_cloud"],
                 self.all_widgets["load_stl_file"],
                 self.all_widgets["load_state_hdf"],
+                self.all_widgets["load_state_pickle"],
             ]
         )
         display(self.hbox_load)
@@ -141,6 +150,11 @@ class JupyterFramework(object):
         self.all_widgets["save_hdf"] = widgets.Button(description="Save State hdf5")
         self.all_widgets["save_hdf"].on_click(self.save_state_hdf)
 
+        self.all_widgets["save_pickle"] = widgets.Button(
+            description="Save State pickle"
+        )
+        self.all_widgets["save_pickle"].on_click(self.save_pickle)
+
         self.all_widgets["fit_rbf"] = widgets.Button(description="Fit RBF Fxn")
         self.all_widgets["fit_rbf"].on_click(self.fit_rbf)
 
@@ -163,21 +177,33 @@ class JupyterFramework(object):
         self.all_widgets["crop_fit"] = widgets.Button(description="Crop fit around")
         self.all_widgets["crop_fit"].on_click(self.crop_fit)
 
+        self.all_widgets["fit_sampling_method"] = widgets.Dropdown(
+            options=["N points", "Average Distance"],
+            value="Average Distance",
+            description="Fit Sampling:",
+            style={"description_width": "initial"},
+        )
+
         self.all_widgets["get_fit_normal_sampling"] = widgets.IntText(
             value=20,
             min=1,
-            description="Average Distance",
+            description="Value",
             disabled=False,
             style={"description_width": "initial"},
             layout=widgets.Layout(width="200px"),
         )
+
+        self.all_widgets["sample_fit"] = widgets.Button(description="Sample Fit")
+        self.all_widgets["sample_fit"].on_click(self.sample_fit)
 
         self.all_widgets["get_fit_normals"] = widgets.Button(description="Get Normals")
         self.all_widgets["get_fit_normals"].on_click(self.get_fit_normals)
 
         self.all_widgets["fit_normals"] = widgets.HBox(
             [
+                self.all_widgets["sample_fit"],
                 self.all_widgets["get_fit_normals"],
+                self.all_widgets["fit_sampling_method"],
                 self.all_widgets["get_fit_normal_sampling"],
             ]
         )
@@ -309,7 +335,8 @@ class JupyterFramework(object):
 
         self.napari_manager = None
         self.all_widgets["load_raw_image_button"] = widgets.Button(
-            description="Open Napari", style={"description_width": "initial"}
+            description="Open Napari",
+            style={"description_width": "initial"},
         )
 
         def open_napari_wrapper(change):
@@ -317,11 +344,15 @@ class JupyterFramework(object):
             if self.all_widgets["load_raw_image_text"].value != "":
                 open_tomo = self.data_structure.read_mrc(
                     self.all_widgets["load_raw_image_text"].value
-                ).data
+                )
+
             self.napari_manager = NapariManager(
-                colabsegdata_instance=self.data_structure, display_data=open_tomo
+                colabsegdata_instance=self.data_structure,
+                display_data=open_tomo.data,
+                display_pixel_size=np.asarray(open_tomo.pixel) * 10,
             )
-            self.napari_manager.run()
+            # Not required since run from jupyter notebook
+            # self.napari_manager.run()
 
         self.all_widgets["load_raw_image_button"].on_click(open_napari_wrapper)
 
@@ -335,9 +366,11 @@ class JupyterFramework(object):
                 "cluster_list_tv": "Cluster",
                 "cluster_list_fits": "Fit",
                 "protein_positions_list": "Protein",
+                "cluster_list_fits_objects": "Fits",
             }
             for key, value in mapping.items():
-                setattr(self.data_structure, key, [x for x in data.get(value, [[]])])
+                # setattr(self.data_structure, key, [x for x in data.get(value, [[]])])
+                setattr(self.data_structure, key, [x for x in data.get(value, [])])
 
             if self.napari_manager is not None:
                 self.napari_manager.close()
@@ -508,6 +541,7 @@ class JupyterFramework(object):
                 self.all_widgets["save_clusters_mrc"],
                 self.all_widgets["save_clusters_txt"],
                 self.all_widgets["save_hdf"],
+                self.all_widgets["save_pickle"],
             ]
         )
 
@@ -693,9 +727,12 @@ class JupyterFramework(object):
         self.seg_visualization.load_all_models(
             self.data_structure.cluster_list_tv, start_index=0
         )
-        self.model_mapping_table = {
-            i: i for i in self.all_widgets["cluster_sel"].options
-        }
+
+        total_options = [
+            *self.all_widgets["cluster_sel"].options,
+            *self.all_widgets["fit_sel"].options,
+        ]
+        self.model_mapping_table = dict(zip(total_options, total_options))
         self.model_mapping_table_previous = self.model_mapping_table.copy()
         if len(self.data_structure.cluster_list_fits) > 0:
             self.seg_visualization.load_all_models_fit(
@@ -823,6 +860,18 @@ class JupyterFramework(object):
         self.data_structure.save_hdf(self.all_widgets["output_filename"].value)
         return
 
+    def load_pickle(self, obj):
+        """load state as hdf5"""
+        self.data_structure = ColabSegData.load_pickle(
+            self.all_widgets["input_mrc"].value
+        )
+        return None
+
+    def save_pickle(self, obj):
+        """save state as hdf5 file"""
+        self.data_structure.save_pickle(self.all_widgets["output_filename"].value)
+        return None
+
     def save_clusters_mrc(self, obj):
         """Saves an MRC file with the selected clusters and fits"""
         positions = []
@@ -901,7 +950,7 @@ class JupyterFramework(object):
         removed, added = self.data_structure.merge_clusters(
             self.all_widgets["cluster_sel"].value
         )
-        self._delete_cluster(removed)
+        self._delete_model(removed)
         self._add_model(added)
 
         self.seg_visualization.view_update()
@@ -1017,23 +1066,26 @@ class JupyterFramework(object):
 
     def fit_parametrization(self, parametrization_type, obj):
         self.backup_step_to_previous()
-        if len(self.all_widgets["cluster_sel"].value) != 1:
+
+        if len(self.all_widgets["cluster_sel"].value) == 0:
             print("Nothing or too many clusters selected!")
-            print("Please select a single cluster for the fitting procedure!")
-            return
-        self.data_structure.interpolate_membrane_closed_surface(
-            parametrization_type,
-            self.all_widgets["cluster_sel"].value[0],
-            sampling_rate=self.all_widgets["get_fit_normal_sampling"].value,
-        )
-        added_data = self.data_structure.cluster_list_fits[-1]
+            return None
 
-        downsample = self.seg_visualization.downsample
-        xyz = self.seg_visualization.make_xyz_string(added_data[::downsample])
-        model_index = self.seg_visualization.add_fit(xyz)
+        for cluster in self.all_widgets["cluster_sel"].value:
+            self.data_structure.interpolate_membrane_closed_surface(
+                parametrization_type,
+                cluster,
+                sampling_rate=self.all_widgets["get_fit_normal_sampling"].value,
+                compute_npoints=self.all_widgets["fit_sampling_method"].value
+                == "Average Distance",
+            )
+            added_data = self.data_structure.cluster_list_fits[-1]
 
-        value = len(self.model_mapping_table)
-        self.model_mapping_table[value] = model_index
+            xyz = self.seg_visualization.make_xyz_string(added_data)
+            model_index = self.seg_visualization.add_fit(xyz)
+
+            value = len(self.model_mapping_table)
+            self.model_mapping_table[value] = model_index
 
         options = [
             x
@@ -1048,8 +1100,7 @@ class JupyterFramework(object):
         self.seg_visualization.view_update()
         return None
 
-    def get_fit_normals(self, obj):
-        self.backup_step_to_previous()
+    def sample_fit(self, obj):
         if len(self.all_widgets["fit_sel"].value) != 1:
             print("Nothing or too many clusters selected!")
             print("Please select a single cluster for the deleting procedure!")
@@ -1057,12 +1108,42 @@ class JupyterFramework(object):
 
         fit_index = self.all_widgets["fit_sel"].value[0]
         fit_index = fit_index - len(self.data_structure.cluster_list_tv)
-        sampling = self.all_widgets["get_fit_normal_sampling"].value
         model = self.data_structure.cluster_list_fits_objects[fit_index]
-        n_points = model.points_per_sampling(sampling)
 
-        # sample samples n_points ** 2
-        n_points = int(np.ceil(np.sqrt(n_points)))
+        n_points = self.all_widgets["get_fit_normal_sampling"].value
+        if self.all_widgets["fit_sampling_method"].value == "Average Distance":
+            n_points = model.points_per_sampling(n_points)
+
+        points = model.sample(n_points)
+        self.data_structure.cluster_list_fits[fit_index] = points
+
+        # downsample = self.seg_visualization.downsample
+        for value in self.all_widgets["fit_sel"].value:
+            model_value = self.model_mapping_table[value]
+            self.seg_visualization.delete_model(model_value)
+
+            xyz = self.seg_visualization.make_xyz_string(points)
+            model_index = self.seg_visualization.add_fit(xyz)
+            self.model_mapping_table[value] = model_index
+
+        self.seg_visualization.view_update()
+
+        return None
+
+    def get_fit_normals(self, obj):
+        if len(self.all_widgets["fit_sel"].value) != 1:
+            print("Nothing or too many clusters selected!")
+            print("Please select a single cluster for the deleting procedure!")
+            return None
+        self.backup_step_to_previous()
+        fit_index = self.all_widgets["fit_sel"].value[0]
+        fit_index = fit_index - len(self.data_structure.cluster_list_tv)
+        model = self.data_structure.cluster_list_fits_objects[fit_index]
+
+        n_points = self.all_widgets["get_fit_normal_sampling"].value
+        if self.all_widgets["fit_sampling_method"].value == "Average Distance":
+            n_points = model.points_per_sampling(n_points)
+
         base_vectors = model.sample(n_points)
         normal_vectors = model.compute_normal(base_vectors)
         self.data_structure.analysis_properties["normal_selection"] = base_vectors

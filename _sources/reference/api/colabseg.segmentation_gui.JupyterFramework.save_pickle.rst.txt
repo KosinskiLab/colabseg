@@ -1,0 +1,6 @@
+JupyterFramework.save\_pickle
+======================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.save_pickle

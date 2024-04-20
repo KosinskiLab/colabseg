@@ -1,0 +1,6 @@
+JupyterFramework.sample\_fit
+=====================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.sample_fit

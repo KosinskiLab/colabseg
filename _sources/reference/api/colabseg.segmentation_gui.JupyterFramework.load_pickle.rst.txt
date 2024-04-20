@@ -1,0 +1,6 @@
+JupyterFramework.load\_pickle
+======================================================
+
+.. currentmodule:: colabseg.segmentation_gui
+
+.. automethod:: JupyterFramework.load_pickle

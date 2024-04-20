@@ -103,6 +103,9 @@
            JupyterFramework.load_mrc_file
          
          
+           JupyterFramework.load_pickle
+         
+         
            JupyterFramework.load_raw_image
          
          
@@ -136,6 +139,9 @@
            JupyterFramework.rotate_flat
          
          
+           JupyterFramework.sample_fit
+         
+         
            JupyterFramework.save_clusters_mrc
          
          
@@ -149,6 +155,9 @@
          
          
            JupyterFramework.save_normals_file
+         
+         
+           JupyterFramework.save_pickle
          
          
            JupyterFramework.save_radii_file

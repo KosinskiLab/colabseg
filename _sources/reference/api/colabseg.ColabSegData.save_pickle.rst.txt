@@ -1,0 +1,6 @@
+ColabSegData.save\_pickle
+=================================
+
+.. currentmodule:: colabseg
+
+.. automethod:: ColabSegData.save_pickle

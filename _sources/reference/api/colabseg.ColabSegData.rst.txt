@@ -82,6 +82,9 @@
            ColabSegData.load_hdf
          
          
+           ColabSegData.load_pickle
+         
+         
            ColabSegData.load_point_cloud
          
          
@@ -110,6 +113,9 @@
          
          
            ColabSegData.save_hdf
+         
+         
+           ColabSegData.save_pickle
          
          
            ColabSegData.save_values_txt

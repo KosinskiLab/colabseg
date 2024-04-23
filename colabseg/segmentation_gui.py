@@ -155,6 +155,11 @@ class JupyterFramework(object):
         )
         self.all_widgets["save_pickle"].on_click(self.save_pickle)
 
+        self.all_widgets["save_downsampled_cloud"] = widgets.Button(
+            description="Save Downsampled Cloud"
+        )
+        self.all_widgets["save_downsampled_cloud"].on_click(self.save_downcloud_txt)
+
         self.all_widgets["fit_rbf"] = widgets.Button(description="Fit RBF Fxn")
         self.all_widgets["fit_rbf"].on_click(self.fit_rbf)
 
@@ -542,6 +547,7 @@ class JupyterFramework(object):
                 self.all_widgets["save_clusters_txt"],
                 self.all_widgets["save_hdf"],
                 self.all_widgets["save_pickle"],
+                self.all_widgets["save_downsampled_cloud"]
             ]
         )
 
@@ -923,6 +929,31 @@ class JupyterFramework(object):
             positions, self.all_widgets["output_filename"].value
         )
         return
+    
+    def save_downcloud_txt(self, obj):
+        downsample = self.seg_visualization.downsample
+
+        positions = []
+        if self.all_widgets["select_all_clusters"].value == True:
+            for cluster in self.data_structure.cluster_list_tv:
+                positions.append(
+                    cluster[::downsample]
+                )
+
+        if self.all_widgets["select_all_clusters"].value == False:
+            for i in self.all_widgets["cluster_sel"].value:
+                positions.append(
+                    self.data_structure.cluster_list_tv[i][::downsample]
+                )
+        
+        
+        positions = np.vstack(np.asarray(np.array(positions, dtype=object)))
+
+        self.data_structure.write_txt(
+            positions, self.all_widgets["output_filename"].value
+        )
+
+        return None
 
     def highlight_clusters(self, obj):
         new_obj = {}

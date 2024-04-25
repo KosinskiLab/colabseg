@@ -154,6 +154,9 @@
            JupyterFramework.save_distance_plot
          
          
+           JupyterFramework.save_downcloud_txt
+         
+         
            JupyterFramework.save_normals_file
          
          
